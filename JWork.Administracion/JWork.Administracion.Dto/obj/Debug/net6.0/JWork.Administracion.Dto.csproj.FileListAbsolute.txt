@@ -1,0 +1,12 @@
+C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.Dto\bin\Debug\net6.0\JWork.Administracion.Dto.deps.json
+C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.Dto\bin\Debug\net6.0\JWork.Administracion.Dto.dll
+C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.Dto\bin\Debug\net6.0\JWork.Administracion.Dto.pdb
+C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.Dto\obj\Debug\net6.0\JWork.Administracion.Dto.csproj.AssemblyReference.cache
+C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.Dto\obj\Debug\net6.0\JWork.Administracion.Dto.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.Dto\obj\Debug\net6.0\JWork.Administracion.Dto.AssemblyInfoInputs.cache
+C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.Dto\obj\Debug\net6.0\JWork.Administracion.Dto.AssemblyInfo.cs
+C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.Dto\obj\Debug\net6.0\JWork.Administracion.Dto.csproj.CoreCompileInputs.cache
+C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.Dto\obj\Debug\net6.0\JWork.Administracion.Dto.dll
+C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.Dto\obj\Debug\net6.0\refint\JWork.Administracion.Dto.dll
+C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.Dto\obj\Debug\net6.0\JWork.Administracion.Dto.pdb
+C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.Dto\obj\Debug\net6.0\ref\JWork.Administracion.Dto.dll

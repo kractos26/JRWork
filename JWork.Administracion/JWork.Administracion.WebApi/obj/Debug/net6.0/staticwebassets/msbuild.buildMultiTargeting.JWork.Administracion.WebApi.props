@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\JWork.Administracion.WebApi.props" />
+</Project>
