@@ -64,14 +64,16 @@ namespace JRWork.Administracion.DataAccess.Repositories
             return Entidad;
         }
 
-        public T TraerUno(Expression<Func<T, bool>> predicado)
+        public T? TraerUno(Expression<Func<T, bool>> predicado)
         {
-            return _contex.Set<T>().FirstOrDefault(predicado);
+            T? result  =  _contex.Set<T>().FirstOrDefault(predicado);
+            return result ?? default;
+            
         }
 
-        public T TraerUltimo(Expression<Func<T, bool>> predicado)
+        public T? TraerUltimo(Expression<Func<T, bool>> predicado)
         {
-            return _contex.Set<T>().LastOrDefault(predicado);
+            return _contex.Set<T>().LastOrDefault(predicado); 
         }
     }
 }
