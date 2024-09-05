@@ -1,0 +1,43 @@
+# Evitar archivos de solución y proyecto
+*.sln
+*.csproj
+*.vbproj
+*.fsproj
+*.user
+*.suo
+*.vcxproj
+*.proj
+
+# Evitar directorios de compilación
+bin/
+obj/
+
+# Evitar archivos de paquetes
+*.nupkg
+*.snupkg
+*.nuspec
+
+# Evitar archivos de paquetes de NuGet descargados
+packages/
+!packages/repositories.config
+
+# Evitar archivos de configuración de Visual Studio
+.vscode/
+.vs/
+.vscode/*
+
+# Evitar archivos temporales del sistema
+*.log
+*.tmp
+*.cache
+*.DS_Store
+
+# Evitar configuraciones de usuario
+*.userosscache
+*.unsuccessfulbuild
+*.ide
+*.coverage
+*.dotCover
+
+# Evitar directorios y archivos generados por compiladores
+Generated_Code/
