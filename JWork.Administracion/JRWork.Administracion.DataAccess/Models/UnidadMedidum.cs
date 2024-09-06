@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace JRWork.Administracion.DataAccess.Models;
+﻿namespace JRWork.Administracion.DataAccess.Models;
 
 public partial class UnidadMedidum
 {

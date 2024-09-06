@@ -1,5 +1,6 @@
 ﻿using JRWork.Administracion.DataAccess.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Linq.Expressions;
 
 namespace JRWork.Administracion.DataAccess.Repositories
@@ -26,15 +27,9 @@ namespace JRWork.Administracion.DataAccess.Repositories
             return Entidad;
         }
 
-        public List<T> Buscar(Expression<Func<T, bool>> predicado)
-        {
-            return _contex.Set<T>().Where(predicado).ToList();
-        }
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
+        public List<T> Buscar(Expression<Func<T, bool>> predicado) => _contex.Set<T>().Where(predicado).ToList();
+        
+        public void Dispose() => GC.SuppressFinalize(this);
 
         public T Eliminar(T Entidad)
         {
@@ -44,15 +39,11 @@ namespace JRWork.Administracion.DataAccess.Repositories
             return Entidad;
         }
 
-        public List<T> GetAll()
-        {
-            return _contex.Set<T>().ToList();
-        }
+        public List<T> GetAll() => _contex.Set<T>().ToList();
+       
 
-        public void Guardar()
-        {
-            this._contex.SaveChanges();
-        }
+        public void Guardar() => this._contex.SaveChanges();
+        
 
         public T Modificar(T Entidad)
         {
@@ -73,8 +64,7 @@ namespace JRWork.Administracion.DataAccess.Repositories
 
         public T? TraerUltimo(Expression<Func<T, bool>> predicado)
         {
-            return _contex.Set<T>().LastOrDefault(predicado); 
-        }
+            return _contex.Set<T>().LastOrDefault(predicado);         }
     }
 }
 
