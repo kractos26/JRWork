@@ -6,44 +6,33 @@ namespace JRWork.Administracion.DataAccess.Repositories
 {
     internal class RepositoryTipoDocumento : IRepositoryTipoDocumento
     {
-        public TipoDocumento Adicionar(TipoDocumento Entidad)
+        private readonly IRepositorio<TipoDocumento> _repositorio;
+        public RepositoryTipoDocumento(IRepositorio<TipoDocumento> repositorio)
         {
-            throw new NotImplementedException();
+            _repositorio = repositorio;
         }
+        public async Task<TipoDocumento> AdicionarAsync(TipoDocumento Entidad) => await _repositorio.AdicionarAsync(Entidad);
+       
 
-        public List<TipoDocumento> Buscar(Expression<Func<TipoDocumento, bool>> predicado)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<List<TipoDocumento>> BuscarAsync(Expression<Func<TipoDocumento, bool>> predicado) => await _repositorio.BuscarAsync(predicado);
+        
 
-        public TipoDocumento Eliminar(TipoDocumento Entidad)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<TipoDocumento> EliminarAsync(TipoDocumento Entidad) => await _repositorio.EliminarAsync(Entidad);
+       
 
-        public List<TipoDocumento> GetAll()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<List<TipoDocumento>> GetAllAsync() => await _repositorio.GetAllAsync();
+        
 
-        public void Guardar()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task GuardarAsync() => await _repositorio.GuardarAsync();
+       
 
-        public TipoDocumento Modificar(TipoDocumento Entidad)
-        {
-            throw new NotImplementedException();
-        }
+        public Task<TipoDocumento> ModificarAsync(TipoDocumento Entidad) => _repositorio.ModificarAsync(Entidad);
 
-        public TipoDocumento? TraerUltimo(Expression<Func<TipoDocumento, bool>> predicado)
-        {
-            throw new NotImplementedException();
-        }
 
-        public TipoDocumento? TraerUno(Expression<Func<TipoDocumento, bool>> predicado)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<TipoDocumento?> TraerUltimoAsync(Expression<Func<TipoDocumento, bool>> predicado) => await _repositorio.TraerUltimoAsync(predicado);
+
+
+        public async Task<TipoDocumento?> TraerUnoAsync(Expression<Func<TipoDocumento, bool>> predicado) => await _repositorio.TraerUnoAsync(predicado);
+      
     }
 }

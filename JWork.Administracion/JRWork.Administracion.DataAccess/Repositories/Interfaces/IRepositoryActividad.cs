@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using JRWork.Administracion.DataAccess.Models;
 
 namespace JRWork.Administracion.DataAccess.Repositories.Interfaces
 {
-    internal interface IRepositoryActividad
+    public interface IRepositoryActividad : IRepositorio<Actividad>
     {
     }
 }

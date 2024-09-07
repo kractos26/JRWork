@@ -6,44 +6,32 @@ namespace JRWork.Administracion.DataAccess.Repositories
 {
     public class RepositoryArea : IRepositoryArea
     {
-        public Area Adicionar(Area Entidad)
+        private readonly IRepositorio<Area> _repocitorio;
+        public RepositoryArea(IRepositorio<Area> repocitorio)
         {
-            throw new NotImplementedException();
+            _repocitorio = repocitorio;
         }
+        public async Task<Area> AdicionarAsync(Area Entidad) => await _repocitorio.AdicionarAsync(Entidad);
+        
 
-        public List<Area> Buscar(Expression<Func<Area, bool>> predicado)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<List<Area>> BuscarAsync(Expression<Func<Area, bool>> predicado) => await _repocitorio.BuscarAsync(predicado);
 
-        public Area Eliminar(Area Entidad)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<Area> EliminarAsync(Area Entidad) => await _repocitorio.EliminarAsync(Entidad);
+       
 
-        public List<Area> GetAll()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<List<Area>> GetAllAsync() => await _repocitorio.GetAllAsync();
+        
 
-        public void Guardar()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task GuardarAsync() => await _repocitorio.GuardarAsync();
+        
 
-        public Area Modificar(Area Entidad)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<Area> ModificarAsync(Area Entidad) => await _repocitorio.ModificarAsync(Entidad);
 
-        public Area? TraerUltimo(Expression<Func<Area, bool>> predicado)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Area? TraerUno(Expression<Func<Area, bool>> predicado)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<Area?> TraerUltimoAsync(Expression<Func<Area, bool>> predicado) => await _repocitorio.TraerUltimoAsync(predicado);
+
+
+        public async Task<Area?> TraerUnoAsync(Expression<Func<Area, bool>> predicado) => await _repocitorio.TraerUnoAsync(predicado);
+        
     }
 }

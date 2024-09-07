@@ -6,20 +6,20 @@ namespace JRWork.Administracion.DataAccess.Repositories.Interfaces
 {
     public interface IRepositorio<T> where T : class
     {
-        List<T> GetAll();
+        Task<List<T>> GetAllAsync();
 
-        List<T> Buscar(Expression<Func<T, bool>> predicado);
+        Task<List<T>> BuscarAsync(Expression<Func<T, bool>> predicado);
 
-        T? TraerUno(Expression<Func<T, bool>> predicado);
+        Task<T?> TraerUnoAsync(Expression<Func<T, bool>> predicado);
 
-        T? TraerUltimo(Expression<Func<T, bool>> predicado);
+        Task<T?> TraerUltimoAsync(Expression<Func<T, bool>> predicado);
 
-        T Adicionar(T Entidad);
+        Task<T> AdicionarAsync(T Entidad);
 
-        T Modificar(T Entidad);
+        Task<T> ModificarAsync(T Entidad);
 
-        T Eliminar(T Entidad);
+        Task<T> EliminarAsync(T Entidad);
 
-        void Guardar();
+        Task GuardarAsync();
     }
 }

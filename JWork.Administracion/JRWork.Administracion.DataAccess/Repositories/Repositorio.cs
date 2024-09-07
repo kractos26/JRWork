@@ -1,6 +1,5 @@
 ﻿using JRWork.Administracion.DataAccess.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using System.Linq.Expressions;
 
 namespace JRWork.Administracion.DataAccess.Repositories
@@ -14,57 +13,54 @@ namespace JRWork.Administracion.DataAccess.Repositories
 
         }
 
-        public T Adicionar(T Entidad)
+        public async Task<T> AdicionarAsync(T Entidad)
         {
-            if (this._contex.Entry<T>(Entidad).State != EntityState.Deleted)
+            if (this._contex.Entry(Entidad).State != EntityState.Deleted)
             {
-                this._contex.Entry<T>(Entidad).State = EntityState.Added;
+                this._contex.Entry(Entidad).State = EntityState.Added;
             }
             else
             {
-                this._contex.Set<T>().Add(Entidad);
+                _contex.Set<T>().Add(Entidad);
+                await _contex.SaveChangesAsync();
             }
             return Entidad;
         }
 
-        public List<T> Buscar(Expression<Func<T, bool>> predicado) => _contex.Set<T>().Where(predicado).ToList();
-        
+        public Task<List<T>> BuscarAsync(Expression<Func<T, bool>> predicado) => _contex.Set<T>().Where(predicado).ToListAsync();
+
         public void Dispose() => GC.SuppressFinalize(this);
 
-        public T Eliminar(T Entidad)
+        public async Task<T> EliminarAsync(T Entidad)
         {
-            if (this._contex.Entry<T>(Entidad).State == EntityState.Deleted)
-            { this._contex.Set<T>().Attach(Entidad); }
-            _contex.Entry<T>(Entidad).State = EntityState.Deleted;
+            if (_contex.Entry(Entidad).State == EntityState.Deleted)
+            { _contex.Set<T>().Attach(Entidad); }
+            _contex.Entry(Entidad).State = EntityState.Deleted;
+            await _contex.SaveChangesAsync();
             return Entidad;
         }
 
-        public List<T> GetAll() => _contex.Set<T>().ToList();
-       
+        public Task<List<T>> GetAllAsync() => _contex.Set<T>().ToListAsync();
 
-        public void Guardar() => this._contex.SaveChanges();
-        
 
-        public T Modificar(T Entidad)
+        public Task GuardarAsync() => _contex.SaveChangesAsync();
+
+
+        public async Task<T> ModificarAsync(T Entidad)
         {
-            if (this._contex.Entry<T>(Entidad).State == EntityState.Deleted)
+            if (this._contex.Entry(Entidad).State == EntityState.Deleted)
             { this._contex.Set<T>().Attach(Entidad); }
 
-            _contex.Entry<T>(Entidad).State = EntityState.Modified;
-
+            _contex.Entry(Entidad).State = EntityState.Modified;
+            await _contex.SaveChangesAsync();
             return Entidad;
         }
 
-        public T? TraerUno(Expression<Func<T, bool>> predicado)
-        {
-            T? result  =  _contex.Set<T>().FirstOrDefault(predicado);
-            return result ?? default;
-            
-        }
+        public Task<T?> TraerUnoAsync(Expression<Func<T, bool>> predicado) => _contex.Set<T>().FirstOrDefaultAsync(predicado);
 
-        public T? TraerUltimo(Expression<Func<T, bool>> predicado)
-        {
-            return _contex.Set<T>().LastOrDefault(predicado);         }
+
+        public Task<T?> TraerUltimoAsync(Expression<Func<T, bool>> predicado) => _contex.Set<T>().LastOrDefaultAsync(predicado);
+
     }
-}
 
+}
