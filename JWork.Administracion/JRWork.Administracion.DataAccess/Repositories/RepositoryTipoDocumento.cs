@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace JRWork.Administracion.DataAccess.Repositories
 {
-    internal class RepositoryTipoDocumento : IRepositoryTipoDocumento
+    public class RepositoryTipoDocumento : IRepositoryTipoDocumento
     {
         private readonly IRepositorio<TipoDocumento> _repositorio;
         public RepositoryTipoDocumento(IRepositorio<TipoDocumento> repositorio)

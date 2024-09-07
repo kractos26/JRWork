@@ -2,7 +2,7 @@
 
 namespace JRWork.Administracion.DataAccess.Repositories.Interfaces
 {
-    internal interface IRepositoryHabilidad : IRepositorio<Habilidad>
+    public interface IRepositoryHabilidad : IRepositorio<Habilidad>
     {
     }
 }

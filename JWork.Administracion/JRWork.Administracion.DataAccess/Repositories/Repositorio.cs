@@ -1,4 +1,5 @@
-﻿using JRWork.Administracion.DataAccess.Repositories.Interfaces;
+﻿using JRWork.Administracion.DataAccess.Models;
+using JRWork.Administracion.DataAccess.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -6,8 +7,8 @@ namespace JRWork.Administracion.DataAccess.Repositories
 {
     public class Repositorio<T> : IRepositorio<T>, IDisposable where T : class
     {
-        private readonly DbContext _contex;
-        public Repositorio(DbContext contex)
+        private readonly JrworkContext _contex;
+        public Repositorio(JrworkContext contex)
         {
             this._contex = contex;
 

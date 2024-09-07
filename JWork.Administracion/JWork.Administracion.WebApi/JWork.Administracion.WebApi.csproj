@@ -10,4 +10,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\JRWork.Administracion.DataAccess\JRWork.Administracion.DataAccess.csproj" />
+    <ProjectReference Include="..\JWork.Administracion.Business\JWork.Administracion.Business.csproj" />
+  </ItemGroup>
+
 </Project>

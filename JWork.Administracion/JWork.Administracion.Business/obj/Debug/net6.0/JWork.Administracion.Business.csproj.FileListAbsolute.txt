@@ -10,3 +10,8 @@ C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Adm
 C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.Business\obj\Debug\net6.0\refint\JWork.Administracion.Business.dll
 C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.Business\obj\Debug\net6.0\JWork.Administracion.Business.pdb
 C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.Business\obj\Debug\net6.0\ref\JWork.Administracion.Business.dll
+C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.Business\bin\Debug\net6.0\JRWork.Administracion.DataAccess.dll
+C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.Business\bin\Debug\net6.0\JWork.Administracion.Dto.dll
+C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.Business\bin\Debug\net6.0\JRWork.Administracion.DataAccess.pdb
+C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.Business\bin\Debug\net6.0\JWork.Administracion.Dto.pdb
+C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.Business\obj\Debug\net6.0\JWork.Administracion.Business.csproj.CopyComplete

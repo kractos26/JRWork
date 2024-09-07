@@ -6,4 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="MediatR" Version="12.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JRWork.Administracion.DataAccess\JRWork.Administracion.DataAccess.csproj" />
+    <ProjectReference Include="..\JWork.Administracion.Dto\JWork.Administracion.Dto.csproj" />
+  </ItemGroup>
+
 </Project>

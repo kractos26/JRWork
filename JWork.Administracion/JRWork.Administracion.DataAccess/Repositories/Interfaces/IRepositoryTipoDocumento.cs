@@ -2,7 +2,7 @@
 
 namespace JRWork.Administracion.DataAccess.Repositories.Interfaces
 {
-    internal interface IRepositoryTipoDocumento:IRepositorio<TipoDocumento>
+    public interface IRepositoryTipoDocumento:IRepositorio<TipoDocumento>
     {
     }
 }

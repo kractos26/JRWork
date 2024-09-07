@@ -7,5 +7,5 @@ public partial class Area
 {
     public int AreaId { get; set; }
 
-    public string? Nombre { get; set; }
+    public string Nombre { get; set; } = null!;
 }

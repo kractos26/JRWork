@@ -2,7 +2,7 @@
 
 namespace JRWork.Administracion.DataAccess.Repositories.Interfaces
 {
-    internal interface IRepositoryUnidadMedidum : IRepositorio<UnidadMedidum>
+    internal interface IRepositoryUnidadMedida : IRepositorio<UnidadMedida>
     {
     }
 }
