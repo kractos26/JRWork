@@ -7,5 +7,7 @@ public partial class Area
 {
     public int AreaId { get; set; }
 
-    public string Nombre { get; set; } = null!;
+    public string? Nombre { get; set; }
+
+    public virtual ICollection<Oficio> Oficios { get; set; } = new List<Oficio>();
 }

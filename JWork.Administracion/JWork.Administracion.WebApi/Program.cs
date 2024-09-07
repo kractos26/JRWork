@@ -21,6 +21,9 @@ builder.Services.AddScoped<IRepositoryArea,RepositoryArea>();
 builder.Services.AddScoped<IRepositoryTipoPersona,RepositoryTipoPersona>();
 builder.Services.AddScoped<IRepositoryHabilidad, RepositoryHabilidad>();
 builder.Services.AddScoped<IRepositoryTipoDocumento,RepositoryTipoDocumento>();
+builder.Services.AddScoped<IRepositoryConceptoCalificacion, RepositoryConceptoCalificacion>();
+builder.Services.AddScoped<IRepositoryOficio, RepositoryOficio>();  
+builder.Services.AddScoped<IRepositoryDivipola, RepositoryDivipola>(); 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 var app = builder.Build();

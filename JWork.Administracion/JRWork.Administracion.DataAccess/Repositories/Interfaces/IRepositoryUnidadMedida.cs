@@ -1,8 +1,7 @@
 ﻿using JRWork.Administracion.DataAccess.Models;
 
-namespace JRWork.Administracion.DataAccess.Repositories.Interfaces
+namespace JRWork.Administracion.DataAccess.Repositories.Interfaces;
+
+public interface IRepositoryUnidadMedida : IRepositorio<UnidadMedida>
 {
-    internal interface IRepositoryUnidadMedida : IRepositorio<UnidadMedida>
-    {
-    }
 }

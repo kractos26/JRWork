@@ -2,8 +2,6 @@
 using JRWork.Administracion.DataAccess.Repositories.Interfaces;
 using JWork.Administracion.Dto;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace JWork.Administracion.Business.Aplicacion.Actividad
 {
@@ -35,7 +33,7 @@ namespace JWork.Administracion.Business.Aplicacion.Actividad
                 throw new InvalidOperationException("La actividad ya está registrada.");
             }
 
-            JRWork.Administracion.DataAccess.Models.Actividad actividad = new JRWork.Administracion.DataAccess.Models.Actividad
+            JRWork.Administracion.DataAccess.Models.Actividad actividad = new()
             {
                 Nombre = request.Nombre,
                 ActividadId = request.ActividadId,

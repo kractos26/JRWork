@@ -6,29 +6,28 @@ namespace JRWork.Administracion.DataAccess.Models;
 
 public partial class JrworkContext : DbContext
 {
-    public JrworkContext()
-    {
-    }
-
     public JrworkContext(DbContextOptions<JrworkContext> options)
         : base(options)
     {
     }
 
-    public virtual DbSet<Actividad> Actividads { get; set; }
+    public virtual DbSet<Actividad> Actividad { get; set; }
 
-    public virtual DbSet<Area> Areas { get; set; }
+    public virtual DbSet<Area> Area { get; set; }
 
-    public virtual DbSet<Habilidad> Habilidads { get; set; }
+    public virtual DbSet<ConceptoCalificacion> ConceptoCalificacions { get; set; }
 
-    public virtual DbSet<TipoDocumento> TipoDocumentos { get; set; }
+    public virtual DbSet<Divipola> Divipola { get; set; }
 
-    public virtual DbSet<TipoPersona> TipoPersonas { get; set; }
+    public virtual DbSet<Habilidad> Habilidad { get; set; }
 
-    public virtual DbSet<UnidadMedida> UnidadMedida { get; set; }
+    public virtual DbSet<Oficio> Oficio { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Data Source=LAPTOP-7VA8NVM3\\JULIANDB;Initial Catalog=JRWork;Integrated Security=True;TrustServerCertificate=True");
+    public virtual DbSet<TipoDocumento> TipoDocumento { get; set; }
+
+    public virtual DbSet<TipoPersona> TipoPersona { get; set; }
+
+    public virtual DbSet<UnidadMedidum> UnidadMedida { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -39,6 +38,10 @@ public partial class JrworkContext : DbContext
             entity.ToTable("Actividad", "adm");
 
             entity.Property(e => e.Nombre).HasMaxLength(20);
+
+            entity.HasOne(d => d.Oficio).WithMany(p => p.Actividads)
+                .HasForeignKey(d => d.OficioId)
+                .HasConstraintName("oficio_fk");
         });
 
         modelBuilder.Entity<Area>(entity =>
@@ -48,6 +51,27 @@ public partial class JrworkContext : DbContext
             entity.ToTable("Area", "adm");
 
             entity.Property(e => e.Nombre).HasMaxLength(10);
+        });
+
+        modelBuilder.Entity<ConceptoCalificacion>(entity =>
+        {
+            entity.HasKey(e => e.ConceptoCalificacionId).HasName("PK__Concepto__02BDA26D855A1A9D");
+
+            entity.ToTable("ConceptoCalificacion", "adm");
+
+            entity.Property(e => e.Descripcion).HasMaxLength(500);
+            entity.Property(e => e.Nombre).HasMaxLength(200);
+        });
+
+        modelBuilder.Entity<Divipola>(entity =>
+        {
+            entity.HasKey(e => e.DivipolaId).HasName("PK__Divipola__B5B505D3BC134CAE");
+
+            entity.ToTable("Divipola", "adm");
+
+            entity.Property(e => e.Codigo).HasColumnType("numeric(16, 0)");
+            entity.Property(e => e.CodigoPadre).HasColumnType("numeric(16, 0)");
+            entity.Property(e => e.Nombre).HasMaxLength(24);
         });
 
         modelBuilder.Entity<Habilidad>(entity =>
@@ -61,6 +85,19 @@ public partial class JrworkContext : DbContext
             entity.HasOne(d => d.Actividad).WithMany(p => p.Habilidads)
                 .HasForeignKey(d => d.ActividadId)
                 .HasConstraintName("actividad_fk");
+        });
+
+        modelBuilder.Entity<Oficio>(entity =>
+        {
+            entity.HasKey(e => e.OficioId).HasName("PK__Oficio__6C7A97864E4E408E");
+
+            entity.ToTable("Oficio", "adm");
+
+            entity.Property(e => e.Nombre).HasMaxLength(20);
+
+            entity.HasOne(d => d.Area).WithMany(p => p.Oficios)
+                .HasForeignKey(d => d.AreaId)
+                .HasConstraintName("area_fk");
         });
 
         modelBuilder.Entity<TipoDocumento>(entity =>
@@ -81,7 +118,7 @@ public partial class JrworkContext : DbContext
             entity.Property(e => e.Nombre).HasMaxLength(11);
         });
 
-        modelBuilder.Entity<UnidadMedida>(entity =>
+        modelBuilder.Entity<UnidadMedidum>(entity =>
         {
             entity.HasKey(e => e.UnidadMedidaId).HasName("PK__UnidadMe__339728610A12D95F");
 
