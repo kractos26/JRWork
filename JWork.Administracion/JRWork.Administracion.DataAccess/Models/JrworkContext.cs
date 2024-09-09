@@ -27,7 +27,7 @@ public partial class JrworkContext : DbContext
 
     public virtual DbSet<TipoPersona> TipoPersona { get; set; }
 
-    public virtual DbSet<UnidadMedidum> UnidadMedida { get; set; }
+    public virtual DbSet<UnidadMedida> UnidadMedida { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -118,7 +118,7 @@ public partial class JrworkContext : DbContext
             entity.Property(e => e.Nombre).HasMaxLength(11);
         });
 
-        modelBuilder.Entity<UnidadMedidum>(entity =>
+        modelBuilder.Entity<UnidadMedida>(entity =>
         {
             entity.HasKey(e => e.UnidadMedidaId).HasName("PK__UnidadMe__339728610A12D95F");
 

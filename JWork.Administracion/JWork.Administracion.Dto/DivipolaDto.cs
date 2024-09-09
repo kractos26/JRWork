@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace JWork.Administracion.Dto
 {
-    internal class DivipolaDto
+    public class DivipolaDto
     {
+
     }
 }

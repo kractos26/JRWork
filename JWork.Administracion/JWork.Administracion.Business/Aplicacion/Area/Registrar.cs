@@ -3,7 +3,8 @@ using JRWork.Administracion.DataAccess.Repositories.Interfaces;
 using JWork.Administracion.Dto;
 using MediatR;
 
-namespace JWork.Administracion.Business.Aplicacion.Area
+namespace JWork.Administracion.Business.Aplicacion.Area;
+public class Registrar
 {
     public class AreaRegisterCommand : IRequest<AreaDto>
     {
@@ -39,7 +40,8 @@ namespace JWork.Administracion.Business.Aplicacion.Area
 
             JRWork.Administracion.DataAccess.Models.Area result = await _repositoryArea.AdicionarAsync(actividad);
 
-           return _mapper.Map<AreaDto>(result);
+            return _mapper.Map<AreaDto>(result);
         }
     }
+
 }

@@ -5,7 +5,7 @@ using JWork.Administracion.Dto;
 namespace JWork.Administracion.Business;
 
 public class MappingProfile : Profile
-{
+{ 
     public MappingProfile()
     {
         CreateMap<Area,AreaDto>().ReverseMap();
