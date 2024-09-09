@@ -36,6 +36,7 @@ builder.Services.AddScoped<IRepositoryConceptoCalificacion, RepositoryConceptoCa
 builder.Services.AddScoped<IRepositoryOficio, RepositoryOficio>();  
 builder.Services.AddScoped<IRepositoryDivipola, RepositoryDivipola>(); 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(typeof(ConceptoCalificacionRegisterCommand).Assembly);
@@ -44,6 +45,7 @@ builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssemblies(typeof(HabilidadRegisterCommand).Assembly);
     cfg.RegisterServicesFromAssemblies(typeof(TipoDocumentoRegisterCommand).Assembly);
     cfg.RegisterServicesFromAssemblies(typeof(TipoPersonaRegisterCommand).Assembly);
+
     cfg.RegisterServicesFromAssemblies(typeof(ActividadRegisterCommand).Assembly);
     cfg.RegisterServicesFromAssemblies(typeof(ActividadUpdateCommand).Assembly);
     cfg.RegisterServicesFromAssemblies(typeof(ActividadDeleteCommand).Assembly);
