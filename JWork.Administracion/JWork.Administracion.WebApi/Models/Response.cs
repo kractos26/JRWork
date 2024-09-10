@@ -2,7 +2,7 @@
 
 namespace JWork.Administracion.WebApi.Models
 {
-    public class RespustaViewModel<T>
+    public class Response<T>
     {
        public T? Entidad { get; set; }
        public string? Mensaje { get; set; }

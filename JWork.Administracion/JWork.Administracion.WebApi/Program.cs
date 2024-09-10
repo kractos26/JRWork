@@ -40,15 +40,38 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(typeof(ConceptoCalificacionRegisterCommand).Assembly);
-    cfg.RegisterServicesFromAssembly(typeof(UnidadMedidaRegisterCommand).Assembly);
-    cfg.RegisterServicesFromAssemblies(typeof(AreaRegisterCommand).Assembly);
-    cfg.RegisterServicesFromAssemblies(typeof(HabilidadRegisterCommand).Assembly);
-    cfg.RegisterServicesFromAssemblies(typeof(TipoDocumentoRegisterCommand).Assembly);
-    cfg.RegisterServicesFromAssemblies(typeof(TipoPersonaRegisterCommand).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(ConceptoCalificacionUpdateCommand).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(ConceptoCalificacionEliminarCommand).Assembly);
 
-    cfg.RegisterServicesFromAssemblies(typeof(ActividadRegisterCommand).Assembly);
-    cfg.RegisterServicesFromAssemblies(typeof(ActividadUpdateCommand).Assembly);
-    cfg.RegisterServicesFromAssemblies(typeof(ActividadDeleteCommand).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(UnidadMedidaRegisterCommand).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(UnidadMedidaUpdateCommand).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(UnidadMedidaEliminarCommand).Assembly);
+
+
+    cfg.RegisterServicesFromAssembly(typeof(AreaRegisterCommand).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(AreaUpdateCommand).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(AreaEliminarCommand).Assembly);
+
+
+    cfg.RegisterServicesFromAssembly(typeof(HabilidadRegisterCommand).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(HabilidadUpdateCommand).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(HabilidadEliminarCommand).Assembly);
+
+
+
+    cfg.RegisterServicesFromAssembly(typeof(TipoDocumentoRegisterCommand).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(TipoDocumentoUpdateCommand).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(TipoDocumentoEliminarCommand).Assembly);
+
+
+    cfg.RegisterServicesFromAssembly(typeof(TipoPersonaRegisterCommand).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(TipoPersonaUpdateCommand).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(TipoPersonaEliminarCommand).Assembly);
+
+
+    cfg.RegisterServicesFromAssembly(typeof(ActividadRegisterCommand).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(ActividadUpdateCommand).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(ActividadEliminarCommand).Assembly);
 
 });
 

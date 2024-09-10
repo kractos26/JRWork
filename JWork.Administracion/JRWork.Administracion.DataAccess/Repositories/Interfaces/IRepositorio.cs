@@ -18,7 +18,7 @@ public interface IRepositorio<T> where T : class
 
     Task<T> ModificarAsync(T Entidad);
 
-    Task<T> EliminarAsync(T Entidad);
+    Task<bool> EliminarAsync(T Entidad);
 
     Task GuardarAsync();
 }

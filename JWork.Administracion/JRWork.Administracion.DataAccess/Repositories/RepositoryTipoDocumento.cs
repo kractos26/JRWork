@@ -17,7 +17,7 @@ public class RepositoryTipoDocumento : IRepositoryTipoDocumento
     public async Task<List<TipoDocumento>> BuscarAsync(Expression<Func<TipoDocumento, bool>> predicado) => await _repositorio.BuscarAsync(predicado);
     
 
-    public async Task<TipoDocumento> EliminarAsync(TipoDocumento Entidad) => await _repositorio.EliminarAsync(Entidad);
+    public async Task<bool> EliminarAsync(TipoDocumento Entidad) => await _repositorio.EliminarAsync(Entidad);
    
 
     public async Task<List<TipoDocumento>> GetAllAsync() => await _repositorio.GetAllAsync();

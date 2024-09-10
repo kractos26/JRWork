@@ -16,7 +16,7 @@ public class RepositoryArea : IRepositoryArea
 
     public async Task<List<Area>> BuscarAsync(Expression<Func<Area, bool>> predicado) => await _repocitorio.BuscarAsync(predicado);
 
-    public async Task<Area> EliminarAsync(Area Entidad) => await _repocitorio.EliminarAsync(Entidad);
+    public async Task<bool> EliminarAsync(Area Entidad) => await _repocitorio.EliminarAsync(Entidad);
    
 
     public async Task<List<Area>> GetAllAsync() => await _repocitorio.GetAllAsync();

@@ -10,7 +10,6 @@ public class Registar
 
     public class ActividadRegisterCommand : IRequest<ActividadDto>
     {
-        public int ActividadId { get; set; }
 
         public string Nombre { get; set; } = null!;
 
@@ -24,14 +23,14 @@ public class Registar
         public int OficioId { get; set; }
     }
 
-    public class ActividadDeleteCommand : IRequest<Unit>
+    public class ActividadEliminarCommand : IRequest<bool>
     {
         public int ActividadId { get; set; }
     }
 
     public class ActividadRegisterHandler : IRequestHandler<ActividadRegisterCommand, ActividadDto>,
                                             IRequestHandler<ActividadUpdateCommand, ActividadDto>,
-                                            IRequestHandler<ActividadDeleteCommand, Unit>
+                                            IRequestHandler<ActividadEliminarCommand, bool>
     {
         private readonly IRepositoryActividad _repositoryActividad;
         private readonly IMapper _mapper;
@@ -44,16 +43,11 @@ public class Registar
 
         public async Task<ActividadDto> Handle(ActividadRegisterCommand request, CancellationToken cancellationToken)
         {
-            JRWork.Administracion.DataAccess.Models.Actividad? actividadExistente = await _repositoryActividad.TraerUnoAsync(x => x.Nombre == request.Nombre);
-            if (actividadExistente != null)
-            {
-                throw new InvalidOperationException("La actividad ya está registrada.");
-            }
+            JRWork.Administracion.DataAccess.Models.Actividad? actividadExistente = await _repositoryActividad.TraerUnoAsync(x => x.Nombre == request.Nombre) ?? throw new InvalidOperationException("La actividad ya está registrada."); 
 
             JRWork.Administracion.DataAccess.Models.Actividad actividad = new()
             {
                 Nombre = request.Nombre,
-                ActividadId = request.ActividadId,
                 OficioId = request.OficioId
             };
 
@@ -64,11 +58,7 @@ public class Registar
 
         public async Task<ActividadDto> Handle(ActividadUpdateCommand request, CancellationToken cancellationToken)
         {
-            JRWork.Administracion.DataAccess.Models.Actividad? actividadExistente = await _repositoryActividad.TraerUnoAsync(x => x.ActividadId == request.ActividadId);
-            if (actividadExistente == null)
-            {
-                throw new InvalidOperationException("La actividad no existe.");
-            }
+            JRWork.Administracion.DataAccess.Models.Actividad? actividadExistente = await _repositoryActividad.TraerUnoAsync(x => x.ActividadId == request.ActividadId) ?? throw new InvalidOperationException("La actividad no existe."); 
 
             actividadExistente.Nombre = request.Nombre;
             actividadExistente.OficioId = request.OficioId;
@@ -77,16 +67,11 @@ public class Registar
             return _mapper.Map<ActividadDto>(result);
         }
 
-        public async Task<Unit> Handle(ActividadDeleteCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(ActividadEliminarCommand request, CancellationToken cancellationToken)
         {
-            JRWork.Administracion.DataAccess.Models.Actividad? actividadExistente = await _repositoryActividad.TraerUnoAsync(x => x.ActividadId == request.ActividadId);
-            if (actividadExistente == null)
-            {
-                throw new InvalidOperationException("La actividad no existe.");
-            }
+            JRWork.Administracion.DataAccess.Models.Actividad? actividadExistente = await _repositoryActividad.TraerUnoAsync(x => x.ActividadId == request.ActividadId) ?? throw new InvalidOperationException("La actividad no existe.");
 
-            await _repositoryActividad.EliminarAsync(actividadExistente);
-            return Unit.Value;
+            return  await _repositoryActividad.EliminarAsync(actividadExistente);
         }
     }
 

@@ -18,7 +18,7 @@ public class RepositoryHabilidad : IRepositoryHabilidad
     public async Task<List<Habilidad>> BuscarAsync(Expression<Func<Habilidad, bool>> predicado) => await _repositorio.BuscarAsync(predicado);
     
 
-    public async Task<Habilidad> EliminarAsync(Habilidad Entidad) => await _repositorio.EliminarAsync(Entidad);
+    public async Task<bool> EliminarAsync(Habilidad Entidad) => await _repositorio.EliminarAsync(Entidad);
    
 
     public async Task<List<Habilidad>> GetAllAsync() => await _repositorio.GetAllAsync();

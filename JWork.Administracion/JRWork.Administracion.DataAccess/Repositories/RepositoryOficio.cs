@@ -18,7 +18,7 @@ public class RepositoryOficio : IRepositoryOficio
     public async Task<List<Oficio>> BuscarAsync(Expression<Func<Oficio, bool>> predicado) => await _repositorio.BuscarAsync(predicado);
 
 
-    public async Task<Oficio> EliminarAsync(Oficio Entidad) => await _repositorio.EliminarAsync(Entidad);
+    public async Task<bool> EliminarAsync(Oficio Entidad) => await _repositorio.EliminarAsync(Entidad);
 
 
     public async Task<List<Oficio>> GetAllAsync() => await _repositorio.GetAllAsync();

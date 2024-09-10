@@ -22,11 +22,11 @@ namespace JWork.Administracion.WebApi.Controllers
             Response<ConceptoCalificacionDto> respon;
             try
             {
-                ConceptoCalificacionDto area = await _mediator.Send(conRegister);
+                ConceptoCalificacionDto ConceptoCalificacion = await _mediator.Send(conRegister);
                 respon = new()
                 {
-                    Entidad = area,
-                    Mensaje = "Area creada correctamente",
+                    Entidad = ConceptoCalificacion,
+                    Mensaje = "ConceptoCalificacion creada correctamente",
                     Status = System.Net.HttpStatusCode.Created
                 };
                 return Ok(respon);
@@ -43,6 +43,67 @@ namespace JWork.Administracion.WebApi.Controllers
                 return BadRequest(respon);
             }
 
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<Response<ConceptoCalificacionDto>>> Put(Registrar.ConceptoCalificacionUpdateCommand command)
+        {
+            Response<ConceptoCalificacionDto> respon;
+            try
+            {
+                ConceptoCalificacionDto ConceptoCalificacion = await _mediator.Send(command);
+                respon = new()
+                {
+                    Entidad = ConceptoCalificacion,
+                    Mensaje = "ConceptoCalificacion actualizada correctamente",
+                    Status = System.Net.HttpStatusCode.Created
+                };
+                return Ok(respon);
+            }
+            catch (Exception ex)
+            {
+                respon = new Models.Response<ConceptoCalificacionDto>()
+                {
+                    Entidad = new ConceptoCalificacionDto() { },
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(respon);
+            }
+        }
+
+        // DELETE api/<ConceptoCalificacionController>/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Response<bool>>> Delete(int id)
+        {
+            Response<bool> response = new();
+            try
+            {
+
+                Registrar.ConceptoCalificacionEliminarCommand command = new()
+                {
+                    ConceptoCalificacionId = id
+                };
+
+                bool exitoso = await _mediator.Send(command);
+
+                response.Mensaje = "ConceptoCalificacion elimiminada correctamenta";
+                response.Entidad = exitoso;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = false,
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
         }
     }
 }

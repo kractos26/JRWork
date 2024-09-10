@@ -20,7 +20,7 @@ public class RepositoryConceptoCalificacion : IRepositoryConceptoCalificacion
     public async Task<List<ConceptoCalificacion>> BuscarAsync(Expression<Func<ConceptoCalificacion, bool>> predicado) => await _repositorio.BuscarAsync(predicado);
 
 
-    public async Task<ConceptoCalificacion> EliminarAsync(ConceptoCalificacion Entidad) => await _repositorio.EliminarAsync(Entidad);
+    public async Task<bool> EliminarAsync(ConceptoCalificacion Entidad) => await _repositorio.EliminarAsync(Entidad);
 
 
     public async Task<List<ConceptoCalificacion>> GetAllAsync() => await _repositorio.GetAllAsync();

@@ -17,7 +17,7 @@ public class RepositoryUnidadMedida : IRepositoryUnidadMedida
     public async Task<List<UnidadMedida>> BuscarAsync(Expression<Func<UnidadMedida, bool>> predicado) => await _repositorio.BuscarAsync(predicado);
 
 
-    public async Task<UnidadMedida> EliminarAsync(UnidadMedida Entidad) => await _repositorio.EliminarAsync(Entidad);
+    public async Task<bool> EliminarAsync(UnidadMedida Entidad) => await _repositorio.EliminarAsync(Entidad);
 
     public async Task<List<UnidadMedida>> GetAllAsync() => await _repositorio.GetAllAsync();
 

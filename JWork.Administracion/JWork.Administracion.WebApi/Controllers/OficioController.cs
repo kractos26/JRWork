@@ -61,16 +61,65 @@ namespace JWork.Administracion.WebApi.Controllers
 
         }
 
-        // PUT api/<OficioController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public async Task<ActionResult<Response<OficioDto>>> Put(Registrar.OficioUpdateCommand command)
         {
+            Response<OficioDto> respon;
+            try
+            {
+                OficioDto Oficio = await _mediator.Send(command);
+                respon = new()
+                {
+                    Entidad = Oficio,
+                    Mensaje = "Oficio actualizada correctamente",
+                    Status = System.Net.HttpStatusCode.Created
+                };
+                return Ok(respon);
+            }
+            catch (Exception ex)
+            {
+                respon = new Response<OficioDto>()
+                {
+                    Entidad = new OficioDto() { },
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(respon);
+            }
         }
 
         // DELETE api/<OficioController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult<Response<bool>>> Delete(int id)
         {
+            Response<bool> response = new();
+            try
+            {
+
+                Registrar.OficioEliminarCommand command = new()
+                {
+                    OficioId = id
+                };
+
+                bool exitoso = await _mediator.Send(command);
+
+                response.Mensaje = "Oficio elimiminada correctamenta";
+                response.Entidad = exitoso;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = false,
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
         }
     }
 }

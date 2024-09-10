@@ -18,7 +18,7 @@ public class RepositoryActividad : IRepositoryActividad
     public async Task<List<Actividad>> BuscarAsync(Expression<Func<Actividad, bool>> predicado) => await _repocitorio.BuscarAsync(predicado);
     
 
-    public async Task<Actividad> EliminarAsync(Actividad entidad) => await _repocitorio.EliminarAsync(entidad);
+    public async Task<bool> EliminarAsync(Actividad entidad) => await _repocitorio.EliminarAsync(entidad);
     
 
     public async Task<List<Actividad>> GetAllAsync() => await _repocitorio.GetAllAsync();
@@ -27,7 +27,7 @@ public class RepositoryActividad : IRepositoryActividad
     public async Task GuardarAsync() => await _repocitorio.GuardarAsync();
     
 
-    public  async Task<Actividad> ModificarAsync(Actividad entidad) => await _repocitorio.EliminarAsync(entidad);
+    public  async Task<Actividad> ModificarAsync(Actividad entidad) => await _repocitorio.ModificarAsync(entidad);
     
 
     public Task<Actividad?> TraerUltimoAsync(Expression<Func<Actividad, bool>> predicado) => _repocitorio.TraerUnoAsync(predicado);

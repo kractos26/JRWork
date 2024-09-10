@@ -28,7 +28,7 @@ namespace JWork.Administracion.WebApi.Controllers
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            return "value";
+            return "value"+id;
         }
 
         // POST api/<AreaController>
@@ -49,7 +49,7 @@ namespace JWork.Administracion.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                respon = new Response<AreaDto>()
+                respon = new Models.Response<AreaDto>()
                 {
                     Entidad = new AreaDto() { },
                     Mensaje = ex.Message,
@@ -61,15 +61,65 @@ namespace JWork.Administracion.WebApi.Controllers
 
         }
         // PUT api/<AreaController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public async Task<ActionResult<Response<AreaDto>>> Put(Registrar.AreaUpdateCommand command)
         {
+            Response<AreaDto> respon;
+            try
+            {
+                AreaDto area = await _mediator.Send(command);
+                respon = new()
+                {
+                    Entidad = area,
+                    Mensaje = "Area actualizada correctamente",
+                    Status = System.Net.HttpStatusCode.Created
+                };
+                return Ok(respon);
+            }
+            catch (Exception ex)
+            {
+                respon = new Models.Response<AreaDto>()
+                {
+                    Entidad = new AreaDto() { },
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(respon);
+            }
         }
 
         // DELETE api/<AreaController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult<Response<bool>>> Delete(int id)
         {
+            Response<bool> response = new();
+            try
+            {
+               
+                Registrar.AreaEliminarCommand command = new Registrar.AreaEliminarCommand()
+                {
+                    AreaId = id
+                };
+
+                bool exitoso = await _mediator.Send(command);
+
+                response.Mensaje = "Area elimiminada correctamenta";
+                response.Entidad = exitoso;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new ()
+                {
+                    Entidad = false,
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
         }
     }
 }

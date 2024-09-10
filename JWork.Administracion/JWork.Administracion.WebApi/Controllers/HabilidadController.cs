@@ -32,12 +32,12 @@ namespace JWork.Administracion.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Response<HabilidadDto>>> Post(Registrar.HabilidadRegisterCommand habilidadRegister)
+        public async Task<ActionResult<Response<Dto.HabilidadDto>>> Post(Registrar.HabilidadRegisterCommand habilidadRegister)
         {
-            Response<HabilidadDto> respon;
+            Response<Dto.HabilidadDto> respon;
             try
             {
-                HabilidadDto area = await _mediator.Send(habilidadRegister);
+                Dto.HabilidadDto area = await _mediator.Send(habilidadRegister);
                 respon = new()
                 {
                     Entidad = area,
@@ -48,9 +48,9 @@ namespace JWork.Administracion.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                respon = new Response<HabilidadDto>()
+                respon = new Response<Dto.HabilidadDto>()
                 {
-                    Entidad = new HabilidadDto() { },
+                    Entidad = new Dto.HabilidadDto() { },
                     Mensaje = ex.Message,
                     Status = System.Net.HttpStatusCode.BadRequest
 

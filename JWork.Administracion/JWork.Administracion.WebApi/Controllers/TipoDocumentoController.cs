@@ -46,5 +46,64 @@ namespace JWork.Administracion.WebApi.Controllers
 
         }
 
+        [HttpPut]
+        public async Task<ActionResult<Response<TipoDocumentoDto>>> Put(Registrar.TipoDocumentoUpdateCommand command)
+        {
+            Response<TipoDocumentoDto> respon;
+            try
+            {
+                TipoDocumentoDto TipoDocumento = await _mediator.Send(command);
+                respon = new()
+                {
+                    Entidad = TipoDocumento,
+                    Mensaje = "TipoDocumento actualizada correctamente",
+                    Status = System.Net.HttpStatusCode.Created
+                };
+                return Ok(respon);
+            }
+            catch (Exception ex)
+            {
+                respon = new Response<TipoDocumentoDto>()
+                {
+                    Entidad = new TipoDocumentoDto() { },
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(respon);
+            }
+        }
+
+        // DELETE api/<TipoDocumentoController>/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Response<bool>>> Delete(int id)
+        {
+            Response<bool> response = new();
+            try
+            {
+                Registrar.TipoDocumentoEliminarCommand command = new()
+                {
+                    TipoDocumentoId = id
+                };
+
+                bool exitoso = await _mediator.Send(command);
+
+                response.Mensaje = "TipoDocumento elimiminada correctamenta";
+                response.Entidad = exitoso;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = false,
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
+        }
     }
 }

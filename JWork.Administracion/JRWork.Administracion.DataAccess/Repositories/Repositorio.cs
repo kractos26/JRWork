@@ -32,13 +32,12 @@ public class Repositorio<T> : IRepositorio<T>, IDisposable where T : class
 
     public void Dispose() => GC.SuppressFinalize(this);
 
-    public async Task<T> EliminarAsync(T Entidad)
+    public async Task<bool> EliminarAsync(T Entidad)
     {
         if (_contex.Entry(Entidad).State == EntityState.Deleted)
         { _contex.Set<T>().Attach(Entidad); }
         _contex.Entry(Entidad).State = EntityState.Deleted;
-        await _contex.SaveChangesAsync();
-        return Entidad;
+       return await _contex.SaveChangesAsync() > 0;
     }
 
     public Task<List<T>> GetAllAsync() => _contex.Set<T>().ToListAsync();

@@ -17,7 +17,7 @@ public class RepositoryTipoPersona : IRepositoryTipoPersona
     public async Task<List<TipoPersona>> BuscarAsync(Expression<Func<TipoPersona, bool>> predicado) => await _repositorio.BuscarAsync(predicado);
    
 
-    public async Task<TipoPersona> EliminarAsync(TipoPersona Entidad) => await _repositorio.EliminarAsync(Entidad);
+    public async Task<bool> EliminarAsync(TipoPersona Entidad) => await _repositorio.EliminarAsync(Entidad);
 
     public async Task<List<TipoPersona>> GetAllAsync() => await _repositorio.GetAllAsync(); 
     

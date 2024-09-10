@@ -22,11 +22,11 @@ namespace JWork.Administracion.WebApi.Controllers
             Response<ActividadDto> respon;
             try
             {
-                ActividadDto area = await _mediator.Send(actividadRegister);
+                ActividadDto Actividad = await _mediator.Send(actividadRegister);
                 respon = new()
                 {
-                    Entidad = area,
-                    Mensaje = "Area creada correctamente",
+                    Entidad = Actividad,
+                    Mensaje = "Actividad creada correctamente",
                     Status = System.Net.HttpStatusCode.Created
                 };
                 return Ok(respon);
@@ -43,6 +43,67 @@ namespace JWork.Administracion.WebApi.Controllers
                 return BadRequest(respon);
             }
 
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<Response<ActividadDto>>> Put(Registar.ActividadUpdateCommand command)
+        {
+            Response<ActividadDto> respon;
+            try
+            {
+                ActividadDto Actividad = await _mediator.Send(command);
+                respon = new()
+                {
+                    Entidad = Actividad,
+                    Mensaje = "Actividad actualizada correctamente",
+                    Status = System.Net.HttpStatusCode.Created
+                };
+                return Ok(respon);
+            }
+            catch (Exception ex)
+            {
+                respon = new Models.Response<ActividadDto>()
+                {
+                    Entidad = new ActividadDto() { },
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(respon);
+            }
+        }
+
+        // DELETE api/<ActividadController>/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Response<bool>>> Delete(int id)
+        {
+            Response<bool> response = new();
+            try
+            {
+
+                Registar.ActividadEliminarCommand command = new Registar.ActividadEliminarCommand()
+                {
+                    ActividadId = id
+                };
+
+                bool exitoso = await _mediator.Send(command);
+
+                response.Mensaje = "Actividad elimiminada correctamenta";
+                response.Entidad = exitoso;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = false,
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
         }
     }
 }
