@@ -5,7 +5,7 @@ using MediatR;
 
 namespace JWork.Administracion.Business.Aplicacion.Actividad;
 
-public class Registar
+public class Registrar
 {
 
     public class ActividadRegisterCommand : IRequest<ActividadDto>

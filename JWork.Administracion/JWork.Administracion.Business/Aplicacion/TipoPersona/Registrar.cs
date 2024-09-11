@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using JRWork.Administracion.DataAccess.Repositories;
 using JRWork.Administracion.DataAccess.Repositories.Interfaces;
 using JWork.Administracion.Dto;
 using MediatR;

@@ -17,7 +17,7 @@ namespace JWork.Administracion.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Response<ActividadDto>>> Post(Registar.ActividadRegisterCommand actividadRegister)
+        public async Task<ActionResult<Response<ActividadDto>>> Post(Registrar.ActividadRegisterCommand actividadRegister)
         {
             Response<ActividadDto> respon;
             try
@@ -46,7 +46,7 @@ namespace JWork.Administracion.WebApi.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<Response<ActividadDto>>> Put(Registar.ActividadUpdateCommand command)
+        public async Task<ActionResult<Response<ActividadDto>>> Put(Registrar.ActividadUpdateCommand command)
         {
             Response<ActividadDto> respon;
             try
@@ -62,7 +62,7 @@ namespace JWork.Administracion.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                respon = new Models.Response<ActividadDto>()
+                respon = new Response<ActividadDto>()
                 {
                     Entidad = new ActividadDto() { },
                     Mensaje = ex.Message,
@@ -81,7 +81,7 @@ namespace JWork.Administracion.WebApi.Controllers
             try
             {
 
-                Registar.ActividadEliminarCommand command = new Registar.ActividadEliminarCommand()
+                Registrar.ActividadEliminarCommand command = new Registrar.ActividadEliminarCommand()
                 {
                     ActividadId = id
                 };

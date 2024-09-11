@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using Microsoft.EntityFrameworkCore;
 
 namespace JRWork.Administracion.DataAccess.Models;
@@ -28,6 +29,8 @@ public partial class JrworkContext : DbContext
     public virtual DbSet<TipoPersona> TipoPersona { get; set; }
 
     public virtual DbSet<UnidadMedida> UnidadMedida { get; set; }
+
+    public virtual DbSet<TipoIdentificacion> TipoIdentificacion { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -127,6 +130,13 @@ public partial class JrworkContext : DbContext
             entity.Property(e => e.Nombre).HasMaxLength(4);
         });
 
+        modelBuilder.Entity<TipoIdentificacion>(entity =>
+        {
+            entity.HasKey(e => e.TipoDocumentoId).HasName("PK__TipoDocu__A329EA87F15F2D84");
+            entity.ToTable("TipoIdentificacion", "adm");
+            entity.Property(e => e.Nombre).HasMaxLength(24);
+            entity.Property(e=>e.Sigla).HasMaxLength(5);
+        });
         OnModelCreatingPartial(modelBuilder);
     }
 

@@ -1,57 +1,42 @@
-﻿using JWork.Administracion.Business.Aplicacion.Area;
+﻿using JWork.Administracion.Business.Aplicacion.Divipola;
 using JWork.Administracion.Dto;
 using JWork.Administracion.WebApi.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace JWork.Administracion.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AreaController : ControllerBase
+    public class DivipolaController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public AreaController(IMediator mediator)
+        public DivipolaController(IMediator mediator)
         {
             _mediator = mediator;
         }
-        // GET: api/<AreaController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
-        // GET api/<AreaController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value"+id;
-        }
-
-        // POST api/<AreaController>
         [HttpPost]
-        public async Task<ActionResult<Response<AreaDto>>> Post(Registrar.AreaRegisterCommand areaRegister)
+        public async Task<ActionResult<Response<DivipolaDto>>> Post(Registrar.DivipolaRegisterCommand DivipolaRegister)
         {
-            Response<AreaDto> respon;
+            Response<DivipolaDto> respon;
             try
             {
-                AreaDto area = await _mediator.Send(areaRegister);
+                DivipolaDto Divipola = await _mediator.Send(DivipolaRegister);
                 respon = new()
                 {
-                    Entidad = area,
-                    Mensaje = "Area creada correctamente",
+                    Entidad = Divipola,
+                    Mensaje = "Divipola creada correctamente",
                     Status = System.Net.HttpStatusCode.Created
                 };
                 return Ok(respon);
             }
             catch (Exception ex)
             {
-                respon = new Response<AreaDto>()
+                respon = new Response<DivipolaDto>()
                 {
-                    Entidad = new AreaDto() { },
+                    Entidad = new DivipolaDto() { },
                     Mensaje = ex.Message,
                     Status = System.Net.HttpStatusCode.BadRequest
 
@@ -60,27 +45,27 @@ namespace JWork.Administracion.WebApi.Controllers
             }
 
         }
-        // PUT api/<AreaController>/5
+
         [HttpPut]
-        public async Task<ActionResult<Response<AreaDto>>> Put(Registrar.AreaUpdateCommand command)
+        public async Task<ActionResult<Response<DivipolaDto>>> Put(Registrar.DivipolaUpdateCommand command)
         {
-            Response<AreaDto> respon;
+            Response<DivipolaDto> respon;
             try
             {
-                AreaDto area = await _mediator.Send(command);
+                DivipolaDto Divipola = await _mediator.Send(command);
                 respon = new()
                 {
-                    Entidad = area,
-                    Mensaje = "Area actualizada correctamente",
+                    Entidad = Divipola,
+                    Mensaje = "Divipola actualizada correctamente",
                     Status = System.Net.HttpStatusCode.Created
                 };
                 return Ok(respon);
             }
             catch (Exception ex)
             {
-                respon = new Models.Response<AreaDto>()
+                respon = new Response<DivipolaDto>()
                 {
-                    Entidad = new AreaDto() { },
+                    Entidad = new DivipolaDto() { },
                     Mensaje = ex.Message,
                     Status = System.Net.HttpStatusCode.BadRequest
 
@@ -89,29 +74,29 @@ namespace JWork.Administracion.WebApi.Controllers
             }
         }
 
-        // DELETE api/<AreaController>/5
+        // DELETE api/<DivipolaController>/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Response<bool>>> Delete(int id)
         {
             Response<bool> response = new();
             try
             {
-               
-                Registrar.AreaEliminarCommand command = new Registrar.AreaEliminarCommand()
+
+                Registrar.DivipolaEliminarCommand command = new Registrar.DivipolaEliminarCommand()
                 {
-                    AreaId = id
+                    DivipolaId = id
                 };
 
                 bool exitoso = await _mediator.Send(command);
 
-                response.Mensaje = "Area elimiminada correctamenta";
+                response.Mensaje = "Divipola elimiminada correctamenta";
                 response.Entidad = exitoso;
                 response.Status = System.Net.HttpStatusCode.OK;
                 return Ok(response);
             }
             catch (Exception ex)
             {
-                response = new ()
+                response = new()
                 {
                     Entidad = false,
                     Mensaje = ex.Message,

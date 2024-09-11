@@ -7,11 +7,13 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Sinks.MSSqlServer;
 using System.Collections.ObjectModel;
-using static JWork.Administracion.Business.Aplicacion.Actividad.Registar;
+using static JWork.Administracion.Business.Aplicacion.Actividad.Registrar;
 using static JWork.Administracion.Business.Aplicacion.Area.Registrar;
 using static JWork.Administracion.Business.Aplicacion.ConceptoCalificacion.Registrar;
+using static JWork.Administracion.Business.Aplicacion.Divipola.Registrar;
 using static JWork.Administracion.Business.Aplicacion.Habilidad.Registrar;
 using static JWork.Administracion.Business.Aplicacion.TipoDocumento.Registrar;
+using static JWork.Administracion.Business.Aplicacion.TipoIdentificacion.Registrar;
 using static JWork.Administracion.Business.Aplicacion.TipoPersona.Registrar;
 using static JWork.Administracion.Business.Aplicacion.UnidadMedida.Registrar;
 
@@ -26,15 +28,17 @@ builder.Services.AddDbContext<JrworkContext>(opt =>
 {
     opt.UseSqlServer(builder.Configuration.GetConnectionString("ConexionDB"));
 });
-builder.Services.AddScoped(typeof(IRepositorio<>), typeof(Repositorio<>));
-builder.Services.AddScoped<IRepositoryActividad,RepositoryActividad>();
-builder.Services.AddScoped<IRepositoryArea,RepositoryArea>();   
-builder.Services.AddScoped<IRepositoryTipoPersona,RepositoryTipoPersona>();
-builder.Services.AddScoped<IRepositoryHabilidad, RepositoryHabilidad>();
-builder.Services.AddScoped<IRepositoryTipoDocumento,RepositoryTipoDocumento>();
-builder.Services.AddScoped<IRepositoryConceptoCalificacion, RepositoryConceptoCalificacion>();
-builder.Services.AddScoped<IRepositoryOficio, RepositoryOficio>();  
-builder.Services.AddScoped<IRepositoryDivipola, RepositoryDivipola>(); 
+builder.Services.AddTransient(typeof(IRepositorio<>), typeof(Repositorio<>));
+builder.Services.AddTransient<IRepositoryActividad,RepositoryActividad>();
+builder.Services.AddTransient<IRepositoryArea,RepositoryArea>();   
+builder.Services.AddTransient<IRepositoryTipoPersona,RepositoryTipoPersona>();
+builder.Services.AddTransient<IRepositoryHabilidad, RepositoryHabilidad>();
+builder.Services.AddTransient<IRepositoryTipoDocumento,RepositoryTipoDocumento>();
+builder.Services.AddTransient<IRepositoryConceptoCalificacion, RepositoryConceptoCalificacion>();
+builder.Services.AddTransient<IRepositoryOficio, RepositoryOficio>();  
+builder.Services.AddTransient<IRepositoryDivipola, RepositoryDivipola>();
+builder.Services.AddTransient<IRepositoryUnidadMedida, RepositoryUnidadMedida>();
+
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddMediatR(cfg =>
@@ -73,6 +77,13 @@ builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(ActividadUpdateCommand).Assembly);
     cfg.RegisterServicesFromAssembly(typeof(ActividadEliminarCommand).Assembly);
 
+    cfg.RegisterServicesFromAssembly(typeof(DivipolaRegisterCommand).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(DivipolaUpdateCommand).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(DivipolaEliminarCommand).Assembly);
+
+    cfg.RegisterServicesFromAssembly(typeof(TipoIdentificacionRegisterCommand).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(TipoIdentificacionUpdateCommand).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(TipoIdentificacionEliminarCommand).Assembly);
 });
 
 var columnOptions = new ColumnOptions
