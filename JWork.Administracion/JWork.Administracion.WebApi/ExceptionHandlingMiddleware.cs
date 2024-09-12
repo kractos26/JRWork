@@ -2,40 +2,43 @@
 using System.Net;
 using System.Text.Json;
 
-namespace JWork.Administracion.WebApi;
-
-public class ExceptionHandlingMiddleware
+namespace JWork.Administracion.WebApi
 {
-    private readonly RequestDelegate _next;
-    private readonly ILogger<ExceptionHandlingMiddleware> _logger;
-
-    public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
+    public class ExceptionHandlingMiddleware
     {
-        _next = next;
-        _logger = logger;
-    }
+        private readonly RequestDelegate _next;
 
-    public async Task Invoke(HttpContext context)
-    {
-        try
+        public ExceptionHandlingMiddleware(RequestDelegate next)
         {
-            await _next(context);
-        }
-        catch (Exception ex)
+            _next = next;
+        } 
+
+        public async Task Invoke(HttpContext context)
         {
-            await HandleExceptionAsync(context, ex);
+            try
+            {
+                await _next(context);
+            }
+            catch (Exception ex)
+            {
+                await HandleExceptionAsync(context, ex);
+            }
         }
-    }
 
-    private Task HandleExceptionAsync(HttpContext context, Exception exception)
-    {
-        Log.Error(exception, "An error occurred");
+        private static Task HandleExceptionAsync(HttpContext context, Exception exception)
+        {
+            // Logea el error con Serilog
+            Log.Error(exception, "An error occurred");
 
-        context.Response.ContentType = "application/json";
-        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-        _logger.Log(LogLevel.Error,exception.Message);
-        var result = JsonSerializer.Serialize(new { error = exception.Message });
-        return context.Response.WriteAsync(result);
+            // Configuración de respuesta HTTP
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
+            // Serializa el resultado en formato JSON para la respuesta
+            var result = JsonSerializer.Serialize(new { error = exception.Message });
+
+            // Retorna la respuesta escrita en el cuerpo
+            return context.Response.WriteAsync(result);
+        }
     }
 }
-

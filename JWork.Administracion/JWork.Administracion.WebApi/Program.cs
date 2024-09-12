@@ -6,6 +6,7 @@ using JWork.Administracion.Business.Aplicacion.Actividad;
 using JWork.Administracion.WebApi;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
 using System.Collections.ObjectModel;
 using static JWork.Administracion.Business.Aplicacion.Actividad.Registrar;
@@ -55,22 +56,38 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 ConfigurarMediaTR(builder);
 ConfigurarMediaTRBucar(builder);
 
-var columnOptions = new ColumnOptions
+var connectionString = builder.Configuration.GetConnectionString("ConexionSerilog");
+
+
+// Configura las opciones para el sink de MSSQL Server
+var sinkOptions = new MSSqlServerSinkOptions
 {
-    AdditionalColumns = new Collection<SqlColumn>
-    {
-        new SqlColumn("UserId", System.Data.SqlDbType.VarChar),
-        new SqlColumn("IpAddress", System.Data.SqlDbType.VarChar)
-    }
+    TableName = "Logs",
+    AutoCreateSqlTable = true // Crea la tabla automáticamente si no existe
 };
+
+// Configuración de las columnas adicionales (opcional)
+var columnOptions = new ColumnOptions();
+columnOptions.Store.Remove(StandardColumn.Properties);
+columnOptions.AdditionalColumns = new Collection<SqlColumn>
+{
+    new SqlColumn { ColumnName = "UserName", DataType = System.Data.SqlDbType.NVarChar, DataLength = 50 }
+};
+
+// Configura Serilog con la nueva interfaz MSSqlServerSinkOptions
 Log.Logger = new LoggerConfiguration()
-    .WriteTo.Console()
+    .MinimumLevel.Information()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)  // Ajustar niveles mínimos para otros namespaces
+    .Enrich.FromLogContext()
+    .WriteTo.Console()  // Para mostrar en la consola
     .WriteTo.MSSqlServer(
-        connectionString: builder.Configuration.GetConnectionString("ConexionSerilog"),
-        sinkOptions: new MSSqlServerSinkOptions { TableName = "ErrorLogs", AutoCreateSqlTable = true },
-        restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Error,
-        columnOptions: columnOptions)
+        connectionString: connectionString,
+        sinkOptions: sinkOptions,  // Usa las nuevas opciones
+        restrictedToMinimumLevel: LogEventLevel.Error,  // Captura errores
+        columnOptions: columnOptions  // Opciones de columnas
+    )
     .CreateLogger();
+
 
 builder.Host.UseSerilog();
 
