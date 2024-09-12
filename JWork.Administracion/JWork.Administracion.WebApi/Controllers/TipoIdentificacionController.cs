@@ -82,9 +82,9 @@ namespace JWork.Administracion.WebApi.Controllers
             try
             {
 
-                Registrar.TipoIdentificacionEliminarCommand command = new Registrar.TipoIdentificacionEliminarCommand()
+                Registrar.TipoIdentificacionEliminarCommand command = new()
                 {
-                    TipoDocumentoId = id
+                    TipoIdentificacionId = id
                 };
 
                 bool exitoso = await _mediator.Send(command);
@@ -99,6 +99,98 @@ namespace JWork.Administracion.WebApi.Controllers
                 response = new()
                 {
                     Entidad = false,
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<Response<List<TipoIdentificacionDto>>>> Get()
+        {
+            Response<List<TipoIdentificacionDto>> response = new();
+            try
+            {
+
+                Buscar.TipoIdentificacionBuscarTodoCommand command = new()
+                {
+
+                };
+
+                List<TipoIdentificacionDto> TipoIdentificacionDtos = await _mediator.Send(command);
+
+                response.Mensaje = "TipoIdentificacion elimiminada correctamenta";
+                response.Entidad = TipoIdentificacionDtos;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = new List<TipoIdentificacionDto>(),
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
+        }
+
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Response<TipoIdentificacionDto>>> Get(int id)
+        {
+            Response<TipoIdentificacionDto> response = new();
+            try
+            {
+
+                Buscar.TipoIdentificacionBuscarIdCommand command = new()
+                {
+                    TipoIdentificacionId = id
+                };
+
+                TipoIdentificacionDto TipoIdentificacionDtos = await _mediator.Send(command);
+
+                response.Mensaje = "TipoIdentificacion elimiminada correctamenta";
+                response.Entidad = TipoIdentificacionDtos;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = new TipoIdentificacionDto(),
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
+        }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<Response<TipoIdentificacionDto>>> Get(Buscar.TipoIdentificacionBuscarIdCommand command)
+        {
+            Response<TipoIdentificacionDto> response = new();
+            try
+            {
+
+                TipoIdentificacionDto TipoIdentificacionDtos = await _mediator.Send(command);
+
+                response.Mensaje = "";
+                response.Entidad = TipoIdentificacionDtos;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = new TipoIdentificacionDto(),
                     Mensaje = ex.Message,
                     Status = System.Net.HttpStatusCode.BadRequest
 

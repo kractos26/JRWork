@@ -17,14 +17,14 @@ public class Registrar
 
     public class TipoIdentificacionUpdateCommand : IRequest<TipoIdentificacionDto>
     {
-        public int TipoDocumentoId { get; set; }
+        public int TipoIdentificacionId { get; set; }
         public string Sigla { get; set; } = null!;
         public string Nombre { get; set; } = null!;
     }
 
     public class TipoIdentificacionEliminarCommand : IRequest<bool>
     {
-        public int TipoDocumentoId { get; set; }
+        public int TipoIdentificacionId { get; set; }
     }
 
     public class TipoIdentificacionRegisterHandler : IRequestHandler<TipoIdentificacionRegisterCommand, TipoIdentificacionDto>,
@@ -56,13 +56,13 @@ public class Registrar
 
         public async Task<bool> Handle(TipoIdentificacionEliminarCommand request, CancellationToken cancellationToken)
         {
-            JRWork.Administracion.DataAccess.Models.TipoIdentificacion? tipoIdentificacionExistente = await _repositoryTipoIdentificacion.TraerUnoAsync(x => x.TipoDocumentoId == request.TipoDocumentoId) ?? throw new InvalidOperationException("La TipoIdentificacion no existe.");
+            JRWork.Administracion.DataAccess.Models.TipoIdentificacion? tipoIdentificacionExistente = await _repositoryTipoIdentificacion.TraerUnoAsync(x => x.TipoIdentificacionId == request.TipoIdentificacionId) ?? throw new InvalidOperationException("La TipoIdentificacion no existe.");
             return await _repositoryTipoIdentificacion.EliminarAsync(tipoIdentificacionExistente);
         }
 
         public async Task<TipoIdentificacionDto> Handle(TipoIdentificacionUpdateCommand request, CancellationToken cancellationToken)
         {
-            JRWork.Administracion.DataAccess.Models.TipoIdentificacion? tipoIdentificacionExistente = await _repositoryTipoIdentificacion.TraerUnoAsync(x => x.TipoDocumentoId == request.TipoDocumentoId) ?? throw new InvalidOperationException("La tipoIdentificacion no existe.");
+            JRWork.Administracion.DataAccess.Models.TipoIdentificacion? tipoIdentificacionExistente = await _repositoryTipoIdentificacion.TraerUnoAsync(x => x.TipoIdentificacionId == request.TipoIdentificacionId) ?? throw new InvalidOperationException("La tipoIdentificacion no existe.");
             tipoIdentificacionExistente.Nombre = request.Nombre;
             var result = await _repositoryTipoIdentificacion.ModificarAsync(tipoIdentificacionExistente);
             return _mapper.Map<TipoIdentificacionDto>(result);

@@ -105,5 +105,97 @@ namespace JWork.Administracion.WebApi.Controllers
                 return BadRequest(response);
             }
         }
+
+        [HttpGet]
+        public async Task<ActionResult<Response<List<ConceptoCalificacionDto>>>> Get()
+        {
+            Response<List<ConceptoCalificacionDto>> response = new();
+            try
+            {
+
+                Buscar.ConceptoCalificacionBuscarTodoCommand command = new()
+                {
+
+                };
+
+                List<ConceptoCalificacionDto> ConceptoCalificacionDtos = await _mediator.Send(command);
+
+                response.Mensaje = "ConceptoCalificacion elimiminada correctamenta";
+                response.Entidad = ConceptoCalificacionDtos;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = new List<ConceptoCalificacionDto>(),
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
+        }
+
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Response<ConceptoCalificacionDto>>> Get(int id)
+        {
+            Response<ConceptoCalificacionDto> response = new();
+            try
+            {
+
+                Buscar.ConceptoCalificacionBuscarIdCommand command = new()
+                {
+                    ConceptoCalificacionId = id
+                };
+
+                ConceptoCalificacionDto ConceptoCalificacionDtos = await _mediator.Send(command);
+
+                response.Mensaje = "ConceptoCalificacion elimiminada correctamenta";
+                response.Entidad = ConceptoCalificacionDtos;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = new ConceptoCalificacionDto(),
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
+        }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<Response<ConceptoCalificacionDto>>> Get(Buscar.ConceptoCalificacionBuscarIdCommand command)
+        {
+            Response<ConceptoCalificacionDto> response = new();
+            try
+            {
+
+                ConceptoCalificacionDto ConceptoCalificacionDtos = await _mediator.Send(command);
+
+                response.Mensaje = "";
+                response.Entidad = ConceptoCalificacionDtos;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = new ConceptoCalificacionDto(),
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
+        }
     }
 }

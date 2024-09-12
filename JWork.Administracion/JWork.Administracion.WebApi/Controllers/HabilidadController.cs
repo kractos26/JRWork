@@ -17,19 +17,7 @@ namespace JWork.Administracion.WebApi.Controllers
         {
             _mediator = mediator;
         }
-        // GET: api/<HabilidadController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<HabilidadController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+    
 
         [HttpPost]
         public async Task<ActionResult<Response<HabilidadDto>>> Post(Registrar.HabilidadRegisterCommand habilidadRegister)
@@ -114,6 +102,98 @@ namespace JWork.Administracion.WebApi.Controllers
                 response = new()
                 {
                     Entidad = false,
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<Response<List<HabilidadDto>>>> Get()
+        {
+            Response<List<HabilidadDto>> response = new();
+            try
+            {
+
+                Buscar.HabilidadBuscarTodoCommand command = new()
+                {
+
+                };
+
+                List<HabilidadDto> HabilidadDtos = await _mediator.Send(command);
+
+                response.Mensaje = "Habilidad elimiminada correctamenta";
+                response.Entidad = HabilidadDtos;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = new List<HabilidadDto>(),
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
+        }
+
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Response<HabilidadDto>>> Get(int id)
+        {
+            Response<HabilidadDto> response = new();
+            try
+            {
+
+                Buscar.HabilidadBuscarIdCommand command = new()
+                {
+                    HabilidadId = id
+                };
+
+                HabilidadDto HabilidadDtos = await _mediator.Send(command);
+
+                response.Mensaje = "Habilidad elimiminada correctamenta";
+                response.Entidad = HabilidadDtos;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = new HabilidadDto(),
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
+        }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<Response<HabilidadDto>>> Get(Buscar.HabilidadBuscarIdCommand command)
+        {
+            Response<HabilidadDto> response = new();
+            try
+            {
+
+                HabilidadDto HabilidadDtos = await _mediator.Send(command);
+
+                response.Mensaje = "";
+                response.Entidad = HabilidadDtos;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = new HabilidadDto(),
                     Mensaje = ex.Message,
                     Status = System.Net.HttpStatusCode.BadRequest
 

@@ -132,7 +132,7 @@ public partial class JrworkContext : DbContext
 
         modelBuilder.Entity<TipoIdentificacion>(entity =>
         {
-            entity.HasKey(e => e.TipoDocumentoId).HasName("PK__TipoDocu__A329EA87F15F2D84");
+            entity.HasKey(e => e.TipoIdentificacionId).HasName("PK__TipoDocu__A329EA87F15F2D84");
             entity.ToTable("TipoIdentificacion", "adm");
             entity.Property(e => e.Nombre).HasMaxLength(24);
             entity.Property(e=>e.Sigla).HasMaxLength(5);

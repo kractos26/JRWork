@@ -82,7 +82,7 @@ namespace JWork.Administracion.WebApi.Controllers
             try
             {
 
-                Registrar.DivipolaEliminarCommand command = new Registrar.DivipolaEliminarCommand()
+                Registrar.DivipolaEliminarCommand command = new()
                 {
                     DivipolaId = id
                 };
@@ -99,6 +99,98 @@ namespace JWork.Administracion.WebApi.Controllers
                 response = new()
                 {
                     Entidad = false,
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<Response<List<DivipolaDto>>>> Get()
+        {
+            Response<List<DivipolaDto>> response = new();
+            try
+            {
+
+                Buscar.DivipolaBuscarTodoCommand command = new()
+                {
+
+                };
+
+                List<DivipolaDto> DivipolaDtos = await _mediator.Send(command);
+
+                response.Mensaje = "Divipola elimiminada correctamenta";
+                response.Entidad = DivipolaDtos;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = new List<DivipolaDto>(),
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
+        }
+
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Response<DivipolaDto>>> Get(int id)
+        {
+            Response<DivipolaDto> response = new();
+            try
+            {
+
+                Buscar.DivipolaBuscarIdCommand command = new()
+                {
+                    DivipolaId = id
+                };
+
+                DivipolaDto DivipolaDtos = await _mediator.Send(command);
+
+                response.Mensaje = "Divipola elimiminada correctamenta";
+                response.Entidad = DivipolaDtos;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = new DivipolaDto(),
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
+        }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<Response<DivipolaDto>>> Get(Buscar.DivipolaBuscarIdCommand command)
+        {
+            Response<DivipolaDto> response = new();
+            try
+            {
+
+                DivipolaDto DivipolaDtos = await _mediator.Send(command);
+
+                response.Mensaje = "";
+                response.Entidad = DivipolaDtos;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = new DivipolaDto(),
                     Mensaje = ex.Message,
                     Status = System.Net.HttpStatusCode.BadRequest
 

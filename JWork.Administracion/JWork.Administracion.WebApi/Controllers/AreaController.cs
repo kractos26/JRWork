@@ -17,19 +17,7 @@ namespace JWork.Administracion.WebApi.Controllers
         {
             _mediator = mediator;
         }
-        // GET: api/<AreaController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<AreaController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value"+id;
-        }
+   
 
         // POST api/<AreaController>
         [HttpPost]
@@ -97,7 +85,7 @@ namespace JWork.Administracion.WebApi.Controllers
             try
             {
                
-                Registrar.AreaEliminarCommand command = new Registrar.AreaEliminarCommand()
+                Registrar.AreaEliminarCommand command = new()
                 {
                     AreaId = id
                 };
@@ -121,5 +109,98 @@ namespace JWork.Administracion.WebApi.Controllers
                 return BadRequest(response);
             }
         }
+
+        [HttpGet]
+        public async Task<ActionResult<Response<List<AreaDto>>>> Get()
+        {
+            Response<List<AreaDto>> response = new();
+            try
+            {
+
+                Buscar.AreaBuscarTodoCommand command = new()
+                {
+
+                };
+
+                List<AreaDto> AreaDtos = await _mediator.Send(command);
+
+                response.Mensaje = "Area elimiminada correctamenta";
+                response.Entidad = AreaDtos;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = new List<AreaDto>(),
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
+        }
+
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Response<AreaDto>>> Get(int id)
+        {
+            Response<AreaDto> response = new();
+            try
+            {
+
+                Buscar.AreaBuscarIdCommand command = new()
+                {
+                    AreaId = id
+                };
+
+                AreaDto AreaDtos = await _mediator.Send(command);
+
+                response.Mensaje = "Area elimiminada correctamenta";
+                response.Entidad = AreaDtos;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = new AreaDto(),
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
+        }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<Response<AreaDto>>> Get(Buscar.AreaBuscarIdCommand command)
+        {
+            Response<AreaDto> response = new();
+            try
+            {
+
+                AreaDto AreaDtos = await _mediator.Send(command);
+
+                response.Mensaje = "";
+                response.Entidad = AreaDtos;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = new AreaDto(),
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
+        }
+
     }
 }

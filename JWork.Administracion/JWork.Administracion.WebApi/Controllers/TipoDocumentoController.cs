@@ -105,5 +105,97 @@ namespace JWork.Administracion.WebApi.Controllers
                 return BadRequest(response);
             }
         }
+
+        [HttpGet]
+        public async Task<ActionResult<Response<List<TipoDocumentoDto>>>> Get()
+        {
+            Response<List<TipoDocumentoDto>> response = new();
+            try
+            {
+
+                Buscar.TipoDocumentoBuscarTodoCommand command = new()
+                {
+
+                };
+
+                List<TipoDocumentoDto> TipoDocumentoDtos = await _mediator.Send(command);
+
+                response.Mensaje = "TipoDocumento elimiminada correctamenta";
+                response.Entidad = TipoDocumentoDtos;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = new List<TipoDocumentoDto>(),
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
+        }
+
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Response<TipoDocumentoDto>>> Get(int id)
+        {
+            Response<TipoDocumentoDto> response = new();
+            try
+            {
+
+                Buscar.TipoDocumentoBuscarIdCommand command = new()
+                {
+                    TipoDocumentoId = id
+                };
+
+                TipoDocumentoDto TipoDocumentoDtos = await _mediator.Send(command);
+
+                response.Mensaje = "TipoDocumento elimiminada correctamenta";
+                response.Entidad = TipoDocumentoDtos;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = new TipoDocumentoDto(),
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
+        }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<Response<TipoDocumentoDto>>> Get(Buscar.TipoDocumentoBuscarIdCommand command)
+        {
+            Response<TipoDocumentoDto> response = new();
+            try
+            {
+
+                TipoDocumentoDto TipoDocumentoDtos = await _mediator.Send(command);
+
+                response.Mensaje = "";
+                response.Entidad = TipoDocumentoDtos;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = new TipoDocumentoDto(),
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
+        }
     }
 }

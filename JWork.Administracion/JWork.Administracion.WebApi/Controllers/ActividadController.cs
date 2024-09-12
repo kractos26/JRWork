@@ -81,7 +81,7 @@ namespace JWork.Administracion.WebApi.Controllers
             try
             {
 
-                Registrar.ActividadEliminarCommand command = new Registrar.ActividadEliminarCommand()
+                Registrar.ActividadEliminarCommand command = new()
                 {
                     ActividadId = id
                 };
@@ -105,5 +105,100 @@ namespace JWork.Administracion.WebApi.Controllers
                 return BadRequest(response);
             }
         }
+
+        [HttpGet]
+        public async Task<ActionResult<Response<List<ActividadDto>>>> Get()
+        {
+            Response<List<ActividadDto>> response = new();
+            try
+            {
+
+                Buscar.ActividadBuscarTodoCommand command = new()
+                {
+                   
+                };
+
+                List<ActividadDto> actividadDtos = await _mediator.Send(command);
+
+                response.Mensaje = "Actividad elimiminada correctamenta";
+                response.Entidad = actividadDtos;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = new List<ActividadDto>(),
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
+        }
+
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Response<ActividadDto>>> Get(int id)
+        {
+            Response<ActividadDto> response = new();
+            try
+            {
+
+                Buscar.ActividadBuscarIdCommand command = new()
+                {
+                    ActividadId = id
+                };
+
+                ActividadDto actividadDtos = await _mediator.Send(command);
+
+                response.Mensaje = "Actividad elimiminada correctamenta";
+                response.Entidad = actividadDtos;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = new ActividadDto(),
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
+        }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<Response<ActividadDto>>> Get(Buscar.ActividadBuscarIdCommand command)
+        {
+            Response<ActividadDto> response = new();
+            try
+            {
+
+                ActividadDto actividadDtos = await _mediator.Send(command);
+
+                response.Mensaje = "";
+                response.Entidad = actividadDtos;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = new ActividadDto(),
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
+        }
+
+
+
     }
 }

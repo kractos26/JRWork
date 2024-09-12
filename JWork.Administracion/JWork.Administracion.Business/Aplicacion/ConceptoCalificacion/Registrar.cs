@@ -51,7 +51,7 @@ public class Registrar
 
 
             // Crear la nueva entidad ConceptoCalificacion
-            JRWork.Administracion.DataAccess.Models.ConceptoCalificacion nuevoConceptoCalificacion = new JRWork.Administracion.DataAccess.Models.ConceptoCalificacion
+            JRWork.Administracion.DataAccess.Models.ConceptoCalificacion nuevoConceptoCalificacion = new()
             {
                 Nombre = request.Nombre,
                 Descripcion = request.Descripcion,

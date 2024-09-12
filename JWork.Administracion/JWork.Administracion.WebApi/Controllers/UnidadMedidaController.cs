@@ -1,44 +1,41 @@
-﻿using JWork.Administracion.Business.Aplicacion.Oficio;
+﻿using JWork.Administracion.Business.Aplicacion.UnidadMedida;
 using JWork.Administracion.Dto;
 using JWork.Administracion.WebApi.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace JWork.Administracion.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OficioController : ControllerBase
+    public class UnidadMedidaController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public OficioController(IMediator mediator)
+        public UnidadMedidaController(IMediator mediator)
         {
             _mediator = mediator;
         }
-        // GET: api/<OficioController>
-      
+
         [HttpPost]
-        public async Task<ActionResult<Response<OficioDto>>> Post(Registrar.OficioRegisterCommand oficioRegister)
+        public async Task<ActionResult<Response<UnidadMedidaDto>>> Post(Registrar.UnidadMedidaRegisterCommand UnidadMedidaRegister)
         {
-            Response<OficioDto> respon;
+            Response<UnidadMedidaDto> respon;
             try
             {
-                OficioDto area = await _mediator.Send(oficioRegister);
+                UnidadMedidaDto UnidadMedida = await _mediator.Send(UnidadMedidaRegister);
                 respon = new()
                 {
-                    Entidad = area,
-                    Mensaje = "Area creada correctamente",
+                    Entidad = UnidadMedida,
+                    Mensaje = "UnidadMedida creada correctamente",
                     Status = System.Net.HttpStatusCode.Created
                 };
                 return Ok(respon);
             }
             catch (Exception ex)
             {
-                respon = new Response<OficioDto>()
+                respon = new Response<UnidadMedidaDto>()
                 {
-                    Entidad = new OficioDto() { },
+                    Entidad = new UnidadMedidaDto() { },
                     Mensaje = ex.Message,
                     Status = System.Net.HttpStatusCode.BadRequest
 
@@ -49,25 +46,25 @@ namespace JWork.Administracion.WebApi.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<Response<OficioDto>>> Put(Registrar.OficioUpdateCommand command)
+        public async Task<ActionResult<Response<UnidadMedidaDto>>> Put(Registrar.UnidadMedidaUpdateCommand command)
         {
-            Response<OficioDto> respon;
+            Response<UnidadMedidaDto> respon;
             try
             {
-                OficioDto Oficio = await _mediator.Send(command);
+                UnidadMedidaDto UnidadMedida = await _mediator.Send(command);
                 respon = new()
                 {
-                    Entidad = Oficio,
-                    Mensaje = "Oficio actualizada correctamente",
+                    Entidad = UnidadMedida,
+                    Mensaje = "UnidadMedida actualizada correctamente",
                     Status = System.Net.HttpStatusCode.Created
                 };
                 return Ok(respon);
             }
             catch (Exception ex)
             {
-                respon = new Response<OficioDto>()
+                respon = new Response<UnidadMedidaDto>()
                 {
-                    Entidad = new OficioDto() { },
+                    Entidad = new UnidadMedidaDto() { },
                     Mensaje = ex.Message,
                     Status = System.Net.HttpStatusCode.BadRequest
 
@@ -76,7 +73,7 @@ namespace JWork.Administracion.WebApi.Controllers
             }
         }
 
-        // DELETE api/<OficioController>/5
+        // DELETE api/<UnidadMedidaController>/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Response<bool>>> Delete(int id)
         {
@@ -84,14 +81,14 @@ namespace JWork.Administracion.WebApi.Controllers
             try
             {
 
-                Registrar.OficioEliminarCommand command = new()
+                Registrar.UnidadMedidaEliminarCommand command = new()
                 {
-                    OficioId = id
+                    UnidadMedidaId = id
                 };
 
                 bool exitoso = await _mediator.Send(command);
 
-                response.Mensaje = "Oficio elimiminada correctamenta";
+                response.Mensaje = "UnidadMedida elimiminada correctamenta";
                 response.Entidad = exitoso;
                 response.Status = System.Net.HttpStatusCode.OK;
                 return Ok(response);
@@ -110,21 +107,21 @@ namespace JWork.Administracion.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Response<List<OficioDto>>>> Get()
+        public async Task<ActionResult<Response<List<UnidadMedidaDto>>>> Get()
         {
-            Response<List<OficioDto>> response = new();
+            Response<List<UnidadMedidaDto>> response = new();
             try
             {
 
-                Buscar.OficioBuscarTodoCommand command = new()
+                Buscar.UnidadMedidaBuscarTodoCommand command = new()
                 {
-
+                   
                 };
 
-                List<OficioDto> OficioDtos = await _mediator.Send(command);
+                List<UnidadMedidaDto> UnidadMedidaDtos = await _mediator.Send(command);
 
-                response.Mensaje = "Oficio elimiminada correctamenta";
-                response.Entidad = OficioDtos;
+                response.Mensaje = "UnidadMedida elimiminada correctamenta";
+                response.Entidad = UnidadMedidaDtos;
                 response.Status = System.Net.HttpStatusCode.OK;
                 return Ok(response);
             }
@@ -132,7 +129,7 @@ namespace JWork.Administracion.WebApi.Controllers
             {
                 response = new()
                 {
-                    Entidad = new List<OficioDto>(),
+                    Entidad = new List<UnidadMedidaDto>(),
                     Mensaje = ex.Message,
                     Status = System.Net.HttpStatusCode.BadRequest
 
@@ -143,21 +140,21 @@ namespace JWork.Administracion.WebApi.Controllers
 
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Response<OficioDto>>> Get(int id)
+        public async Task<ActionResult<Response<UnidadMedidaDto>>> Get(int id)
         {
-            Response<OficioDto> response = new();
+            Response<UnidadMedidaDto> response = new();
             try
             {
 
-                Buscar.OficioBuscarIdCommand command = new()
+                Buscar.UnidadMedidaBuscarIdCommand command = new()
                 {
-                    OficioId = id
+                    UnidadMedidaId = id
                 };
 
-                OficioDto OficioDtos = await _mediator.Send(command);
+                UnidadMedidaDto UnidadMedidaDtos = await _mediator.Send(command);
 
-                response.Mensaje = "Oficio elimiminada correctamenta";
-                response.Entidad = OficioDtos;
+                response.Mensaje = "UnidadMedida elimiminada correctamenta";
+                response.Entidad = UnidadMedidaDtos;
                 response.Status = System.Net.HttpStatusCode.OK;
                 return Ok(response);
             }
@@ -165,7 +162,7 @@ namespace JWork.Administracion.WebApi.Controllers
             {
                 response = new()
                 {
-                    Entidad = new OficioDto(),
+                    Entidad = new UnidadMedidaDto(),
                     Mensaje = ex.Message,
                     Status = System.Net.HttpStatusCode.BadRequest
 
@@ -175,16 +172,16 @@ namespace JWork.Administracion.WebApi.Controllers
         }
 
         [HttpGet("search")]
-        public async Task<ActionResult<Response<OficioDto>>> Get(Buscar.OficioBuscarIdCommand command)
+        public async Task<ActionResult<Response<UnidadMedidaDto>>> Get(Buscar.UnidadMedidaBuscarIdCommand command)
         {
-            Response<OficioDto> response = new();
+            Response<UnidadMedidaDto> response = new();
             try
             {
 
-                OficioDto OficioDtos = await _mediator.Send(command);
+                UnidadMedidaDto UnidadMedidaDtos = await _mediator.Send(command);
 
                 response.Mensaje = "";
-                response.Entidad = OficioDtos;
+                response.Entidad = UnidadMedidaDtos;
                 response.Status = System.Net.HttpStatusCode.OK;
                 return Ok(response);
             }
@@ -192,7 +189,7 @@ namespace JWork.Administracion.WebApi.Controllers
             {
                 response = new()
                 {
-                    Entidad = new OficioDto(),
+                    Entidad = new UnidadMedidaDto(),
                     Mensaje = ex.Message,
                     Status = System.Net.HttpStatusCode.BadRequest
 
@@ -200,5 +197,8 @@ namespace JWork.Administracion.WebApi.Controllers
                 return BadRequest(response);
             }
         }
+
+
+
     }
 }

@@ -60,17 +60,65 @@ namespace JWork.Administracion.WebApi.Controllers
 
         }
 
-
-        // PUT api/<TipoPersonaController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public async Task<ActionResult<Response<TipoPersonaDto>>> Put(Registrar.TipoPersonaUpdateCommand command)
         {
+            Response<TipoPersonaDto> respon;
+            try
+            {
+                TipoPersonaDto TipoIdentificacion = await _mediator.Send(command);
+                respon = new()
+                {
+                    Entidad = TipoIdentificacion,
+                    Mensaje = "TipoIdentificacion actualizada correctamente",
+                    Status = System.Net.HttpStatusCode.Created
+                };
+                return Ok(respon);
+            }
+            catch (Exception ex)
+            {
+                respon = new Response<TipoPersonaDto>()
+                {
+                    Entidad = new TipoPersonaDto() { },
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(respon);
+            }
         }
 
-        // DELETE api/<TipoPersonaController>/5
+        // DELETE api/<TipoIdentificacionController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult<Response<bool>>> Delete(int id)
         {
+            Response<bool> response = new();
+            try
+            {
+
+                Registrar.TipoPersonaEliminarCommand command = new()
+                {
+                    TipoPersonaId = id
+                };
+
+                bool exitoso = await _mediator.Send(command);
+
+                response.Mensaje = "TipoIdentificacion elimiminada correctamenta";
+                response.Entidad = exitoso;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = false,
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
         }
     }
 }

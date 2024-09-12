@@ -33,7 +33,7 @@ public class ExceptionHandlingMiddleware
 
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-
+        _logger.Log(LogLevel.Error,exception.Message);
         var result = JsonSerializer.Serialize(new { error = exception.Message });
         return context.Response.WriteAsync(result);
     }

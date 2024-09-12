@@ -4,7 +4,7 @@ namespace JWork.Administracion.Dto;
 
 public class TipoIdentificacionDto
 {
-    public int TipoDocumentoId { get; set; }
+    public int TipoIdentificacionId { get; set; }
     [Required(ErrorMessage = "Campo obligatorio")]
     public string Sigla { get; set; } = null!;
     [Required(ErrorMessage = "Campo obligatorio")]
