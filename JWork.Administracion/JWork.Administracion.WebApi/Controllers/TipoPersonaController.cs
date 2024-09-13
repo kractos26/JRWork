@@ -16,19 +16,7 @@ namespace JWork.Administracion.WebApi.Controllers
         {
             _mediator = mediator;
         }
-        // GET: api/<TipoPersonaController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<TipoPersonaController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+     
 
         // POST api/<TipoPersonaController>
         [HttpPost]
@@ -66,11 +54,11 @@ namespace JWork.Administracion.WebApi.Controllers
             Response<TipoPersonaDto> respon;
             try
             {
-                TipoPersonaDto TipoIdentificacion = await _mediator.Send(command);
+                TipoPersonaDto TipoPersona = await _mediator.Send(command);
                 respon = new()
                 {
-                    Entidad = TipoIdentificacion,
-                    Mensaje = "TipoIdentificacion actualizada correctamente",
+                    Entidad = TipoPersona,
+                    Mensaje = "TipoPersona actualizada correctamente",
                     Status = System.Net.HttpStatusCode.Created
                 };
                 return Ok(respon);
@@ -88,7 +76,7 @@ namespace JWork.Administracion.WebApi.Controllers
             }
         }
 
-        // DELETE api/<TipoIdentificacionController>/5
+        // DELETE api/<TipoPersonaController>/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Response<bool>>> Delete(int id)
         {
@@ -103,7 +91,7 @@ namespace JWork.Administracion.WebApi.Controllers
 
                 bool exitoso = await _mediator.Send(command);
 
-                response.Mensaje = "TipoIdentificacion elimiminada correctamenta";
+                response.Mensaje = "TipoPersona elimiminada correctamenta";
                 response.Entidad = exitoso;
                 response.Status = System.Net.HttpStatusCode.OK;
                 return Ok(response);
@@ -113,6 +101,98 @@ namespace JWork.Administracion.WebApi.Controllers
                 response = new()
                 {
                     Entidad = false,
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<Response<List<TipoPersonaDto>>>> Get()
+        {
+            Response<List<TipoPersonaDto>> response = new();
+            try
+            {
+
+                Buscar.TipoPersonaBuscarTodoCommand command = new()
+                {
+
+                };
+
+                List<TipoPersonaDto> TipoPersonaDtos = await _mediator.Send(command);
+
+                response.Mensaje = "TipoPersona elimiminada correctamenta";
+                response.Entidad = TipoPersonaDtos;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = new List<TipoPersonaDto>(),
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
+        }
+
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Response<TipoPersonaDto>>> Get(int id)
+        {
+            Response<TipoPersonaDto> response = new();
+            try
+            {
+
+                Buscar.TipoPersonaBuscarIdCommand command = new()
+                {
+                    TipoPersonaId = id
+                };
+
+                TipoPersonaDto TipoPersonaDtos = await _mediator.Send(command);
+
+                response.Mensaje = "TipoPersona elimiminada correctamenta";
+                response.Entidad = TipoPersonaDtos;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = new TipoPersonaDto(),
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+
+                };
+                return BadRequest(response);
+            }
+        }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<Response<TipoPersonaDto>>> Get(Buscar.TipoPersonaBuscarIdCommand command)
+        {
+            Response<TipoPersonaDto> response = new();
+            try
+            {
+
+                TipoPersonaDto TipoPersonaDtos = await _mediator.Send(command);
+
+                response.Mensaje = "";
+                response.Entidad = TipoPersonaDtos;
+                response.Status = System.Net.HttpStatusCode.OK;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Entidad = new TipoPersonaDto(),
                     Mensaje = ex.Message,
                     Status = System.Net.HttpStatusCode.BadRequest
 

@@ -42,8 +42,13 @@ public class Registrar
 
         public async Task<OficioDto> Handle(OficioRegisterCommand request, CancellationToken cancellationToken)
         {
-            JRWork.Administracion.DataAccess.Models.Oficio? oficioExistente = await _repositoryOficio.TraerUnoAsync(x => x.Nombre == request.Nombre) ?? throw new InvalidOperationException("La Oficio ya está registrada."); ;
+            JRWork.Administracion.DataAccess.Models.Oficio? oficioExistente = await _repositoryOficio.TraerUnoAsync(x => x.Nombre == request.Nombre);
             
+            if(oficioExistente != null)
+            {
+                throw new InvalidOperationException("La Oficio ya está registrada."); ;
+
+            }
 
             JRWork.Administracion.DataAccess.Models.Oficio actividad = new()
             {

@@ -46,8 +46,12 @@ public class Registrar
         public async Task<ConceptoCalificacionDto> Handle(ConceptoCalificacionRegisterCommand request, CancellationToken cancellationToken)
         {
             // Validar si el nombre ya existe en la base de datos
-            JRWork.Administracion.DataAccess.Models.ConceptoCalificacion conceptoExistente = await _repositoryConceptoCalificacion.TraerUnoAsync(x => x.Nombre == request.Nombre) ?? throw new InvalidOperationException("El concepto de calificación ya está registrado.");
+            JRWork.Administracion.DataAccess.Models.ConceptoCalificacion? conceptoExistente = await _repositoryConceptoCalificacion.TraerUnoAsync(x => x.Nombre == request.Nombre);
 
+            if(conceptoExistente != null)
+            {
+                throw new InvalidOperationException("El concepto de calificación ya está registrado.");
+            }
 
 
             // Crear la nueva entidad ConceptoCalificacion

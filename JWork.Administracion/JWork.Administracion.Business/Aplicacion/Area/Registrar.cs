@@ -40,7 +40,12 @@ public class Registrar
 
         public async Task<AreaDto> Handle(AreaRegisterCommand request, CancellationToken cancellationToken)
         {
-            JRWork.Administracion.DataAccess.Models.Area? areaExistente = await _repositoryArea.TraerUnoAsync(x => x.Nombre == request.Nombre) ?? throw new InvalidOperationException("El area ya está registrada.");
+            JRWork.Administracion.DataAccess.Models.Area? areaExistente = await _repositoryArea.TraerUnoAsync(x => x.Nombre == request.Nombre);
+
+            if (areaExistente != null)
+            {
+                throw new InvalidOperationException("El area ya está registrada.");
+            }
 
             JRWork.Administracion.DataAccess.Models.Area actividad = new()
             {
@@ -61,7 +66,7 @@ public class Registrar
 
         async Task<AreaDto> IRequestHandler<AreaUpdateCommand, AreaDto>.Handle(AreaUpdateCommand request, CancellationToken cancellationToken)
         {
-            JRWork.Administracion.DataAccess.Models.Area? areaExistente = await _repositoryArea.TraerUnoAsync(x => x.AreaId == request.AreaId) ?? throw new InvalidOperationException("La actividad no existe.");
+            JRWork.Administracion.DataAccess.Models.Area? areaExistente = await _repositoryArea.TraerUnoAsync(x => x.AreaId == request.AreaId) ?? throw new InvalidOperationException("La area no existe.");
             areaExistente.Nombre = request.Nombre;
             var result = await _repositoryArea.ModificarAsync(areaExistente);
             return _mapper.Map<AreaDto>(result);

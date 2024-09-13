@@ -33,7 +33,7 @@ public class Registrar
     public class HabilidadRegisterHandler :
         IRequestHandler<HabilidadRegisterCommand, HabilidadDto>,
         IRequestHandler<HabilidadUpdateCommand, HabilidadDto>,
-        IRequestHandler<HabilidadEliminarCommand, bool>
+        IRequestHandler<HabilidadEliminarCommand,bool>
     {
         private readonly IRepositoryHabilidad _repositoryHabilidad;
         private readonly IMapper _mapper;
@@ -54,8 +54,13 @@ public class Registrar
 
         public async Task<HabilidadDto> Handle(HabilidadRegisterCommand request, CancellationToken cancellationToken)
         {
-            JRWork.Administracion.DataAccess.Models.Habilidad? habildadExistente = await _repositoryHabilidad.TraerUnoAsync(x => x.Nombre == request.Nombre) ?? throw new InvalidOperationException("El Habilidad ya está registrada."); ;
-
+            JRWork.Administracion.DataAccess.Models.Habilidad? habildadExistente = await _repositoryHabilidad.TraerUnoAsync(x => x.Nombre == request.Nombre);
+             
+            if(habildadExistente != null)
+            {
+                throw new InvalidOperationException("El Habilidad ya está registrada.");
+            }
+   
             JRWork.Administracion.DataAccess.Models.Habilidad actividad = new()
             {
                 Nombre = request.Nombre,
@@ -70,7 +75,7 @@ public class Registrar
         public async Task<bool> Handle(HabilidadEliminarCommand request, CancellationToken cancellationToken)
         {
             JRWork.Administracion.DataAccess.Models.Habilidad? habildadExistente = await _repositoryHabilidad.TraerUnoAsync(x => x.HabilidadId == request.HabilidadId) ?? throw new InvalidOperationException("La Habilidad no existe.");
-            return await _repositoryHabilidad.EliminarAsync(habildadExistente);
+           return await _repositoryHabilidad.EliminarAsync(habildadExistente);
         }
     }
 }

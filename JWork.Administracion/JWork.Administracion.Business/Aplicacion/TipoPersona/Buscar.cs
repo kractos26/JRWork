@@ -8,53 +8,53 @@ namespace JWork.Administracion.Business.Aplicacion.TipoPersona;
 public class Buscar
 {
 
-    public class TipoIdentificacionBuscarCommand : IRequest<List<TipoIdentificacionDto>>
+    public class TipoPersonaBuscarCommand : IRequest<List<TipoPersonaDto>>
     {
         public int? TipoPersonaId { get; set; }
 
         public string? Nombre { get; set; } 
     }
 
-    public class TipoIdentificacionBuscarTodoCommand : IRequest<List<TipoIdentificacionDto>>
+    public class TipoPersonaBuscarTodoCommand : IRequest<List<TipoPersonaDto>>
     {
 
     }
 
-    public class TipoIdentificacionBuscarIdCommand : IRequest<TipoIdentificacionDto>
+    public class TipoPersonaBuscarIdCommand : IRequest<TipoPersonaDto>
     {
-        public int TipoIdentificacionId { get; set; }
+        public int TipoPersonaId { get; set; }
     }
 
-    public class TipoIdentificacionRegisterHandler : IRequestHandler<TipoIdentificacionBuscarCommand, List<TipoIdentificacionDto>>,
-                                            IRequestHandler<TipoIdentificacionBuscarTodoCommand, List<TipoIdentificacionDto>>,
-                                            IRequestHandler<TipoIdentificacionBuscarIdCommand, TipoIdentificacionDto>
+    public class TipoPersonaRegisterHandler : IRequestHandler<TipoPersonaBuscarCommand, List<TipoPersonaDto>>,
+                                            IRequestHandler<TipoPersonaBuscarTodoCommand, List<TipoPersonaDto>>,
+                                            IRequestHandler<TipoPersonaBuscarIdCommand, TipoPersonaDto>
     {
-        private readonly IRepositoryTipoIdentificacion _repositoryTipoIdentificacion;
+        private readonly IRepositoryTipoPersona _repositoryTipoPersona;
         private readonly IMapper _mapper;
 
-        public TipoIdentificacionRegisterHandler(IRepositoryTipoIdentificacion repositoryTipoIdentificacion, IMapper mapper)
+        public TipoPersonaRegisterHandler(IRepositoryTipoPersona repositoryTipoPersona, IMapper mapper)
         {
-            _repositoryTipoIdentificacion = repositoryTipoIdentificacion;
+            _repositoryTipoPersona = repositoryTipoPersona;
             _mapper = mapper;
         }
 
-        public async Task<List<TipoIdentificacionDto>> Handle(TipoIdentificacionBuscarCommand request, CancellationToken cancellationToken)
+        public async Task<List<TipoPersonaDto>> Handle(TipoPersonaBuscarCommand request, CancellationToken cancellationToken)
         {
-            List<JRWork.Administracion.DataAccess.Models.TipoIdentificacion> TipoIdentificaciones = await _repositoryTipoIdentificacion.BuscarAsync(x=>x.TipoDocumentoId == (request.TipoDocumentoId ?? x.TipoDocumentoId) && x.Nombre == (request.Nombre ?? x.Nombre) && x.Sigla == (request.Sigla ?? x.Sigla));
-            return _mapper.Map<List<TipoIdentificacionDto>>(TipoIdentificaciones);
+            List<JRWork.Administracion.DataAccess.Models.TipoPersona> TipoPersonaes = await _repositoryTipoPersona.BuscarAsync(x=>x.TipoPersonaId == (request.TipoPersonaId ?? x.TipoPersonaId) && x.Nombre == (request.Nombre ?? x.Nombre));
+            return _mapper.Map<List<TipoPersonaDto>>(TipoPersonaes);
 
         }
 
-        public async Task<List<TipoIdentificacionDto>> Handle(TipoIdentificacionBuscarTodoCommand request, CancellationToken cancellationToken)
+        public async Task<List<TipoPersonaDto>> Handle(TipoPersonaBuscarTodoCommand request, CancellationToken cancellationToken)
         {
-            List<JRWork.Administracion.DataAccess.Models.TipoIdentificacion> TipoIdentificaciones = await _repositoryTipoIdentificacion.GetAllAsync();
-            return _mapper.Map<List<TipoIdentificacionDto>>(TipoIdentificaciones);
+            List<JRWork.Administracion.DataAccess.Models.TipoPersona> TipoPersonaes = await _repositoryTipoPersona.GetAllAsync();
+            return _mapper.Map<List<TipoPersonaDto>>(TipoPersonaes);
         }
 
-        public async Task<TipoIdentificacionDto> Handle(TipoIdentificacionBuscarIdCommand request, CancellationToken cancellationToken)
+        public async Task<TipoPersonaDto> Handle(TipoPersonaBuscarIdCommand request, CancellationToken cancellationToken)
         {
-            var TipoIdentificaciones = await _repositoryTipoIdentificacion.TraerUnoAsync(x=>x.TipoDocumentoId == request.TipoIdentificacionId);
-            return _mapper.Map<TipoIdentificacionDto>(TipoIdentificaciones);
+            var TipoPersonaes = await _repositoryTipoPersona.TraerUnoAsync(x=>x.TipoPersonaId == request.TipoPersonaId);
+            return _mapper.Map<TipoPersonaDto>(TipoPersonaes);
         }
     }
 

@@ -42,7 +42,12 @@ public class Registrar
 
         public async Task<UnidadMedidaDto> Handle(UnidadMedidaRegisterCommand request, CancellationToken cancellationToken)
         {
-            JRWork.Administracion.DataAccess.Models.UnidadMedida? actividadExistente = await _repositoryUnidadMedida.TraerUnoAsync(x => x.Nombre == request.Nombre) ?? throw new InvalidOperationException("La UnidadMedida ya está registrada.");
+            JRWork.Administracion.DataAccess.Models.UnidadMedida? unidadmediadExistente = await _repositoryUnidadMedida.TraerUnoAsync(x => x.Nombre == request.Nombre); 
+            if(unidadmediadExistente != null)
+            {
+                throw new InvalidOperationException("La UnidadMedida ya está registrada.");
+            }
+
             JRWork.Administracion.DataAccess.Models.UnidadMedida actividad = new()
             {
                 Nombre = request.Nombre

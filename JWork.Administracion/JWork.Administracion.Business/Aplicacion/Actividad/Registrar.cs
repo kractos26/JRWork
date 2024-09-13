@@ -43,7 +43,12 @@ public class Registrar
 
         public async Task<ActividadDto> Handle(ActividadRegisterCommand request, CancellationToken cancellationToken)
         {
-            JRWork.Administracion.DataAccess.Models.Actividad? actividadExistente = await _repositoryActividad.TraerUnoAsync(x => x.Nombre == request.Nombre) ?? throw new InvalidOperationException("La actividad ya está registrada."); 
+            JRWork.Administracion.DataAccess.Models.Actividad? actividadExistente = await _repositoryActividad.TraerUnoAsync(x => x.Nombre == request.Nombre);
+            
+            if (actividadExistente != null)
+            {
+                throw new InvalidOperationException("La actividad ya está registrada.");
+            }
 
             JRWork.Administracion.DataAccess.Models.Actividad actividad = new()
             {

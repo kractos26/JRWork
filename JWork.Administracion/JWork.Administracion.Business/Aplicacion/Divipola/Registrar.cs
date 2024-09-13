@@ -46,7 +46,13 @@ public class Registrar
 
         public async Task<DivipolaDto> Handle(DivipolaRegisterCommand request, CancellationToken cancellationToken)
         {
-            JRWork.Administracion.DataAccess.Models.Divipola? divipolaExistente = await _repositoryDivipola.TraerUnoAsync(x => x.Nombre == request.Nombre) ?? throw new InvalidOperationException("El Divipola ya está registrada.");
+            JRWork.Administracion.DataAccess.Models.Divipola? divipolaExistente = await _repositoryDivipola.TraerUnoAsync(x => x.Nombre == request.Nombre);
+            
+            if(divipolaExistente != null)
+            {
+                throw new InvalidOperationException("El Divipola ya está registrada.");
+            }
+               
 
             JRWork.Administracion.DataAccess.Models.Divipola actividad = new()
             {

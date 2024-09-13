@@ -42,7 +42,11 @@ public class Registrar
 
         public async Task<TipoIdentificacionDto> Handle(TipoIdentificacionRegisterCommand request, CancellationToken cancellationToken)
         {
-            JRWork.Administracion.DataAccess.Models.TipoIdentificacion? tipoIdentificacionExistente = await _repositoryTipoIdentificacion.TraerUnoAsync(x => x.Nombre == request.Nombre) ?? throw new InvalidOperationException("La TipoIdentificacion ya está registrada.");
+            JRWork.Administracion.DataAccess.Models.TipoIdentificacion? tipoIdentificacionExistente = await _repositoryTipoIdentificacion.TraerUnoAsync(x => x.Nombre == request.Nombre);
+            if(tipoIdentificacionExistente != null)
+            {
+                throw new InvalidOperationException("La TipoIdentificacion ya está registrada.");
+            }
 
             JRWork.Administracion.DataAccess.Models.TipoIdentificacion tipoIdentificacion = new()
             {

@@ -41,7 +41,11 @@ public class Registrar
 
         public async Task<TipoDocumentoDto> Handle(TipoDocumentoRegisterCommand request, CancellationToken cancellationToken)
         {
-            JRWork.Administracion.DataAccess.Models.TipoDocumento? tipoDocumentoExistente = await _repositoryTipoDocumento.TraerUnoAsync(x => x.Nombre == request.Nombre) ?? throw new InvalidOperationException("La TipoDocumento ya está registrada.");
+            JRWork.Administracion.DataAccess.Models.TipoDocumento? tipoDocumentoExistente = await _repositoryTipoDocumento.TraerUnoAsync(x => x.Nombre == request.Nombre);
+            if(tipoDocumentoExistente != null)
+            {
+                throw new InvalidOperationException("La TipoDocumento ya está registrada.");
+            }
 
             JRWork.Administracion.DataAccess.Models.TipoDocumento tipoDocumento = new()
             {

@@ -16,15 +16,15 @@ public class Repositorio<T> : IRepositorio<T>, IDisposable where T : class
 
     public async Task<T> AdicionarAsync(T Entidad)
     {
-        if (this._contex.Entry(Entidad).State != EntityState.Deleted)
+        if (_contex.Entry(Entidad).State != EntityState.Deleted)
         {
-            this._contex.Entry(Entidad).State = EntityState.Added;
+            _contex.Entry(Entidad).State = EntityState.Added;
         }
         else
         {
             _contex.Set<T>().Add(Entidad);
-            await _contex.SaveChangesAsync();
         }
+        await _contex.SaveChangesAsync();
         return Entidad;
     }
 
