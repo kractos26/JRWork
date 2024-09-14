@@ -16,9 +16,9 @@ namespace JWork.Administracion.WebApi.Controllers
         {
             _mediator = mediator;
         }
-        // GET: TipoDocumentoController
-        [HttpPost]
-        public async Task<ActionResult<Response<TipoDocumentoDto>>> Post(Registrar.TipoDocumentoRegisterCommand tipodocRegister)
+        // get: TipoDocumentoController
+        [HttpPost("Crear")]
+        public async Task<ActionResult<Response<TipoDocumentoDto>>> Crear(Registrar.TipoDocumentoRegisterCommand tipodocRegister)
         {
             Response<TipoDocumentoDto> respon;
             try
@@ -46,8 +46,8 @@ namespace JWork.Administracion.WebApi.Controllers
 
         }
 
-        [HttpPut]
-        public async Task<ActionResult<Response<TipoDocumentoDto>>> Put(Registrar.TipoDocumentoUpdateCommand command)
+        [HttpPut("Modificar")]
+        public async Task<ActionResult<Response<TipoDocumentoDto>>> Modificar(Registrar.TipoDocumentoUpdateCommand command)
         {
             Response<TipoDocumentoDto> respon;
             try
@@ -74,9 +74,9 @@ namespace JWork.Administracion.WebApi.Controllers
             }
         }
 
-        // DELETE api/<TipoDocumentoController>/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Response<bool>>> Delete(int id)
+        // Eliminar api/<TipoDocumentoController>/5
+        [HttpDelete("Eliminar/{id}")]
+        public async Task<ActionResult<Response<bool>>> Eliminar(int id)
         {
             Response<bool> response = new();
             try
@@ -106,8 +106,8 @@ namespace JWork.Administracion.WebApi.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<ActionResult<Response<List<TipoDocumentoDto>>>> Get()
+        [HttpGet("GetTodo")]
+        public async Task<ActionResult<Response<List<TipoDocumentoDto>>>> GetTodo()
         {
             Response<List<TipoDocumentoDto>> response = new();
             try
@@ -139,8 +139,8 @@ namespace JWork.Administracion.WebApi.Controllers
         }
 
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Response<TipoDocumentoDto>>> Get(int id)
+        [HttpGet("GetPorId/{id}")]
+        public async Task<ActionResult<Response<TipoDocumentoDto>>> GetPorId(int id)
         {
             Response<TipoDocumentoDto> response = new();
             try
@@ -171,14 +171,14 @@ namespace JWork.Administracion.WebApi.Controllers
             }
         }
 
-        [HttpGet("search")]
-        public async Task<ActionResult<Response<TipoDocumentoDto>>> Get(Buscar.TipoDocumentoBuscarIdCommand command)
+        [HttpGet("Buscar")]
+        public async Task<ActionResult<Response<List<TipoDocumentoDto>>>> Buscar(Buscar.TipoDocumentoBuscarCommand command)
         {
-            Response<TipoDocumentoDto> response = new();
+            Response<List<TipoDocumentoDto>> response = new();
             try
             {
 
-                TipoDocumentoDto TipoDocumentoDtos = await _mediator.Send(command);
+                List<TipoDocumentoDto> TipoDocumentoDtos = await _mediator.Send(command);
 
                 response.Mensaje = "";
                 response.Entidad = TipoDocumentoDtos;
@@ -189,7 +189,7 @@ namespace JWork.Administracion.WebApi.Controllers
             {
                 response = new()
                 {
-                    Entidad = new TipoDocumentoDto(),
+                    Entidad = new List<TipoDocumentoDto>(),
                     Mensaje = ex.Message,
                     Status = System.Net.HttpStatusCode.BadRequest
 

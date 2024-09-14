@@ -19,8 +19,8 @@ namespace JWork.Administracion.WebApi.Controllers
         }
     
 
-        [HttpPost]
-        public async Task<ActionResult<Response<HabilidadDto>>> Post(Registrar.HabilidadRegisterCommand habilidadRegister)
+        [HttpPost("Crear")]
+        public async Task<ActionResult<Response<HabilidadDto>>> Crear(Registrar.HabilidadRegisterCommand habilidadRegister)
         {
             Response<Dto.HabilidadDto> respon;
             try
@@ -49,8 +49,8 @@ namespace JWork.Administracion.WebApi.Controllers
         }
 
 
-        [HttpPut]
-        public async Task<ActionResult<Response<HabilidadDto>>> Put(Registrar.HabilidadUpdateCommand command)
+        [HttpPut("Modificar")]
+        public async Task<ActionResult<Response<HabilidadDto>>> Modificar(Registrar.HabilidadUpdateCommand command)
         {
             Response<HabilidadDto> respon;
             try
@@ -77,9 +77,9 @@ namespace JWork.Administracion.WebApi.Controllers
             }
         }
 
-        // DELETE api/<HabilidadController>/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Response<bool>>> Delete(int id)
+        // Eliminar api/<HabilidadController>/5
+        [HttpDelete("Eliminar/{id}")]
+        public async Task<ActionResult<Response<bool>>> Eliminar(int id)
         {
             Response<bool> response = new();
             try
@@ -110,8 +110,8 @@ namespace JWork.Administracion.WebApi.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<ActionResult<Response<List<HabilidadDto>>>> Get()
+        [HttpGet("GetTodo")]
+        public async Task<ActionResult<Response<List<HabilidadDto>>>> GetTodo()
         {
             Response<List<HabilidadDto>> response = new();
             try
@@ -143,8 +143,8 @@ namespace JWork.Administracion.WebApi.Controllers
         }
 
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Response<HabilidadDto>>> Get(int id)
+        [HttpGet("GetPorId/{id}")]
+        public async Task<ActionResult<Response<HabilidadDto>>> GetPorId(int id)
         {
             Response<HabilidadDto> response = new();
             try
@@ -175,14 +175,14 @@ namespace JWork.Administracion.WebApi.Controllers
             }
         }
 
-        [HttpGet("search")]
-        public async Task<ActionResult<Response<HabilidadDto>>> Get(Buscar.HabilidadBuscarIdCommand command)
+        [HttpGet("Buscar")]
+        public async Task<ActionResult<Response<List<HabilidadDto>>>> Buscar(Buscar.HabilidadBuscarCommand command)
         {
-            Response<HabilidadDto> response = new();
+            Response<List<HabilidadDto>> response = new();
             try
             {
 
-                HabilidadDto HabilidadDtos = await _mediator.Send(command);
+                List<HabilidadDto> HabilidadDtos = await _mediator.Send(command);
 
                 response.Mensaje = "";
                 response.Entidad = HabilidadDtos;
@@ -193,7 +193,7 @@ namespace JWork.Administracion.WebApi.Controllers
             {
                 response = new()
                 {
-                    Entidad = new HabilidadDto(),
+                    Entidad = new List<HabilidadDto>(),
                     Mensaje = ex.Message,
                     Status = System.Net.HttpStatusCode.BadRequest
 

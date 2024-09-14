@@ -16,8 +16,8 @@ namespace JWork.Administracion.WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Response<ConceptoCalificacionDto>>> Post(Registrar.ConceptoCalificacionRegisterCommand conRegister)
+        [HttpPost("Crear")]
+        public async Task<ActionResult<Response<ConceptoCalificacionDto>>> Crear(Registrar.ConceptoCalificacionRegisterCommand conRegister)
         {
             Response<ConceptoCalificacionDto> respon;
             try
@@ -45,8 +45,8 @@ namespace JWork.Administracion.WebApi.Controllers
 
         }
 
-        [HttpPut]
-        public async Task<ActionResult<Response<ConceptoCalificacionDto>>> Put(Registrar.ConceptoCalificacionUpdateCommand command)
+        [HttpPut("Modificar")]
+        public async Task<ActionResult<Response<ConceptoCalificacionDto>>> Modificar(Registrar.ConceptoCalificacionUpdateCommand command)
         {
             Response<ConceptoCalificacionDto> respon;
             try
@@ -73,9 +73,9 @@ namespace JWork.Administracion.WebApi.Controllers
             }
         }
 
-        // DELETE api/<ConceptoCalificacionController>/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Response<bool>>> Delete(int id)
+        // Eliminar api/<ConceptoCalificacionController>/5
+        [HttpDelete("Eliminar/{id}")]
+        public async Task<ActionResult<Response<bool>>> Eliminar(int id)
         {
             Response<bool> response = new();
             try
@@ -106,8 +106,8 @@ namespace JWork.Administracion.WebApi.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<ActionResult<Response<List<ConceptoCalificacionDto>>>> Get()
+        [HttpGet("GetTodo")]
+        public async Task<ActionResult<Response<List<ConceptoCalificacionDto>>>> GetTodo()
         {
             Response<List<ConceptoCalificacionDto>> response = new();
             try
@@ -139,8 +139,8 @@ namespace JWork.Administracion.WebApi.Controllers
         }
 
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Response<ConceptoCalificacionDto>>> Get(int id)
+        [HttpGet("GetPorId/{id}")]
+        public async Task<ActionResult<Response<ConceptoCalificacionDto>>> GetPorId(int id)
         {
             Response<ConceptoCalificacionDto> response = new();
             try
@@ -171,14 +171,14 @@ namespace JWork.Administracion.WebApi.Controllers
             }
         }
 
-        [HttpGet("search")]
-        public async Task<ActionResult<Response<ConceptoCalificacionDto>>> Get(Buscar.ConceptoCalificacionBuscarIdCommand command)
+        [HttpGet("Buscar")]
+        public async Task<ActionResult<Response<List<List<ConceptoCalificacionDto>>>>> Buscar(Buscar.ConceptoCalificacionBuscarCommand command)
         {
-            Response<ConceptoCalificacionDto> response = new();
+            Response<List<ConceptoCalificacionDto>> response = new();
             try
             {
 
-                ConceptoCalificacionDto ConceptoCalificacionDtos = await _mediator.Send(command);
+                List<ConceptoCalificacionDto> ConceptoCalificacionDtos = await _mediator.Send(command);
 
                 response.Mensaje = "";
                 response.Entidad = ConceptoCalificacionDtos;
@@ -189,7 +189,7 @@ namespace JWork.Administracion.WebApi.Controllers
             {
                 response = new()
                 {
-                    Entidad = new ConceptoCalificacionDto(),
+                    Entidad = new List<ConceptoCalificacionDto>(),
                     Mensaje = ex.Message,
                     Status = System.Net.HttpStatusCode.BadRequest
 

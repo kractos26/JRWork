@@ -16,8 +16,8 @@ namespace JWork.Administracion.WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Response<UnidadMedidaDto>>> Post(Registrar.UnidadMedidaRegisterCommand UnidadMedidaRegister)
+        [HttpPost("Crear")]
+        public async Task<ActionResult<Response<UnidadMedidaDto>>> Crear(Registrar.UnidadMedidaRegisterCommand UnidadMedidaRegister)
         {
             Response<UnidadMedidaDto> respon;
             try
@@ -45,8 +45,8 @@ namespace JWork.Administracion.WebApi.Controllers
 
         }
 
-        [HttpPut]
-        public async Task<ActionResult<Response<UnidadMedidaDto>>> Put(Registrar.UnidadMedidaUpdateCommand command)
+        [HttpPut("Modificar")]
+        public async Task<ActionResult<Response<UnidadMedidaDto>>> Modificar(Registrar.UnidadMedidaUpdateCommand command)
         {
             Response<UnidadMedidaDto> respon;
             try
@@ -73,9 +73,8 @@ namespace JWork.Administracion.WebApi.Controllers
             }
         }
 
-        // DELETE api/<UnidadMedidaController>/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Response<bool>>> Delete(int id)
+        [HttpDelete("Eliminar/{id}")]
+        public async Task<ActionResult<Response<bool>>> Eliminar(int id)
         {
             Response<bool> response = new();
             try
@@ -106,8 +105,8 @@ namespace JWork.Administracion.WebApi.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<ActionResult<Response<List<UnidadMedidaDto>>>> Get()
+        [HttpGet("GetTodo")]
+        public async Task<ActionResult<Response<List<UnidadMedidaDto>>>> GetTodo()
         {
             Response<List<UnidadMedidaDto>> response = new();
             try
@@ -115,7 +114,7 @@ namespace JWork.Administracion.WebApi.Controllers
 
                 Buscar.UnidadMedidaBuscarTodoCommand command = new()
                 {
-                   
+
                 };
 
                 List<UnidadMedidaDto> UnidadMedidaDtos = await _mediator.Send(command);
@@ -139,8 +138,8 @@ namespace JWork.Administracion.WebApi.Controllers
         }
 
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Response<UnidadMedidaDto>>> Get(int id)
+        [HttpGet("GetPorId/{id}")]
+        public async Task<ActionResult<Response<UnidadMedidaDto>>> GetPorId(int id)
         {
             Response<UnidadMedidaDto> response = new();
             try
@@ -171,14 +170,14 @@ namespace JWork.Administracion.WebApi.Controllers
             }
         }
 
-        [HttpGet("search")]
-        public async Task<ActionResult<Response<UnidadMedidaDto>>> Get(Buscar.UnidadMedidaBuscarIdCommand command)
+        [HttpGet("Buscar")]
+        public async Task<ActionResult<Response<List<UnidadMedidaDto>>>> Buscar(Buscar.UnidadMedidaBuscarCommand command)
         {
-            Response<UnidadMedidaDto> response = new();
+            Response<List<UnidadMedidaDto>> response = new();
             try
             {
 
-                UnidadMedidaDto UnidadMedidaDtos = await _mediator.Send(command);
+                List<UnidadMedidaDto> UnidadMedidaDtos = await _mediator.Send(command);
 
                 response.Mensaje = "";
                 response.Entidad = UnidadMedidaDtos;
@@ -189,7 +188,7 @@ namespace JWork.Administracion.WebApi.Controllers
             {
                 response = new()
                 {
-                    Entidad = new UnidadMedidaDto(),
+                    Entidad = new List<UnidadMedidaDto>(),
                     Mensaje = ex.Message,
                     Status = System.Net.HttpStatusCode.BadRequest
 

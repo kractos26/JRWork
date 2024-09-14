@@ -17,8 +17,8 @@ namespace JWork.Administracion.WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Response<DivipolaDto>>> Post(Registrar.DivipolaRegisterCommand DivipolaRegister)
+        [HttpPost("Crear")]
+        public async Task<ActionResult<Response<DivipolaDto>>> Crear(Registrar.DivipolaRegisterCommand DivipolaRegister)
         {
             Response<DivipolaDto> respon;
             try
@@ -46,8 +46,8 @@ namespace JWork.Administracion.WebApi.Controllers
 
         }
 
-        [HttpPut]
-        public async Task<ActionResult<Response<DivipolaDto>>> Put(Registrar.DivipolaUpdateCommand command)
+        [HttpPut("Modificar")]
+        public async Task<ActionResult<Response<DivipolaDto>>> Modificar(Registrar.DivipolaUpdateCommand command)
         {
             Response<DivipolaDto> respon;
             try
@@ -74,9 +74,9 @@ namespace JWork.Administracion.WebApi.Controllers
             }
         }
 
-        // DELETE api/<DivipolaController>/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Response<bool>>> Delete(int id)
+        // Eliminar api/<DivipolaController>/5
+        [HttpDelete("Eliminar/{id}")]
+        public async Task<ActionResult<Response<bool>>> Eliminar(int id)
         {
             Response<bool> response = new();
             try
@@ -107,8 +107,8 @@ namespace JWork.Administracion.WebApi.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<ActionResult<Response<List<DivipolaDto>>>> Get()
+        [HttpGet("GetTodo")]
+        public async Task<ActionResult<Response<List<DivipolaDto>>>> GetTodo()
         {
             Response<List<DivipolaDto>> response = new();
             try
@@ -140,8 +140,8 @@ namespace JWork.Administracion.WebApi.Controllers
         }
 
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Response<DivipolaDto>>> Get(int id)
+        [HttpGet("GetPorId/{id}")]
+        public async Task<ActionResult<Response<DivipolaDto>>> GetPorId(int id)
         {
             Response<DivipolaDto> response = new();
             try
@@ -172,14 +172,14 @@ namespace JWork.Administracion.WebApi.Controllers
             }
         }
 
-        [HttpGet("search")]
-        public async Task<ActionResult<Response<DivipolaDto>>> Get(Buscar.DivipolaBuscarIdCommand command)
+        [HttpGet("Buscar")]
+        public async Task<ActionResult<Response<List<DivipolaDto>>>> Buscar(Buscar.DivipolaBuscarCommand command)
         {
-            Response<DivipolaDto> response = new();
+            Response<List<DivipolaDto>> response = new();
             try
             {
 
-                DivipolaDto DivipolaDtos = await _mediator.Send(command);
+                List<DivipolaDto> DivipolaDtos = await _mediator.Send(command);
 
                 response.Mensaje = "";
                 response.Entidad = DivipolaDtos;
@@ -190,7 +190,7 @@ namespace JWork.Administracion.WebApi.Controllers
             {
                 response = new()
                 {
-                    Entidad = new DivipolaDto(),
+                    Entidad = new List<DivipolaDto>(),
                     Mensaje = ex.Message,
                     Status = System.Net.HttpStatusCode.BadRequest
 

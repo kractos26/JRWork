@@ -17,8 +17,8 @@ namespace JWork.Administracion.WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Response<TipoIdentificacionDto>>> Post(Registrar.TipoIdentificacionRegisterCommand TipoIdentificacionRegister)
+        [HttpPost("Crear")]
+        public async Task<ActionResult<Response<TipoIdentificacionDto>>> Crear(Registrar.TipoIdentificacionRegisterCommand TipoIdentificacionRegister)
         {
             Response<TipoIdentificacionDto> respon;
             try
@@ -46,8 +46,8 @@ namespace JWork.Administracion.WebApi.Controllers
 
         }
 
-        [HttpPut]
-        public async Task<ActionResult<Response<TipoIdentificacionDto>>> Put(Registrar.TipoIdentificacionUpdateCommand command)
+        [HttpPut("Modificar")]
+        public async Task<ActionResult<Response<TipoIdentificacionDto>>> Modificar(Registrar.TipoIdentificacionUpdateCommand command)
         {
             Response<TipoIdentificacionDto> respon;
             try
@@ -74,9 +74,9 @@ namespace JWork.Administracion.WebApi.Controllers
             }
         }
 
-        // DELETE api/<TipoIdentificacionController>/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Response<bool>>> Delete(int id)
+        // Eliminar api/<TipoIdentificacionController>/5
+        [HttpDelete("Eliminar/{id}")]
+        public async Task<ActionResult<Response<bool>>> Eliminar(int id)
         {
             Response<bool> response = new();
             try
@@ -107,8 +107,8 @@ namespace JWork.Administracion.WebApi.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<ActionResult<Response<List<TipoIdentificacionDto>>>> Get()
+        [HttpGet("GetTodo")]
+        public async Task<ActionResult<Response<List<TipoIdentificacionDto>>>> GetTodo()
         {
             Response<List<TipoIdentificacionDto>> response = new();
             try
@@ -140,8 +140,8 @@ namespace JWork.Administracion.WebApi.Controllers
         }
 
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Response<TipoIdentificacionDto>>> Get(int id)
+        [HttpGet("GetPorId/{id}")]
+        public async Task<ActionResult<Response<TipoIdentificacionDto>>> GetPorId(int id)
         {
             Response<TipoIdentificacionDto> response = new();
             try
@@ -172,14 +172,14 @@ namespace JWork.Administracion.WebApi.Controllers
             }
         }
 
-        [HttpGet("search")]
-        public async Task<ActionResult<Response<TipoIdentificacionDto>>> Get(Buscar.TipoIdentificacionBuscarIdCommand command)
+        [HttpGet("Buscar")]
+        public async Task<ActionResult<Response<List<TipoIdentificacionDto>>>> Buscar(Buscar.TipoIdentificacionBuscarCommand command)
         {
-            Response<TipoIdentificacionDto> response = new();
+            Response<List<TipoIdentificacionDto>> response = new();
             try
             {
 
-                TipoIdentificacionDto TipoIdentificacionDtos = await _mediator.Send(command);
+                List<TipoIdentificacionDto> TipoIdentificacionDtos = await _mediator.Send(command);
 
                 response.Mensaje = "";
                 response.Entidad = TipoIdentificacionDtos;
@@ -190,7 +190,7 @@ namespace JWork.Administracion.WebApi.Controllers
             {
                 response = new()
                 {
-                    Entidad = new TipoIdentificacionDto(),
+                    Entidad = new List<TipoIdentificacionDto>(),
                     Mensaje = ex.Message,
                     Status = System.Net.HttpStatusCode.BadRequest
 

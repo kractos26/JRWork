@@ -17,11 +17,11 @@ namespace JWork.Administracion.WebApi.Controllers
         {
             _mediator = mediator;
         }
-   
 
-        // POST api/<AreaController>
-        [HttpPost]
-        public async Task<ActionResult<Response<AreaDto>>> Post(Registrar.AreaRegisterCommand areaRegister)
+
+        // Crear api/<AreaController>
+        [HttpPost("Crear")]
+        public async Task<ActionResult<Response<AreaDto>>> Crear(Registrar.AreaRegisterCommand areaRegister)
         {
             Response<AreaDto> respon;
             try
@@ -48,9 +48,9 @@ namespace JWork.Administracion.WebApi.Controllers
             }
 
         }
-        // PUT api/<AreaController>/5
-        [HttpPut]
-        public async Task<ActionResult<Response<AreaDto>>> Put(Registrar.AreaUpdateCommand command)
+        // Modificar api/<AreaController>/5
+        [HttpPut("Modificar")]
+        public async Task<ActionResult<Response<AreaDto>>> Modificar(Registrar.AreaUpdateCommand command)
         {
             Response<AreaDto> respon;
             try
@@ -77,14 +77,14 @@ namespace JWork.Administracion.WebApi.Controllers
             }
         }
 
-        // DELETE api/<AreaController>/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Response<bool>>> Delete(int id)
+        // Eliminar api/<AreaController>/5
+        [HttpDelete("Eliminar/{id}")]
+        public async Task<ActionResult<Response<bool>>> Eliminar(int id)
         {
             Response<bool> response = new();
             try
             {
-               
+
                 Registrar.AreaEliminarCommand command = new()
                 {
                     AreaId = id
@@ -99,7 +99,7 @@ namespace JWork.Administracion.WebApi.Controllers
             }
             catch (Exception ex)
             {
-                response = new ()
+                response = new()
                 {
                     Entidad = false,
                     Mensaje = ex.Message,
@@ -110,8 +110,8 @@ namespace JWork.Administracion.WebApi.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<ActionResult<Response<List<AreaDto>>>> Get()
+        [HttpGet("GetTodo")]
+        public async Task<ActionResult<Response<List<AreaDto>>>> GetTodo()
         {
             Response<List<AreaDto>> response = new();
             try
@@ -143,8 +143,8 @@ namespace JWork.Administracion.WebApi.Controllers
         }
 
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Response<AreaDto>>> Get(int id)
+        [HttpGet("GetPorId/{id}")]
+        public async Task<ActionResult<Response<AreaDto>>> GetPorId(int id)
         {
             Response<AreaDto> response = new();
             try
@@ -175,14 +175,14 @@ namespace JWork.Administracion.WebApi.Controllers
             }
         }
 
-        [HttpGet("search")]
-        public async Task<ActionResult<Response<AreaDto>>> Get(Buscar.AreaBuscarIdCommand command)
+        [HttpGet("Buscar")]
+        public async Task<ActionResult<Response<List<AreaDto>>>> Buscar(Buscar.AreaBuscarCommand command)
         {
-            Response<AreaDto> response = new();
+            Response<List<AreaDto>> response = new();
             try
             {
 
-                AreaDto AreaDtos = await _mediator.Send(command);
+                List<AreaDto> AreaDtos = await _mediator.Send(command);
 
                 response.Mensaje = "";
                 response.Entidad = AreaDtos;
@@ -193,7 +193,7 @@ namespace JWork.Administracion.WebApi.Controllers
             {
                 response = new()
                 {
-                    Entidad = new AreaDto(),
+                    Entidad = new List<AreaDto>(),
                     Mensaje = ex.Message,
                     Status = System.Net.HttpStatusCode.BadRequest
 

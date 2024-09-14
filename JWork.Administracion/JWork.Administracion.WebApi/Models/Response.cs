@@ -6,7 +6,7 @@ namespace JWork.Administracion.WebApi.Models
     {
        public T? Entidad { get; set; }
        public string? Mensaje { get; set; }
-        public HttpStatusCode Status { get; set; }
+       public HttpStatusCode Status { get; set; }
 
     }
 }
