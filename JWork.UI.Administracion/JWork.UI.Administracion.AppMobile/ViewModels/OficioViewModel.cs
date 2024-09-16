@@ -1,9 +1,10 @@
-﻿using JWork.UI.Administracion.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using JWork.UI.Administracion.Models;
 using System.Collections.ObjectModel;
 
 namespace JWork.UI.Administracion.AppMobile.ViewModels
 {
-    public class OficioViewModel : BindingUtilObject
+    public partial class OficioViewModel : ViewModelGlobal
     {
         OficioDto _oficioDto;
         public OficioViewModel()
@@ -20,74 +21,23 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels
             }
         }
 
-        public int OficioId
-        {
-            get { return _oficioDto.OficioId; }
-            set
-            {
-                if (_oficioDto.OficioId != value)
-                {
-                    _oficioDto.OficioId = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
+        [ObservableProperty]
+        public int oficioId;
 
-        public string OficioName
-        {
-            get { return _oficioDto.Nombre; }
-            set
-            {
-                if (_oficioDto.Nombre != value)
-                {
-                    _oficioDto.Nombre = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
+        [ObservableProperty]
+        public string oficioName;
 
-        public int AreaId
-        {
-            get { return _oficioDto.AreaId; }
-            set
-            {
-                if (_oficioDto.AreaId != value)
-                {
-                    _oficioDto.AreaId = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
+        [ObservableProperty]
+        public int areaId;
 
-        private ObservableCollection<AreaDto> _areas;
+        [ObservableProperty]
+        private ObservableCollection<AreaDto> areas;
 
-        public ObservableCollection<AreaDto> Areas
-        {
-            get { return _areas; }
-            set
-            {
-                if (_areas != value)
-                {
-                    _areas = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
 
-        private AreaDto _areaSeleccionada;
+        [ObservableProperty]
+        private AreaDto areaSeleccionada;
 
-        public AreaDto AreaSeleccionada
-        {
-            get { return _areaSeleccionada; }
-            set { 
-                if( _areaSeleccionada != value)
-                {
-                    _areaSeleccionada = value;
-                    RaisePropertyChanged();
-                }
-                _areaSeleccionada = value;
-            }
-        }
+        
 
 
     }

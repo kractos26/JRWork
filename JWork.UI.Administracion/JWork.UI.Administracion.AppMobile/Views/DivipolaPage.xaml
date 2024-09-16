@@ -5,9 +5,7 @@
               xmlns:vm="clr-namespace:JWork.UI.Administracion.AppMobile.ViewModels"
              Title="DivipolaPage">
 
-    <ContentPage.BindingContext>
-        <vm:DivipolaViewModel />
-    </ContentPage.BindingContext>
+
     
     <VerticalStackLayout>
         <Label 

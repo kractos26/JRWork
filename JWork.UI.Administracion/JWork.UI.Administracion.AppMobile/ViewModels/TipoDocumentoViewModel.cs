@@ -1,8 +1,9 @@
-﻿using JWork.UI.Administracion.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using JWork.UI.Administracion.Models;
 
 namespace JWork.UI.Administracion.AppMobile.ViewModels
 {
-    public class TipoDocumentoViewModel : BindingUtilObject
+    public partial class TipoDocumentoViewModel : ViewModelGlobal
     {
         TipoDocumentoDto _tipodocumentodto;
         public TipoDocumentoViewModel()
@@ -10,33 +11,11 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels
             _tipodocumentodto = new TipoDocumentoDto();
         }
 
-        public int TipoDocumentoId
-        {
-            get { return _tipodocumentodto.TipoDocumentoId; }
-            set
-            {
-                if (_tipodocumentodto.TipoDocumentoId != value)
-                {
-                    _tipodocumentodto.TipoDocumentoId = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
+        [ObservableProperty]
+        public int tipoDocumentoId;
 
-        public string Nombre
-        {
-            get
-            {
-                return _tipodocumentodto.Nombre;
-            }
-            set
-            {
-                if (_tipodocumentodto.Nombre != value)
-                {
-                    _tipodocumentodto.Nombre = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
+        [ObservableProperty]
+        public string nombre;
+        
     }
 }

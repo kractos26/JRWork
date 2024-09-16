@@ -1,8 +1,9 @@
-﻿using JWork.UI.Administracion.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using JWork.UI.Administracion.Models;
 
 namespace JWork.UI.Administracion.AppMobile.ViewModels
 {
-    public class ConceptoCalificacionViewModel : BindingUtilObject
+    public partial class ConceptoCalificacionViewModel : ViewModelGlobal
     {
         private readonly ConceptoCalificacionDto _conCalificacion;
         public ConceptoCalificacionViewModel()
@@ -10,47 +11,16 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels
             _conCalificacion = new ConceptoCalificacionDto();
         }
 
-        public int ConceptoCalificacionId
-        {
-            get { return _conCalificacion.ConceptoCalificacionId; }
-            set
-            {
-                if (_conCalificacion.ConceptoCalificacionId != value)
-                {
-                    _conCalificacion.ConceptoCalificacionId = value;
-                    RaisePropertyChanged(nameof(ConceptoCalificacionId));
-                }
-            }
-        }
+        [ObservableProperty]
+        public int conceptoCalificacionId;
+        
 
-        public string? Nombre
-        {
-            get
-            {
-                return _conCalificacion.Nombre;
-            }
-            set
-            {
-                if (_conCalificacion.Nombre != value)
-                {
-                    _conCalificacion.Nombre = value;
-                    RaisePropertyChanged(nameof(Nombre));
-                }
-            }
-        }
+        [ObservableProperty]
+        public string? nombre;
+        
 
-        public string? Descripcion
-        {
-            get
-            {
-                return _conCalificacion.Descripcion;
-            }
-            set { 
-                if(_conCalificacion.Descripcion != value)
-                {
-                    RaisePropertyChanged(nameof(Descripcion));
-                }
-            }
-        }
+        [ObservableProperty]
+        public string? descripcion;
+       
     }
 }

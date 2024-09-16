@@ -1,8 +1,9 @@
-﻿using JWork.UI.Administracion.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using JWork.UI.Administracion.Models;
 
 namespace JWork.UI.Administracion.AppMobile.ViewModels
 {
-    public class TipoIdentificacionViewModel : BindingUtilObject
+    public partial class TipoIdentificacionViewModel : ViewModelGlobal
     {
         TipoIdentificacionDto _tipoIdentificacionDto;
         public TipoIdentificacionViewModel()
@@ -10,41 +11,14 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels
             _tipoIdentificacionDto = new TipoIdentificacionDto();
         }
 
-        public int TipoIdentificacionId
-        {
-            get { return _tipoIdentificacionDto.TipoIdentificacionId; }
-            set
-            {
-                if (_tipoIdentificacionDto.TipoIdentificacionId != value)
-                {
-                    _tipoIdentificacionDto.TipoIdentificacionId = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-        public string Sigla
-        {
-            get { return _tipoIdentificacionDto.Sigla; }
-            set
-            {
-                if (_tipoIdentificacionDto.Sigla != value)
-                {
-                    _tipoIdentificacionDto.Sigla = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-        public string Nombre
-        {
-            get { return _tipoIdentificacionDto.Nombre; }
-            set
-            {
-                if(_tipoIdentificacionDto.Nombre != value)
-                {
-                    _tipoIdentificacionDto.Nombre = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
+        [ObservableProperty]
+        public int tipoIdentificacionId;
+        
+        [ObservableProperty]
+        public string sigla;
+        
+        [ObservableProperty]
+        public string nombre;
+        
     }
 }

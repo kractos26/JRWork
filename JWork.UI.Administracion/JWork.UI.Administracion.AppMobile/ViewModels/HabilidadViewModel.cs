@@ -1,9 +1,10 @@
-﻿using JWork.UI.Administracion.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using JWork.UI.Administracion.Models;
 using System.Collections.ObjectModel;
 
 namespace JWork.UI.Administracion.AppMobile.ViewModels
 {
-    public class HabilidadViewModel : BindingUtilObject
+    public partial class HabilidadViewModel : ViewModelGlobal
     {
         private readonly HabilidadDto _habilidadDto;
         public HabilidadViewModel()
@@ -19,79 +20,23 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels
             }
         }
 
-        public int HabilidadId
-        {
-            get { return _habilidadDto.HabilidadId; }
-            set
-            {
-                if (_habilidadDto.HabilidadId != value)
-                {
-                    _habilidadDto.HabilidadId = value;
-                    RaisePropertyChanged(nameof(HabilidadId));
-                }
-            }
-        }
+        [ObservableProperty]
+        public int habilidadId;
 
 
-        public string Nombre
-        {
-            get
-            {
-                return _habilidadDto.Nombre;
-            }
-            set
-            {
-                if (_habilidadDto.Nombre != value)
-                {
-                    _habilidadDto.Nombre = value;
-                    RaisePropertyChanged(nameof(Nombre));
-                }
-            }
-        }
+        [ObservableProperty]
+        public string nombre;
 
 
-        public int ActividadId
-        {
-            get { return _habilidadDto.ActividadId; }
-            set
-            {
-                if (_habilidadDto.ActividadId != value)
-                {
-                    _habilidadDto.ActividadId = (int)value;
-                    RaisePropertyChanged(nameof(ActividadId));
-                }
-            }
-        }
+        [ObservableProperty]
+        public int actividadId;
 
-        private ObservableCollection<ActividadDto> _actividades;
+        [ObservableProperty]
+        private ObservableCollection<ActividadDto> actividades;
 
-        public ObservableCollection<ActividadDto> Actividades
-        {
-            get { return _actividades; }
-            set
-            {
-                if (_actividades != value)
-                {
-                    _actividades = value;
-                    RaisePropertyChanged(nameof(Actividades));
-                }
-            }
-        }
 
-        private ActividadDto _actividadSeleccionada;
-
-        public ActividadDto ActividadSeleccionada
-        {
-            get { return _actividadSeleccionada; }
-            set
-            {
-                if (_actividadSeleccionada != value)
-                {
-                    _actividadSeleccionada = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
+        [ObservableProperty]
+        private ActividadDto actividadSeleccionada;
 
     }
 }

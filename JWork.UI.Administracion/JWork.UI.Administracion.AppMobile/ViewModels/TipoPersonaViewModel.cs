@@ -1,8 +1,9 @@
-﻿using JWork.UI.Administracion.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using JWork.UI.Administracion.Models;
 
 namespace JWork.UI.Administracion.AppMobile.ViewModels
 {
-    public class TipoPersonaViewModel : BindingUtilObject
+    public partial class TipoPersonaViewModel : ViewModelGlobal
     {
         private readonly TipoPersonaDto _tipopersonaDto;
         public TipoPersonaViewModel()
@@ -10,33 +11,11 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels
             _tipopersonaDto = new TipoPersonaDto();
         }
 
-        public int TipoPersonaId
-        {
-            get { return _tipopersonaDto.TipoPersonaId; }
-            set
-            {
-                if (_tipopersonaDto.TipoPersonaId != value)
-                {
-                    _tipopersonaDto.TipoPersonaId = value;
-                    RaisePropertyChanged(nameof(TipoPersonaId));
-                }
-            }
-        }
+        [ObservableProperty]
+        public int tipoPersonaId;
 
-        public string Nombre
-        {
-            get
-            {
-                return _tipopersonaDto.Nombre;
-            }
-            set
-            {
-                if (_tipopersonaDto.Nombre != value)
-                {
-                    _tipopersonaDto.Nombre = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
+        [ObservableProperty]
+        public string nombre;
+       
     }
 }

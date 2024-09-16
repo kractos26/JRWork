@@ -5,9 +5,7 @@
              xmlns:vm="clr-namespace:JWork.UI.Administracion.AppMobile.ViewModels"
              Title="ConceptoCalificacionPage">
 
-    <ContentPage.BindingContext>
-        <vm:ConceptoCalificacionViewModel />
-    </ContentPage.BindingContext>
+  
     <VerticalStackLayout>
         <Label 
             Text="Welcome to .NET MAUI!"

@@ -1,8 +1,9 @@
-﻿using JWork.UI.Administracion.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using JWork.UI.Administracion.Models;
 
 namespace JWork.UI.Administracion.AppMobile.ViewModels
 {
-    public class UnidadMedidaViewModel : BindingUtilObject
+    public partial class UnidadMedidaViewModel : ViewModelGlobal
     {
         private readonly UnidadMedidaDto _unidadMedida;
         public UnidadMedidaViewModel()
@@ -10,33 +11,12 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels
             _unidadMedida = new UnidadMedidaDto();
         }
 
-        public int UnidadMedidaId
-        {
-            get
-            {
-                return _unidadMedida.UnidadMedidaId;
-            }
-            set
-            {
-                if (_unidadMedida.UnidadMedidaId != value)
-                {
-                    _unidadMedida.UnidadMedidaId = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
+        [ObservableProperty]
+        public int unidadMedidaId;
+        
 
-        public string? Nombre
-        {
-            get { return _unidadMedida.Nombre; }
-            set
-            {
-                if (_unidadMedida.Nombre != value)
-                {
-                    _unidadMedida.Nombre = value; 
-                    RaisePropertyChanged();
-                }
-            }
-        }
+        [ObservableProperty]
+        public string? nombre;
+        
     }
 }

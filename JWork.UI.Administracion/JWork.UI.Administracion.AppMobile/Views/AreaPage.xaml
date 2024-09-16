@@ -5,9 +5,7 @@
              xmlns:vm="clr-namespace:JWork.UI.Administracion.AppMobile.ViewModels"
              Title="AreaPage">
     
-    <ContentPage.BindingContext>
-        <vm:AreaViewModel />
-    </ContentPage.BindingContext>
+    
     
     <VerticalStackLayout>
         <Label 

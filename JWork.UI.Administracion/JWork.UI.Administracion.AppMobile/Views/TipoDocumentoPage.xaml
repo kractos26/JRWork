@@ -5,9 +5,6 @@
              xmlns:vm="clr-namespace:JWork.UI.Administracion.AppMobile.ViewModels"
              Title="TipoDocumentoPage">
 
-    <ContentPage.BindingContext>
-        <vm:TipoDocumentoViewModel />
-    </ContentPage.BindingContext>
     <VerticalStackLayout>
         <Label 
             Text="Welcome to .NET MAUI!"

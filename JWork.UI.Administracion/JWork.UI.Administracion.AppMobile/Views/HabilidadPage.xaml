@@ -5,9 +5,7 @@
               xmlns:vm="clr-namespace:JWork.UI.Administracion.AppMobile.ViewModels"
              Title="HabilidadPage">
 
-    <ContentPage.BindingContext>
-        <vm:HabilidadViewModel />
-    </ContentPage.BindingContext>
+   
     <VerticalStackLayout>
         <Label 
             Text="Welcome to .NET MAUI!"

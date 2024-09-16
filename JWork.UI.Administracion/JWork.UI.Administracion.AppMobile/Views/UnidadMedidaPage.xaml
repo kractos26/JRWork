@@ -4,9 +4,7 @@
              x:Class="JWork.UI.Administracion.AppMobile.Views.UnidadMedidaPage"
              xmlns:vm="clr-namespace:JWork.UI.Administracion.AppMobile.ViewModels"
              Title="UnidadMedidaPage">
-    <ContentPage.BindingContext>
-        <vm:UnidadMedidaViewModel />
-    </ContentPage.BindingContext>
+
     <VerticalStackLayout>
         <Label 
             Text="Welcome to .NET MAUI!"
