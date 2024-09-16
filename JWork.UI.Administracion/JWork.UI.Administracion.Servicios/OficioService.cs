@@ -1,6 +1,5 @@
-﻿using JWork.Administracion.Dto;
-using JWork.UI.Administracion.Common;
-using Microsoft.Extensions.Configuration;
+﻿using JWork.UI.Administracion.Common;
+using JWork.UI.Administracion.Models;
 using Microsoft.Extensions.Options;
 
 namespace JWork.UI.Administracion.Servicios

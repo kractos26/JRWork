@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="JWork.UI.Administracion.AppMobile.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:JWork.UI.Administracion.AppMobile"
+    xmlns:views="clr-namespace:JWork.UI.Administracion.AppMobile.Views"
+    Shell.FlyoutBehavior="Flyout"
+    Title="JWork.UI.Administracion.AppMobile">
+
+    <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage" />
+
+    <ShellContent 
+     Title="Help Support"
+     ContentTemplate="{DataTemplate views:ActividadPage}"
+     Route="ActividadPage"
+     />
+    
+    <ShellContent 
+     Title="Help Support"
+     ContentTemplate="{DataTemplate views:AreaPage}"
+     Route="AreaPage"
+     />
+    <ShellContent 
+     Title="Help Support"
+     ContentTemplate="{DataTemplate views:ConceptoCalificacionPage}"
+     Route="ConceptoCalificacionPage"
+     />
+
+    <ShellContent 
+    Title="Help Support"
+    ContentTemplate="{DataTemplate views:DivipolaPage}"
+    Route="DivipolaPage"
+    />
+
+    <ShellContent 
+    Title="Help Support"
+    ContentTemplate="{DataTemplate views:HabilidadPage}"
+    Route="HabilidadPage"
+    />
+
+    <ShellContent 
+    Title="Help Support"
+    ContentTemplate="{DataTemplate views:OficioPage}"
+    Route="OficioPage"
+    />
+
+    <ShellContent 
+    Title="Help Support"
+    ContentTemplate="{DataTemplate views:TipoDocumentoPage}"
+    Route="TipoDocumentoPage"
+    />
+    <ShellContent 
+    Title="Help Support"
+    ContentTemplate="{DataTemplate views:TipoIdentificacionPage}"
+    Route="TipoIdentificacionPage"
+    />
+
+    <ShellContent 
+    Title="Help Support"
+    ContentTemplate="{DataTemplate views:TipoPersonaPage}"
+    Route="TipoPersonaPage"
+    />
+
+    <ShellContent 
+    Title="Help Support"
+    ContentTemplate="{DataTemplate views:UnidadMedidaPage}"
+    Route="UnidadMedidaPage"
+    />
+</Shell>

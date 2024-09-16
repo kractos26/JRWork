@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace JWork.Administracion.Dto;
 
-namespace JWork.Administracion.Dto
+public class DivipolaDto
 {
-    public class DivipolaDto
-    {
+    public int DivipolaId { get; set; }
 
-    }
+    public decimal Codigo { get; set; }
+
+    public string Nombre { get; set; } = null!;
+
+    public decimal? CodigoPadre { get; set; }
 }

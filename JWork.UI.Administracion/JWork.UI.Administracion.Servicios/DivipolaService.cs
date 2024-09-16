@@ -1,5 +1,5 @@
-﻿using JWork.Administracion.Dto;
-using JWork.UI.Administracion.Common;
+﻿using JWork.UI.Administracion.Common;
+using JWork.UI.Administracion.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 

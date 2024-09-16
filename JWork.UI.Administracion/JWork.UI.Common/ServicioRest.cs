@@ -61,7 +61,7 @@ namespace JWork.UI.Administracion.Common
 
             HttpResponseMessage response = await client.GetAsync(urlBuilder.ToString());
             string resultContent = await response.Content.ReadAsStringAsync();
-            return !string.IsNullOrWhiteSpace(resultContent) ? JsonSerializer.Deserialize<T>(resultContent) : default(T);
+            return !string.IsNullOrWhiteSpace(resultContent) ? JsonSerializer.Deserialize<T>(resultContent) : default;
         }
 
         private static async Task<T?> EjecutarServicioPostAsync<T>(string? urlBase, string? metodo, object? parametros, HttpClient client)
