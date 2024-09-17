@@ -6,21 +6,6 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels
 {
     public partial class OficioViewModel : ViewModelGlobal
     {
-        OficioDto _oficioDto;
-        public OficioViewModel()
-        {
-            _oficioDto = new OficioDto();
-            PropertyChanged += OficioViewModel_PropertyChanged;
-        }
-
-        private void OficioViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(AreaSeleccionada))
-            {
-                _oficioDto.AreaId = AreaSeleccionada.AreaId;
-            }
-        }
-
         [ObservableProperty]
         public int oficioId;
 
@@ -36,6 +21,29 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels
 
         [ObservableProperty]
         private AreaDto areaSeleccionada;
+
+        OficioDto _oficioDto;
+        public OficioViewModel()
+        {
+            _oficioDto = new OficioDto();
+            PropertyChanged += OficioViewModel_PropertyChanged;
+
+        }
+
+        void Inicializar()
+        {
+
+        }
+
+        private void OficioViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(AreaSeleccionada))
+            {
+                _oficioDto.AreaId = AreaSeleccionada.AreaId;
+            }
+        }
+
+      
 
         
 
