@@ -6,21 +6,14 @@ namespace JWork.UI.Administracion.Servicios
 {
     public class AreaService
     {
-        private readonly Settings settings;
-
-        // Constructor
-        public AreaService(IOptions<Settings> options)
-        {
-            settings = options.Value ?? throw new ArgumentNullException(nameof(options), "Configuración de 'Settings' no disponible.");
-        }
-
+        
         public async Task<Response<AreaDto>> CrearAsync(AreaDto Area)
         {
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
                 Metodo = Constantes.UrlArea.Post,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Verbo = Verbo.Post,
                 Parametros = Area
             };
@@ -33,7 +26,7 @@ namespace JWork.UI.Administracion.Servicios
             {
                 Encabezado = null,
                 Metodo = Constantes.UrlArea.Post,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Verbo = Verbo.Put,
                 Parametros = Area
             };
@@ -45,7 +38,7 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Metodo = $"api/Area/Eliminar/{id}",
                 Verbo = Verbo.Delete
             };
@@ -57,8 +50,8 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
-                Metodo = Constantes.UrlArea.GetTodo,
+                UrlBase = Constantes.UrlBase,
+                Metodo = Constantes.UrlArea.GetTodoAsync,
                 Verbo = Verbo.Get
             };
             return await ServicioRest.EjecutarServicioAsync<Response<List<AreaDto>>>(servicio) ?? new();
@@ -69,8 +62,8 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
-                Metodo = $"{Constantes.UrlArea.GetPorId}/{Area}",
+                UrlBase = Constantes.UrlBase,
+                Metodo = $"{Constantes.UrlArea.GetPorIdAsync}/{Area}",
                 Verbo = Verbo.Get
             };
             return await ServicioRest.EjecutarServicioAsync<Response<AreaDto>>(servicio) ?? new Response<AreaDto>();
@@ -81,7 +74,7 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Metodo = Constantes.UrlArea.Buscar,
                 Verbo = Verbo.Get,
                 Parametros = Area

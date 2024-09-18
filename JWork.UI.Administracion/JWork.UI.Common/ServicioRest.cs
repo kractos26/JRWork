@@ -17,7 +17,7 @@ namespace JWork.UI.Administracion.Common
 
     public class ParametrosServicio
     {
-        public string? UrlBase { set; get; }
+        public string UrlBase { set; get; } = null!;
         public string? Metodo { set; get; }
         public Verbo Verbo { set; get; }
         public bool ValidarSertificado { set; get; }
@@ -25,16 +25,12 @@ namespace JWork.UI.Administracion.Common
         public object? Parametros { get; set; }
     }
 
-
     public class ServicioRest
     {
         public static async Task<T?> EjecutarServicioAsync<T>(ParametrosServicio request)
         {
-            HttpClient client = new()
-            {
-                Timeout = TimeSpan.FromSeconds(300.0)
-            };
-            InicializarCliente(request.Encabezado, request.ValidarSertificado, client);
+           
+            HttpClient client =  InicializarCliente(request.Encabezado, request.ValidarSertificado,request.UrlBase);
 
             return request.Verbo switch
             {
@@ -48,20 +44,28 @@ namespace JWork.UI.Administracion.Common
 
         private static async Task<T?> EjecutarServicioGetAsync<T>(string? urlBase, string? metodo, object? parametros, HttpClient client)
         {
-            UriBuilder urlBuilder = new($"{urlBase}/{metodo}");
-            if (parametros != null)
+            try
             {
+                UriBuilder urlBuilder = new($"{urlBase}/{metodo}");
                 NameValueCollection query = HttpUtility.ParseQueryString(string.Empty);
-                foreach (var prop in parametros.GetType().GetProperties())
-                {
-                    query[prop.Name] = prop.GetValue(parametros)?.ToString();
-                }
-                urlBuilder.Query = query.ToString();
-            }
 
-            HttpResponseMessage response = await client.GetAsync(urlBuilder.ToString());
-            string resultContent = await response.Content.ReadAsStringAsync();
-            return !string.IsNullOrWhiteSpace(resultContent) ? JsonSerializer.Deserialize<T>(resultContent) : default;
+                if (parametros != null)
+                {
+                    foreach (var prop in parametros.GetType().GetProperties())
+                    {
+                        query[prop.Name] = prop.GetValue(parametros)?.ToString();
+                    }
+                    urlBuilder.Query = query.ToString();
+                }
+                HttpResponseMessage response = await client.GetAsync(urlBuilder.ToString());
+                response.EnsureSuccessStatusCode();
+                return await ProcesarRespuesta<T>(response);
+            }
+            catch (HttpRequestException ex)
+            {
+
+                throw;
+            }
         }
 
         private static async Task<T?> EjecutarServicioPostAsync<T>(string? urlBase, string? metodo, object? parametros, HttpClient client)
@@ -70,8 +74,7 @@ namespace JWork.UI.Administracion.Common
             HttpContent content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await client.PostAsync($"{urlBase}/{metodo}", content);
-            string resultContent = await response.Content.ReadAsStringAsync();
-            return !string.IsNullOrWhiteSpace(resultContent) ? JsonSerializer.Deserialize<T>(resultContent) : default;
+            return await ProcesarRespuesta<T>(response);
         }
 
         private static async Task<T?> EjecutarServicioPutAsync<T>(string? urlBase, string? metodo, object? parametros, HttpClient client)
@@ -80,8 +83,7 @@ namespace JWork.UI.Administracion.Common
             HttpContent content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await client.PutAsync($"{urlBase}/{metodo}", content);
-            string resultContent = await response.Content.ReadAsStringAsync();
-            return !string.IsNullOrWhiteSpace(resultContent) ? JsonSerializer.Deserialize<T?>(resultContent) : default;
+            return await ProcesarRespuesta<T>(response);
         }
 
         private static async Task<T?> EjecutarServicioDeleteAsync<T>(string? urlBase, string? metodo, object? parametros, HttpClient client)
@@ -98,26 +100,38 @@ namespace JWork.UI.Administracion.Common
             }
 
             HttpResponseMessage response = await client.DeleteAsync(urlBuilder.ToString());
-            string resultContent = await response.Content.ReadAsStringAsync();
-            return !string.IsNullOrWhiteSpace(resultContent)? JsonSerializer.Deserialize<T>(resultContent):default;
+            return await ProcesarRespuesta<T>(response);
         }
 
-        private static void InicializarCliente(Dictionary<string, object>? encabezados, bool validarCertificadoServidor, HttpClient client)
+        private static async Task<T?> ProcesarRespuesta<T>(HttpResponseMessage response)
         {
-            client.DefaultRequestHeaders.Accept.Clear();
-            if (validarCertificadoServidor)
+            if (response.IsSuccessStatusCode)
             {
-                ServicePointManager.ServerCertificateValidationCallback = (RemoteCertificateValidationCallback)((sender, certificate, chain, sslPolicyErrors) => true);
+                string resultContent = await response.Content.ReadAsStringAsync();
+                return !string.IsNullOrWhiteSpace(resultContent) ? JsonSerializer.Deserialize<T>(resultContent) : default;
             }
-            if (encabezados != null)
+            else
             {
-                foreach (var encabezado in encabezados)
-                {
-                    client.DefaultRequestHeaders.Add(encabezado.Key, Convert.ToString(encabezado.Value));
-                }
+                // Opcional: manejar errores de una manera más detallada
+                throw new HttpRequestException($"Error en la solicitud: {response.StatusCode}");
             }
         }
+
+        private static HttpClient InicializarCliente(Dictionary<string, object>? encabezados, bool validarCertificadoServidor,string urlbase)
+        {
+
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, sslPolicyErrors) => true; // Solo para pruebas
+
+            HttpClient client = new HttpClient(handler)
+            {
+                BaseAddress = new Uri(urlbase), // Ajusta la URL según sea necesario
+                Timeout = TimeSpan.FromSeconds(300)
+            };
+
+            client.DefaultRequestHeaders.Accept.Clear();
+            return client;
+        }
+
     }
 }
-
-

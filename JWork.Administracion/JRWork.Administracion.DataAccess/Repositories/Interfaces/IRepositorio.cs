@@ -20,5 +20,7 @@ public interface IRepositorio<T> where T : class
 
     Task<bool> EliminarAsync(T Entidad);
 
+    Task<List<T>> BuscarPaginadoAsync(Expression<Func<T, bool>> predicado, int numeroPagina, int tamanoPagina);
+
     Task GuardarAsync();
 }

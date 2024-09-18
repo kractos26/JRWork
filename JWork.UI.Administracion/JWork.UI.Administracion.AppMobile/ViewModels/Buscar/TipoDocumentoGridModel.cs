@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using JWork.UI.Administracion.AppMobile.Services;
+using JWork.UI.Administracion.AppMobile.Views;
 using JWork.UI.Administracion.Business;
 using JWork.UI.Administracion.Models;
 using System.Collections.ObjectModel;
@@ -14,19 +16,20 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels.Buscar
         public TipoDocumentoDto tipodocumentoselecionada;
 
         private readonly TipoDocumentoBL _tipodocumentoBL;
-        public TipoDocumentoGridViewModel(TipoDocumentoBL tipodocumentoBL)
+        private readonly INavigationService _navigationService;
+        public TipoDocumentoGridViewModel(TipoDocumentoBL tipodocumentoBL,INavigationService navigationService)
         {
             _tipodocumentoBL = tipodocumentoBL;
-            tipodocumentoselecionada = new ();
-            tipodocumento = [];
+            _navigationService = navigationService;
             PropertyChanged += AreaGridViewModel_PropertyChanged;
         }
 
-        private void AreaGridViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private async void AreaGridViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(tipodocumentoselecionada))
-            { 
-                
+            {
+                string uri = $"{nameof(TipoDocumentoPage)}?id={tipodocumentoselecionada.TipoDocumentoId}";
+                await _navigationService.GotoAsync(uri);
             }
         }
 

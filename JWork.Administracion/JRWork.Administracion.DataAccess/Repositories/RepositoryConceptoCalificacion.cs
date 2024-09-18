@@ -16,6 +16,7 @@ public class RepositoryConceptoCalificacion : IRepositoryConceptoCalificacion
 
     public async Task<ConceptoCalificacion> AdicionarAsync(ConceptoCalificacion Entidad) => await _repositorio.AdicionarAsync(Entidad);
 
+    public Task<List<ConceptoCalificacion>> BuscarPaginadoAsync(Expression<Func<ConceptoCalificacion, bool>> predicado, int numeroPagina, int tamanoPagina) => _repositorio.BuscarPaginadoAsync(predicado, numeroPagina, tamanoPagina);
 
     public async Task<List<ConceptoCalificacion>> BuscarAsync(Expression<Func<ConceptoCalificacion, bool>> predicado) => await _repositorio.BuscarAsync(predicado);
 

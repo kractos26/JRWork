@@ -12,7 +12,8 @@ public class RepositoryArea : IRepositoryArea
         _repocitorio = repocitorio;
     }
     public async Task<Area> AdicionarAsync(Area Entidad) => await _repocitorio.AdicionarAsync(Entidad);
-    
+
+    public Task<List<Area>> BuscarPaginadoAsync(Expression<Func<Area, bool>> predicado, int numeroPagina, int tamanoPagina) => _repocitorio.BuscarPaginadoAsync(predicado, numeroPagina, tamanoPagina);
 
     public async Task<List<Area>> BuscarAsync(Expression<Func<Area, bool>> predicado) => await _repocitorio.BuscarAsync(predicado);
 

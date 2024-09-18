@@ -6,13 +6,7 @@ namespace JWork.UI.Administracion.Servicios
 {
     public class UnidadMedidaService
     {
-        private readonly Settings settings;
-
-        // Constructor
-        public UnidadMedidaService(IOptions<Settings> options)
-        {
-            settings = options.Value ?? throw new ArgumentNullException(nameof(options), "Configuración de 'Settings' no disponible.");
-        }
+        
 
         public async Task<Response<UnidadMedidaDto>> CrearAsync(UnidadMedidaDto UnidadMedida)
         {
@@ -20,7 +14,7 @@ namespace JWork.UI.Administracion.Servicios
             {
                 Encabezado = null,
                 Metodo = Constantes.UnidadMedida.Post,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Verbo = Verbo.Post,
                 Parametros = UnidadMedida
             };
@@ -33,7 +27,7 @@ namespace JWork.UI.Administracion.Servicios
             {
                 Encabezado = null,
                 Metodo = Constantes.UnidadMedida.Post,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Verbo = Verbo.Put,
                 Parametros = UnidadMedida
             };
@@ -45,7 +39,7 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Metodo = $"api/UnidadMedida/Eliminar/{id}",
                 Verbo = Verbo.Delete
             };
@@ -57,8 +51,8 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
-                Metodo = Constantes.UnidadMedida.GetTodo,
+                UrlBase = Constantes.UrlBase,
+                Metodo = Constantes.UnidadMedida.GetTodoAsync,
                 Verbo = Verbo.Get
             };
             return await ServicioRest.EjecutarServicioAsync<Response<List<UnidadMedidaDto>>>(servicio) ?? new();
@@ -69,8 +63,8 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
-                Metodo = $"{Constantes.UnidadMedida.GetPorId}/{UnidadMedida}",
+                UrlBase = Constantes.UrlBase,
+                Metodo = $"{Constantes.UnidadMedida.GetPorIdAsync}/{UnidadMedida}",
                 Verbo = Verbo.Get
             };
             return await ServicioRest.EjecutarServicioAsync<Response<UnidadMedidaDto>>(servicio) ?? new Response<UnidadMedidaDto>();
@@ -81,7 +75,7 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Metodo = Constantes.UnidadMedida.Buscar,
                 Verbo = Verbo.Get,
                 Parametros = UnidadMedida

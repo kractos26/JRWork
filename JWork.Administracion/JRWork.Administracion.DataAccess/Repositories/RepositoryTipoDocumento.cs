@@ -12,7 +12,8 @@ public class RepositoryTipoDocumento : IRepositoryTipoDocumento
         _repositorio = repositorio;
     }
     public async Task<TipoDocumento> AdicionarAsync(TipoDocumento Entidad) => await _repositorio.AdicionarAsync(Entidad);
-   
+    public Task<List<TipoDocumento>> BuscarPaginadoAsync(Expression<Func<TipoDocumento, bool>> predicado, int numeroPagina, int tamanoPagina) => _repositorio.BuscarPaginadoAsync(predicado, numeroPagina, tamanoPagina);
+
 
     public async Task<List<TipoDocumento>> BuscarAsync(Expression<Func<TipoDocumento, bool>> predicado) => await _repositorio.BuscarAsync(predicado);
     

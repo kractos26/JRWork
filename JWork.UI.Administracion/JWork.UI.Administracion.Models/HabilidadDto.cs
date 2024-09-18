@@ -9,4 +9,7 @@ public class HabilidadDto
 
    
     public int ActividadId { get; set; }
+
+    public ActividadDto? Actividad { get; set; }
+
 }

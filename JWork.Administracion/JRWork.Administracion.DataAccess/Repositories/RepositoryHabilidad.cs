@@ -14,6 +14,8 @@ public class RepositoryHabilidad : IRepositoryHabilidad
 
     public async Task<Habilidad> AdicionarAsync(Habilidad Entidad) => await _repositorio.AdicionarAsync(Entidad);
 
+    public Task<List<Habilidad>> BuscarPaginadoAsync(Expression<Func<Habilidad, bool>> predicado, int numeroPagina, int tamanoPagina) => _repositorio.BuscarPaginadoAsync(predicado, numeroPagina, tamanoPagina);
+
 
     public async Task<List<Habilidad>> BuscarAsync(Expression<Func<Habilidad, bool>> predicado) => await _repositorio.BuscarAsync(predicado);
     

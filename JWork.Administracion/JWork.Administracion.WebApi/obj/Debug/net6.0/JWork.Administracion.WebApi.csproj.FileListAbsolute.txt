@@ -24,7 +24,6 @@ C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Adm
 C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.WebApi\obj\Debug\net6.0\staticwebassets.build.json
 C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.WebApi\obj\Debug\net6.0\staticwebassets.development.json
 C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.WebApi\obj\Debug\net6.0\scopedcss\bundle\JWork.Administracion.WebApi.styles.css
-C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.WebApi\obj\Debug\net6.0\JWork.Administracion.WebApi.csproj.CopyComplete
 C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.WebApi\obj\Debug\net6.0\JWork.Administracion.WebApi.dll
 C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.WebApi\obj\Debug\net6.0\refint\JWork.Administracion.WebApi.dll
 C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.WebApi\obj\Debug\net6.0\JWork.Administracion.WebApi.pdb
@@ -109,3 +108,5 @@ C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Adm
 C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.WebApi\bin\Debug\net6.0\System.Text.Encodings.Web.dll
 C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.WebApi\bin\Debug\net6.0\System.Text.Json.dll
 C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.WebApi\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.WebApi\obj\Debug\net6.0\JWork.Administracion.WebApi.sourcelink.json
+C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.WebApi\obj\Debug\net6.0\JWork.Ad.6911FF0D.Up2Date

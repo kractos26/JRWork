@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JWork.Administracion.Dto")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1df533f610ed329fe0a0fd4c6eb9cce11a6aa283")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6e4a75673a9950bd687ec11f1a6f9b0c81a96318")]
 [assembly: System.Reflection.AssemblyProductAttribute("JWork.Administracion.Dto")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JWork.Administracion.Dto")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

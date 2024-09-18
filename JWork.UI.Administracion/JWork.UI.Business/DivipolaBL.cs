@@ -14,8 +14,8 @@ namespace JWork.UI.Administracion.Business
 
         public async Task<Response<DivipolaDto>> Crear(DivipolaDto request) => await _service.CrearAsync(request);
         public async Task<Response<DivipolaDto>> Modificar(DivipolaDto request) => await _service.ModificarAsync(request);
-        public async Task<Response<List<DivipolaDto>>> GetTodo() => await _service.BuscarTodoAsync();
-        public async Task<Response<DivipolaDto>> GetPorId(int id) => await _service.BuscarPorIdAsync(id);
+        public async Task<Response<List<DivipolaDto>>> GetTodoAsync() => await _service.BuscarTodoAsync();
+        public async Task<Response<DivipolaDto>> GetPorIdAsync(int id) => await _service.BuscarPorIdAsync(id);
         public async Task<Response<List<DivipolaDto>>> Buscar(DivipolaDto request) => await _service.Buscar(request);
         public async Task<Response<bool>> Eliminar(int id) => await _service.EliminarAsync(id);
 

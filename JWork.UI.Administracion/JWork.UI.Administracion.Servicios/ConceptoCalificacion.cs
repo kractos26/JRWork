@@ -6,13 +6,7 @@ namespace JWork.UI.Administracion.Servicios
 {
     public class ConceptoCalificacionService
     {
-        private readonly Settings settings;
-
-        // Constructor
-        public ConceptoCalificacionService(IOptions<Settings> options)
-        {
-            settings = options.Value ?? throw new ArgumentNullException(nameof(options), "Configuración de 'Settings' no disponible.");
-        }
+      
 
         public async Task<Response<ConceptoCalificacionDto>> CrearAsync(ConceptoCalificacionDto ConceptoCalificacion)
         {
@@ -20,7 +14,7 @@ namespace JWork.UI.Administracion.Servicios
             {
                 Encabezado = null,
                 Metodo = Constantes.ConceptoCalificacion.Post,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Verbo = Verbo.Post,
                 Parametros = ConceptoCalificacion
             };
@@ -33,7 +27,7 @@ namespace JWork.UI.Administracion.Servicios
             {
                 Encabezado = null,
                 Metodo = Constantes.ConceptoCalificacion.Post,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Verbo = Verbo.Put,
                 Parametros = ConceptoCalificacion
             };
@@ -45,7 +39,7 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Metodo = $"api/ConceptoCalificacion/Eliminar/{id}",
                 Verbo = Verbo.Delete
             };
@@ -57,8 +51,8 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
-                Metodo = Constantes.ConceptoCalificacion.GetTodo,
+                UrlBase = Constantes.UrlBase,
+                Metodo = Constantes.ConceptoCalificacion.GetTodoAsync,
                 Verbo = Verbo.Get
             };
             return await ServicioRest.EjecutarServicioAsync<Response<List<ConceptoCalificacionDto>>>(servicio) ?? new();
@@ -69,8 +63,8 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
-                Metodo = $"{Constantes.ConceptoCalificacion.GetPorId}/{ConceptoCalificacion}",
+                UrlBase = Constantes.UrlBase,
+                Metodo = $"{Constantes.ConceptoCalificacion.GetPorIdAsync}/{ConceptoCalificacion}",
                 Verbo = Verbo.Get
             };
             return await ServicioRest.EjecutarServicioAsync<Response<ConceptoCalificacionDto>>(servicio) ?? new Response<ConceptoCalificacionDto>();
@@ -81,7 +75,7 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Metodo = Constantes.ConceptoCalificacion.Buscar,
                 Verbo = Verbo.Get,
                 Parametros = ConceptoCalificacion

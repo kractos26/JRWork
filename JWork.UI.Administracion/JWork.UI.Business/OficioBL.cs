@@ -14,8 +14,8 @@ namespace JWork.UI.Administracion.Business
 
         public async Task<Response<OficioDto>> Crear(OficioDto request) => await _service.CrearAsync(request);
         public async Task<Response<OficioDto>> Modificar(OficioDto request) => await _service.ModificarAsync(request);
-        public async Task<Response<List<OficioDto>>> GetTodo() => await _service.BuscarTodoAsync();
-        public async Task<Response<OficioDto>> GetPorId(int id) => await _service.BuscarPorIdAsync(id);
+        public async Task<Response<List<OficioDto>>> GetTodoAsync() => await _service.BuscarTodoAsync();
+        public async Task<Response<OficioDto>> GetPorIdAsync(int id) => await _service.BuscarPorIdAsync(id);
         public async Task<Response<List<OficioDto>>> Buscar(OficioDto request) => await _service.Buscar(request);
         public async Task<Response<bool>> Eliminar(int id) => await _service.EliminarAsync(id);
 

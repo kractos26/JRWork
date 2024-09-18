@@ -13,7 +13,8 @@ public class RepositoryTipoIdentificacion : IRepositoryTipoIdentificacion
     }
 
     public async Task<TipoIdentificacion> AdicionarAsync(TipoIdentificacion entidad) => await _repocitorio.AdicionarAsync(entidad);
-    
+
+    public Task<List<TipoIdentificacion>> BuscarPaginadoAsync(Expression<Func<TipoIdentificacion, bool>> predicado, int numeroPagina, int tamanoPagina) => _repocitorio.BuscarPaginadoAsync(predicado, numeroPagina, tamanoPagina);
 
     public async Task<List<TipoIdentificacion>> BuscarAsync(Expression<Func<TipoIdentificacion, bool>> predicado) => await _repocitorio.BuscarAsync(predicado);
     

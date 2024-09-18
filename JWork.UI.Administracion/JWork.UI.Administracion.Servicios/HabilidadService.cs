@@ -6,13 +6,7 @@ namespace JWork.UI.Administracion.Servicios
 {
     public class HabilidadService
     {
-        private readonly Settings settings;
-
-        // Constructor
-        public HabilidadService(IOptions<Settings> options)
-        {
-            settings = options.Value ?? throw new ArgumentNullException(nameof(options), "Configuración de 'Settings' no disponible.");
-        }
+       
 
         public async Task<Response<HabilidadDto>> CrearAsync(HabilidadDto Habilidad)
         {
@@ -20,7 +14,7 @@ namespace JWork.UI.Administracion.Servicios
             {
                 Encabezado = null,
                 Metodo = Constantes.Habilidad.Post,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Verbo = Verbo.Post,
                 Parametros = Habilidad
             };
@@ -33,7 +27,7 @@ namespace JWork.UI.Administracion.Servicios
             {
                 Encabezado = null,
                 Metodo = Constantes.Habilidad.Post,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Verbo = Verbo.Put,
                 Parametros = Habilidad
             };
@@ -45,7 +39,7 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Metodo = $"api/Habilidad/Eliminar/{id}",
                 Verbo = Verbo.Delete
             };
@@ -57,8 +51,8 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
-                Metodo = Constantes.Habilidad.GetTodo,
+                UrlBase = Constantes.UrlBase,
+                Metodo = Constantes.Habilidad.GetTodoAsync,
                 Verbo = Verbo.Get
             };
             return await ServicioRest.EjecutarServicioAsync<Response<List<HabilidadDto>>>(servicio) ?? new();
@@ -69,8 +63,8 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
-                Metodo = $"{Constantes.Habilidad.GetPorId}/{Habilidad}",
+                UrlBase = Constantes.UrlBase,
+                Metodo = $"{Constantes.Habilidad.GetPorIdAsync}/{Habilidad}",
                 Verbo = Verbo.Get
             };
             return await ServicioRest.EjecutarServicioAsync<Response<HabilidadDto>>(servicio) ?? new Response<HabilidadDto>();
@@ -81,7 +75,7 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Metodo = Constantes.Habilidad.Buscar,
                 Verbo = Verbo.Get,
                 Parametros = Habilidad

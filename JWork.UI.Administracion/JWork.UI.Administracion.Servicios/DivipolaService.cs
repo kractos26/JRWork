@@ -7,21 +7,14 @@ namespace JWork.UI.Administracion.Servicios
 {
     public class DivipolaService
     {
-        private readonly Settings settings;
-
-        // Constructor
-        public DivipolaService(IOptions<Settings> options)
-        {
-            settings = options.Value ?? throw new ArgumentNullException(nameof(options), "Configuración de 'Settings' no disponible.");
-        }
-
+       
         public async Task<Response<DivipolaDto>> CrearAsync(DivipolaDto Divipola)
         {
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
                 Metodo = Constantes.Divipola.Post,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Verbo = Verbo.Post,
                 Parametros = Divipola
             };
@@ -34,7 +27,7 @@ namespace JWork.UI.Administracion.Servicios
             {
                 Encabezado = null,
                 Metodo = Constantes.Divipola.Post,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Verbo = Verbo.Put,
                 Parametros = Divipola
             };
@@ -46,7 +39,7 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Metodo = $"api/Divipola/Eliminar/{id}",
                 Verbo = Verbo.Delete
             };
@@ -58,8 +51,8 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
-                Metodo = Constantes.Divipola.GetTodo,
+                UrlBase = Constantes.UrlBase,
+                Metodo = Constantes.Divipola.GetTodoAsync,
                 Verbo = Verbo.Get
             };
             return await ServicioRest.EjecutarServicioAsync<Response<List<DivipolaDto>>>(servicio) ?? new();
@@ -70,8 +63,8 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
-                Metodo = $"{Constantes.Divipola.GetPorId}/{Divipola}",
+                UrlBase = Constantes.UrlBase,
+                Metodo = $"{Constantes.Divipola.GetPorIdAsync}/{Divipola}",
                 Verbo = Verbo.Get
             };
             return await ServicioRest.EjecutarServicioAsync<Response<DivipolaDto>>(servicio) ?? new Response<DivipolaDto>();
@@ -82,7 +75,7 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Metodo = Constantes.Divipola.Buscar,
                 Verbo = Verbo.Get,
                 Parametros = Divipola

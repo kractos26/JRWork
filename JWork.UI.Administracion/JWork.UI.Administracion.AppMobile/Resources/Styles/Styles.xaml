@@ -424,4 +424,10 @@
         <Setter Property="SelectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
     </Style>
 
+    <Style TargetType="Label" x:Key="MaterialIconAdd" >
+        <Setter Property="FontFamily" Value="MaterialIcon"/>
+        <Setter Property="FontSize" Value="25" />
+        <Setter Property="TextColor" Value="Green" />
+    </Style>
+    
 </ResourceDictionary>

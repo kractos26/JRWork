@@ -11,4 +11,7 @@ public class HabilidadDto
 
     [Required(ErrorMessage = "Campo obligatorio")]
     public int ActividadId { get; set; }
+
+    public ActividadDto? Actividad { get; set; }
+
 }

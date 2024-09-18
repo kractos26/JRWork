@@ -12,3 +12,4 @@ C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JRWork.Ad
 C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JRWork.Administracion.DataAccess\obj\Debug\net6.0\JRWork.Administracion.DataAccess.pdb
 C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JRWork.Administracion.DataAccess\obj\Debug\net6.0\JRWork.Administracion.DataAccess.genruntimeconfig.cache
 C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JRWork.Administracion.DataAccess\obj\Debug\net6.0\ref\JRWork.Administracion.DataAccess.dll
+C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JRWork.Administracion.DataAccess\obj\Debug\net6.0\JRWork.Administracion.DataAccess.sourcelink.json

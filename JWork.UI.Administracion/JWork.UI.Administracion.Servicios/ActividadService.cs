@@ -1,26 +1,20 @@
 ﻿using JWork.UI.Administracion.Common;
 using JWork.UI.Administracion.Models;
+using JWork.UI.Administracion.Models.Request;
 using Microsoft.Extensions.Options;
 
 namespace JWork.UI.Administracion.Servicios
 {
     public class ActividadService
     {
-        private readonly Settings settings;
-
-        // Constructor
-        public ActividadService(IOptions<Settings> options)
-        {
-            settings = options.Value ?? throw new ArgumentNullException(nameof(options), "Configuración de 'Settings' no disponible.");
-        }
-
+        
         public async Task<Response<ActividadDto>> CrearAsync(ActividadDto actividad)
         {
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
                 Metodo = Constantes.UrlActividad.Post,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Verbo = Verbo.Post,
                 Parametros = actividad
             };
@@ -33,7 +27,7 @@ namespace JWork.UI.Administracion.Servicios
             {
                 Encabezado = null,
                 Metodo = Constantes.UrlActividad.Post,
-                UrlBase = settings.UrlBFF, 
+                UrlBase = Constantes.UrlBase, 
                 Verbo = Verbo.Put,
                 Parametros = actividad
             };
@@ -45,7 +39,7 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Metodo = $"api/Actividad/Eliminar/{id}",
                 Verbo = Verbo.Delete
             };
@@ -57,8 +51,8 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
-                Metodo = Constantes.UrlActividad.GetTodo,
+                UrlBase = Constantes.UrlBase,
+                Metodo = Constantes.UrlActividad.GetTodoAsync,
                 Verbo = Verbo.Get
             };
             return await ServicioRest.EjecutarServicioAsync<Response<List<ActividadDto>>>(servicio) ?? new ();
@@ -69,23 +63,23 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
-                Metodo = $"{Constantes.UrlActividad.GetPorId}/{actividad}",
+                UrlBase = Constantes.UrlBase,
+                Metodo = $"{Constantes.UrlActividad.GetPorIdAsync}/{actividad}",
                 Verbo = Verbo.Get            
             };
             return await ServicioRest.EjecutarServicioAsync<Response<ActividadDto>>(servicio) ?? new Response<ActividadDto>();
         }
 
-        public async Task<Response<List<ActividadDto>>> Buscar(ActividadDto actividad)
+        public async Task<Response<List<ActividadDto>>> Buscar(ActividadRequest actividad)
         {
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Metodo = Constantes.UrlActividad.Buscar,
                 Verbo = Verbo.Get,
-                Parametros = actividad
-
+                Parametros = actividad,
+                ValidarSertificado = false
             };
             return await ServicioRest.EjecutarServicioAsync<Response<List<ActividadDto>>>(servicio) ?? new ();
         }

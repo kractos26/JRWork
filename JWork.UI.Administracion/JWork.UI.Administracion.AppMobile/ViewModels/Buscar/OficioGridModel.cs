@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using JWork.UI.Administracion.AppMobile.Services;
+using JWork.UI.Administracion.AppMobile.Views;
 using JWork.UI.Administracion.Business;
 using JWork.UI.Administracion.Models;
 using System.Collections.ObjectModel;
@@ -14,19 +16,20 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels.Buscar
         public OficioDto oficioseleccionado;
 
         private readonly OficioBL _habilidadBL;
-        public OficioGridViewModel(OficioBL habilidadBL)
+        private readonly INavigationService _navigationService;
+        public OficioGridViewModel(OficioBL habilidadBL,INavigationService navigationService)
         {
             _habilidadBL = habilidadBL;
-            oficioseleccionado = new ();
-            oficios = [];
+            _navigationService = navigationService;
             PropertyChanged += AreaGridViewModel_PropertyChanged;
         }
 
-        private void AreaGridViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private async void AreaGridViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(oficioseleccionado))
-            { 
-                
+            {
+                string uri = $"{nameof(OficioPage)}?id={oficioseleccionado.OficioId}";
+                await _navigationService.GotoAsync(uri);
             }
         }
 

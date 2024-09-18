@@ -16,6 +16,9 @@ public class RepositoryDivipola : IRepositoryDivipola
 
     public async Task<List<Divipola>> BuscarAsync(Expression<Func<Divipola, bool>> predicado) => await _repocitorio.BuscarAsync(predicado);
 
+    public Task<List<Divipola>> BuscarPaginadoAsync(Expression<Func<Divipola, bool>> predicado, int numeroPagina, int tamanoPagina) => _repocitorio.BuscarPaginadoAsync(predicado, numeroPagina, tamanoPagina);
+   
+
     public async Task<bool> EliminarAsync(Divipola Entidad) => await _repocitorio.EliminarAsync(Entidad);
 
 

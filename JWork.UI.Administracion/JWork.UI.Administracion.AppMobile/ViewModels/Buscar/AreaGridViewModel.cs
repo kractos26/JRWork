@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using JWork.UI.Administracion.AppMobile.Services;
+using JWork.UI.Administracion.AppMobile.Views;
 using JWork.UI.Administracion.Business;
 using JWork.UI.Administracion.Models;
 using System.Collections.ObjectModel;
@@ -14,19 +16,21 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels.Buscar
         public AreaDto arealecionada;
 
         private readonly AreaBL _areaBL;
-        public  AreaGridViewModel(AreaBL areaBL)
+        private readonly INavigationService _navigationService;
+
+        public AreaGridViewModel(AreaBL areaBL, INavigationService navigationService)
         {
             _areaBL = areaBL;
-            arealecionada = new ();
-            areas = [];
+            _navigationService = navigationService  ;
             PropertyChanged += AreaGridViewModel_PropertyChanged;
         }
 
-        private void AreaGridViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private async void AreaGridViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(arealecionada))
-            { 
-                
+            {
+                string uri = $"{nameof(AreaPage)}?id={arealecionada.AreaId}";
+                await _navigationService.GotoAsync(uri);
             }
         }
 

@@ -13,6 +13,7 @@ public class RepositoryTipoPersona : IRepositoryTipoPersona
     }
     public async Task<TipoPersona> AdicionarAsync(TipoPersona Entidad) => await _repositorio.AdicionarAsync(Entidad);
 
+    public Task<List<TipoPersona>> BuscarPaginadoAsync(Expression<Func<TipoPersona, bool>> predicado, int numeroPagina, int tamanoPagina) => _repositorio.BuscarPaginadoAsync(predicado, numeroPagina, tamanoPagina);
 
     public async Task<List<TipoPersona>> BuscarAsync(Expression<Func<TipoPersona, bool>> predicado) => await _repositorio.BuscarAsync(predicado);
    

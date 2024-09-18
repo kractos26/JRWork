@@ -6,13 +6,7 @@ namespace JWork.UI.Administracion.Servicios
 {
     public class TipoPersonaService
     {
-        private readonly Settings settings;
-
-        // Constructor
-        public TipoPersonaService(IOptions<Settings> options)
-        {
-            settings = options.Value ?? throw new ArgumentNullException(nameof(options), "Configuración de 'Settings' no disponible.");
-        }
+      
 
         public async Task<Response<TipoPersonaDto>> CrearAsync(TipoPersonaDto TipoPersona)
         {
@@ -20,7 +14,7 @@ namespace JWork.UI.Administracion.Servicios
             {
                 Encabezado = null,
                 Metodo = Constantes.TipoPersona.Post,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Verbo = Verbo.Post,
                 Parametros = TipoPersona
             };
@@ -33,7 +27,7 @@ namespace JWork.UI.Administracion.Servicios
             {
                 Encabezado = null,
                 Metodo = Constantes.TipoPersona.Post,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Verbo = Verbo.Put,
                 Parametros = TipoPersona
             };
@@ -45,7 +39,7 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Metodo = $"api/TipoPersona/Eliminar/{id}",
                 Verbo = Verbo.Delete
             };
@@ -57,8 +51,8 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
-                Metodo = Constantes.TipoPersona.GetTodo,
+                UrlBase = Constantes.UrlBase,
+                Metodo = Constantes.TipoPersona.GetTodoAsync,
                 Verbo = Verbo.Get
             };
             return await ServicioRest.EjecutarServicioAsync<Response<List<TipoPersonaDto>>>(servicio) ?? new();
@@ -69,8 +63,8 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
-                Metodo = $"{Constantes.TipoPersona.GetPorId}/{TipoPersona}",
+                UrlBase = Constantes.UrlBase,
+                Metodo = $"{Constantes.TipoPersona.GetPorIdAsync}/{TipoPersona}",
                 Verbo = Verbo.Get
             };
             return await ServicioRest.EjecutarServicioAsync<Response<TipoPersonaDto>>(servicio) ?? new Response<TipoPersonaDto>();
@@ -81,7 +75,7 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Metodo = Constantes.TipoPersona.Buscar,
                 Verbo = Verbo.Get,
                 Parametros = TipoPersona

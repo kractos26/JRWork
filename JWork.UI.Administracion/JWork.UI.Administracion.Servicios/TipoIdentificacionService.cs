@@ -6,21 +6,14 @@ namespace JWork.UI.Administracion.Servicios
 {
     public class TipoIdentificacionService
     {
-        private readonly Settings settings;
-
-        // Constructor
-        public TipoIdentificacionService(IOptions<Settings> options)
-        {
-            settings = options.Value ?? throw new ArgumentNullException(nameof(options), "Configuración de 'Settings' no disponible.");
-        }
-
+       
         public async Task<Response<TipoIdentificacionDto>> CrearAsync(TipoIdentificacionDto TipoIdentificacion)
         {
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
                 Metodo = Constantes.TipoIdentificacion.Post,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Verbo = Verbo.Post,
                 Parametros = TipoIdentificacion
             };
@@ -33,7 +26,7 @@ namespace JWork.UI.Administracion.Servicios
             {
                 Encabezado = null,
                 Metodo = Constantes.TipoIdentificacion.Post,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Verbo = Verbo.Put,
                 Parametros = TipoIdentificacion
             };
@@ -45,7 +38,7 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Metodo = $"api/TipoIdentificacion/Eliminar/{id}",
                 Verbo = Verbo.Delete
             };
@@ -57,8 +50,8 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
-                Metodo = Constantes.TipoIdentificacion.GetTodo,
+                UrlBase = Constantes.UrlBase,
+                Metodo = Constantes.TipoIdentificacion.GetTodoAsync,
                 Verbo = Verbo.Get
             };
             return await ServicioRest.EjecutarServicioAsync<Response<List<TipoIdentificacionDto>>>(servicio) ?? new();
@@ -69,8 +62,8 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
-                Metodo = $"{Constantes.TipoIdentificacion.GetPorId}/{TipoIdentificacion}",
+                UrlBase = Constantes.UrlBase,
+                Metodo = $"{Constantes.TipoIdentificacion.GetPorIdAsync}/{TipoIdentificacion}",
                 Verbo = Verbo.Get
             };
             return await ServicioRest.EjecutarServicioAsync<Response<TipoIdentificacionDto>>(servicio) ?? new Response<TipoIdentificacionDto>();
@@ -81,7 +74,7 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Metodo = Constantes.TipoIdentificacion.Buscar,
                 Verbo = Verbo.Get,
                 Parametros = TipoIdentificacion

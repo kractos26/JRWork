@@ -42,7 +42,7 @@ public class Buscar
 
         public async Task<List<OficioDto>> Handle(OficioBuscarCommand request, CancellationToken cancellationToken)
         {
-            List<JRWork.Administracion.DataAccess.Models.Oficio> Oficioes = await _repositoryOficio.BuscarAsync(x=>x.OficioId == (request.OficioId ?? x.OficioId) && x.Nombre == (request.Nombre ?? x.Nombre) && x.AreaId == (request.AreaId ?? x.AreaId));
+            List<JRWork.Administracion.DataAccess.Models.Oficio> Oficioes = await _repositoryOficio.BuscarAsync(x=>x.OficioId == (request.OficioId ?? x.OficioId) && x.Nombre!.Contains(request.Nombre ?? x.Nombre) && x.AreaId == (request.AreaId ?? x.AreaId));
             return _mapper.Map<List<OficioDto>>(Oficioes);
 
         }

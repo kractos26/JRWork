@@ -7,5 +7,8 @@
         public string Nombre { get; set; } = null!;
 
         public int AreaId { get; set; }
+
+        public AreaDto? Area { get; set; }
+
     }
 }

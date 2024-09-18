@@ -2,8 +2,10 @@
 using JWork.UI.Administracion.AppMobile.ViewModels;
 using JWork.UI.Administracion.AppMobile.ViewModels.Buscar;
 using JWork.UI.Administracion.AppMobile.Views;
+using JWork.UI.Administracion.AppMobile.Views.Buscar;
 using JWork.UI.Administracion.Business;
 using JWork.UI.Administracion.Servicios;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace JWork.UI.Administracion.AppMobile
@@ -19,13 +21,20 @@ namespace JWork.UI.Administracion.AppMobile
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("MaterialIcons-Regular.ttf", "MaterialIcon");
                 });
 
+         
+
+
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
+            // Registro de servicios de navegación y páginas
             builder.Services.AddSingleton<INavigationService, NavigationService>();
+
+            // Registro de páginas
             builder.Services.AddTransient<ActividadPage>();
             builder.Services.AddTransient<AreaPage>();
             builder.Services.AddTransient<OficioPage>();
@@ -33,21 +42,32 @@ namespace JWork.UI.Administracion.AppMobile
             builder.Services.AddTransient<TipoIdentificacionPage>();
             builder.Services.AddTransient<HabilidadPage>();
             builder.Services.AddTransient<UnidadMedidaPage>();
-            builder.Services.AddTransient<HabilidadPage>();
             builder.Services.AddTransient<DivipolaPage>();
             builder.Services.AddTransient<ConceptoCalificacionPage>();
 
-            builder.Services.AddTransient<ActividadVIewModels>();
+            // Registro de páginas adicionales con plural (listas)
+            builder.Services.AddTransient<ActividadesPage>();
+            builder.Services.AddTransient<AreasPage>();
+            builder.Services.AddTransient<OficiosPage>();
+            builder.Services.AddTransient<TipoDocumentosPage>();
+            builder.Services.AddTransient<TipoIdentificacionesPage>();
+            builder.Services.AddTransient<HabilidadesPage>();
+            builder.Services.AddTransient<UnidadMedidasPage>();
+            builder.Services.AddTransient<DivipolasPage>();
+            builder.Services.AddTransient<ConceptoCalificacionesPage>();
+
+            // Registro de ViewModels
+            builder.Services.AddTransient<ActividadViewModel>();
             builder.Services.AddTransient<AreaViewModel>();
             builder.Services.AddTransient<OficioViewModel>();
             builder.Services.AddTransient<TipoDocumentoViewModel>();
             builder.Services.AddTransient<TipoIdentificacionViewModel>();
-            builder.Services.AddTransient<HabilidadViewModel> ();
-            builder.Services.AddTransient<UnidadMedidaViewModel>();
             builder.Services.AddTransient<HabilidadViewModel>();
+            builder.Services.AddTransient<UnidadMedidaViewModel>();
             builder.Services.AddTransient<DivipolaViewModel>();
             builder.Services.AddTransient<ConceptoCalificacionViewModel>();
 
+            // Registro de GridViewModels (para listas y grids)
             builder.Services.AddTransient<ActividadGridViewModel>();
             builder.Services.AddTransient<AreaGridViewModel>();
             builder.Services.AddTransient<OficioGridViewModel>();
@@ -55,11 +75,10 @@ namespace JWork.UI.Administracion.AppMobile
             builder.Services.AddTransient<TipoIdentificacionGridViewModel>();
             builder.Services.AddTransient<HabilidadGridViewModel>();
             builder.Services.AddTransient<UnidadMedidaGridViewModel>();
-            builder.Services.AddTransient<HabilidadGridViewModel>();
             builder.Services.AddTransient<DivipolaGridViewModel>();
             builder.Services.AddTransient<ConceptoCalificacionGridViewModel>();
 
-
+            // Registro de servicios
             builder.Services.AddSingleton<ActividadService>();
             builder.Services.AddSingleton<AreaService>();
             builder.Services.AddSingleton<ConceptoCalificacionService>();
@@ -71,7 +90,7 @@ namespace JWork.UI.Administracion.AppMobile
             builder.Services.AddSingleton<UnidadMedidaService>();
             builder.Services.AddSingleton<TipoPersonaService>();
 
-
+            // Registro de capas de lógica de negocio (Business Layer)
             builder.Services.AddSingleton<ActividadBL>();
             builder.Services.AddSingleton<AreaBL>();
             builder.Services.AddSingleton<ConceptoCalificacionBL>();
@@ -81,6 +100,7 @@ namespace JWork.UI.Administracion.AppMobile
             builder.Services.AddSingleton<TipoDocumentoBL>();
             builder.Services.AddSingleton<TipoIdentificacionBL>();
             builder.Services.AddSingleton<UnidadMedidaBL>();
+
             return builder.Build();
         }
     }

@@ -14,4 +14,5 @@ C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Adm
 C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.Business\bin\Debug\net6.0\JWork.Administracion.Dto.dll
 C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.Business\bin\Debug\net6.0\JRWork.Administracion.DataAccess.pdb
 C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.Business\bin\Debug\net6.0\JWork.Administracion.Dto.pdb
-C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.Business\obj\Debug\net6.0\JWork.Administracion.Business.csproj.CopyComplete
+C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.Business\obj\Debug\net6.0\JWork.Administracion.Business.sourcelink.json
+C:\Users\ASUS VivoBook\OneDrive\Documentos\JRWork\JWork.Administracion\JWork.Administracion.Business\obj\Debug\net6.0\JWork.Ad.E62D1AA5.Up2Date

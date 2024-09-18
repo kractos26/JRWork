@@ -608,12 +608,18 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.20"
         },
         "runtime": {
-          "JRWork.Administracion.DataAccess.dll": {}
+          "JRWork.Administracion.DataAccess.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "JWork.Administracion.Dto/1.0.0": {
         "runtime": {
-          "JWork.Administracion.Dto.dll": {}
+          "JWork.Administracion.Dto.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

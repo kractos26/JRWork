@@ -1,49 +1,62 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using JWork.UI.Administracion.Business;
 using JWork.UI.Administracion.Models;
 using System.Collections.ObjectModel;
 
 namespace JWork.UI.Administracion.AppMobile.ViewModels;
 
-public partial class ActividadVIewModels : ViewModelGlobal
+public partial class ActividadViewModel : ViewModelGlobal, IQueryAttributable
 {
+    [ObservableProperty]
+    private int actividadId;
 
-    private readonly ActividadDto _area;
-    public ActividadVIewModels()
+    [ObservableProperty]
+    private string? nombre;
+
+    [ObservableProperty]
+    private int oficioId;
+
+    [ObservableProperty]
+    private ObservableCollection<OficioDto>? oficios;
+
+    [ObservableProperty]
+    private OficioDto oficioSeleccionado;
+
+    private readonly ActividadBL _actividadBL;
+    private readonly OficioBL _oficioBL;
+
+    public ActividadViewModel(ActividadBL actividadBL, OficioBL oficioBL)
     {
-        _area = new();
-        oficios = [];//Data llega del business
-        oficioSeleccionado = new();//Data llega del business
-        PropertyChanged += BindingUtil_PropertyChanged;
+        _actividadBL = actividadBL;
+        _oficioBL = oficioBL;
+        oficios = new ObservableCollection<OficioDto>();
+        oficioSeleccionado = new OficioDto();
     }
 
-    private void BindingUtil_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    public async Task InicializarAsync()
     {
-        if (e.PropertyName == nameof(oficioSeleccionado))
+        var actividadResponse = await _actividadBL.GetPorIdAsync(oficioId); 
+        if (actividadResponse?.Entidad != null)
         {
-            _area.OficioId = OficioSeleccionado.OficioId;
+            var actividad = actividadResponse.Entidad;
+            actividadId = actividad.ActividadId;
+            nombre = actividad.Nombre;
+            oficioId = actividad.OficioId;
+            oficioSeleccionado = actividad.Oficio ?? new OficioDto();
+        }
 
+        var oficiolstResponse = await _oficioBL.GetTodoAsync();
+        if (oficiolstResponse?.Entidad != null)
+        {
+            oficios = new ObservableCollection<OficioDto>(oficiolstResponse.Entidad);
         }
     }
 
-    [ObservableProperty]
-    public int actividadId;
-    
-
-    [ObservableProperty]
-    public string? nombre;
-  
-
-    [ObservableProperty]
-    public int oficioId;
-
-
-
-    [ObservableProperty]
-    public ObservableCollection<OficioDto>? oficios;
-
-
-
-    [ObservableProperty]
-    public OficioDto oficioSeleccionado;
-
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        if (query.ContainsKey("id") && int.TryParse(query["id"]?.ToString(), out var id))
+        {
+            oficioId = id;
+        }
+    }
 }

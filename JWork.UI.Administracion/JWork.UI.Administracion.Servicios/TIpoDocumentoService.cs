@@ -6,13 +6,7 @@ namespace JWork.UI.Administracion.Servicios
 {
     public class TipoDocumentoService
     {
-        private readonly Settings settings;
-
-        // Constructor
-        public TipoDocumentoService(IOptions<Settings> options)
-        {
-            settings = options.Value ?? throw new ArgumentNullException(nameof(options), "Configuración de 'Settings' no disponible.");
-        }
+       
 
         public async Task<Response<TipoDocumentoDto>> CrearAsync(TipoDocumentoDto TipoDocumento)
         {
@@ -20,7 +14,7 @@ namespace JWork.UI.Administracion.Servicios
             {
                 Encabezado = null,
                 Metodo = Constantes.TipoDocumento.Post,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Verbo = Verbo.Post,
                 Parametros = TipoDocumento
             };
@@ -33,7 +27,7 @@ namespace JWork.UI.Administracion.Servicios
             {
                 Encabezado = null,
                 Metodo = Constantes.TipoDocumento.Post,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Verbo = Verbo.Put,
                 Parametros = TipoDocumento
             };
@@ -45,7 +39,7 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Metodo = $"api/TipoDocumento/Eliminar/{id}",
                 Verbo = Verbo.Delete
             };
@@ -57,8 +51,8 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
-                Metodo = Constantes.TipoDocumento.GetTodo,
+                UrlBase = Constantes.UrlBase,
+                Metodo = Constantes.TipoDocumento.GetTodoAsync,
                 Verbo = Verbo.Get
             };
             return await ServicioRest.EjecutarServicioAsync<Response<List<TipoDocumentoDto>>>(servicio) ?? new();
@@ -69,8 +63,8 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
-                Metodo = $"{Constantes.TipoDocumento.GetPorId}/{TipoDocumento}",
+                UrlBase = Constantes.UrlBase,
+                Metodo = $"{Constantes.TipoDocumento.GetPorIdAsync}/{TipoDocumento}",
                 Verbo = Verbo.Get
             };
             return await ServicioRest.EjecutarServicioAsync<Response<TipoDocumentoDto>>(servicio) ?? new Response<TipoDocumentoDto>();
@@ -81,7 +75,7 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Metodo = Constantes.TipoDocumento.Buscar,
                 Verbo = Verbo.Get,
                 Parametros = TipoDocumento

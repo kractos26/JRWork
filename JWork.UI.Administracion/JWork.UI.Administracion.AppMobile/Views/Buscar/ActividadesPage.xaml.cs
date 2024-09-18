@@ -15,9 +15,11 @@ public partial class ActividadesPage : ContentPage
 
     protected override async void OnAppearing()
     {
-        base.OnAppearing(); 
         await _model.ObtenerData();
     }
 
+    private void Nuevo_Clicked(object sender, EventArgs e)
+    {
 
+    }
 }

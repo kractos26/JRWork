@@ -6,21 +6,14 @@ namespace JWork.UI.Administracion.Servicios
 {
     public class OficioService
     {
-        private readonly Settings settings;
-
-        // Constructor
-        public OficioService(IOptions<Settings> options)
-        {
-            settings = options.Value ?? throw new ArgumentNullException(nameof(options), "Configuración de 'Settings' no disponible.");
-        }
-
+      
         public async Task<Response<OficioDto>> CrearAsync(OficioDto Oficio)
         {
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
                 Metodo = Constantes.Oficio.Post,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Verbo = Verbo.Post,
                 Parametros = Oficio
             };
@@ -33,7 +26,7 @@ namespace JWork.UI.Administracion.Servicios
             {
                 Encabezado = null,
                 Metodo = Constantes.Oficio.Post,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Verbo = Verbo.Put,
                 Parametros = Oficio
             };
@@ -45,7 +38,7 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Metodo = $"api/Oficio/Eliminar/{id}",
                 Verbo = Verbo.Delete
             };
@@ -57,8 +50,8 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
-                Metodo = Constantes.Oficio.GetTodo,
+                UrlBase = Constantes.UrlBase,
+                Metodo = Constantes.Oficio.GetTodoAsync,
                 Verbo = Verbo.Get
             };
             return await ServicioRest.EjecutarServicioAsync<Response<List<OficioDto>>>(servicio) ?? new();
@@ -69,8 +62,8 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
-                Metodo = $"{Constantes.Oficio.GetPorId}/{Oficio}",
+                UrlBase = Constantes.UrlBase,
+                Metodo = $"{Constantes.Oficio.GetPorIdAsync}/{Oficio}",
                 Verbo = Verbo.Get
             };
             return await ServicioRest.EjecutarServicioAsync<Response<OficioDto>>(servicio) ?? new Response<OficioDto>();
@@ -81,7 +74,7 @@ namespace JWork.UI.Administracion.Servicios
             ParametrosServicio servicio = new()
             {
                 Encabezado = null,
-                UrlBase = settings.UrlBFF,
+                UrlBase = Constantes.UrlBase,
                 Metodo = Constantes.Oficio.Buscar,
                 Verbo = Verbo.Get,
                 Parametros = Oficio

@@ -7,4 +7,6 @@ public class ActividadDto
     public string? Nombre { get; set; }
 
     public int OficioId { get; set; }
+
+    public OficioDto? Oficio { get; set; }
 }

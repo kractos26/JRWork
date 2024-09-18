@@ -1,10 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using JWork.UI.Administracion.Business;
 using JWork.UI.Administracion.Models;
 using System.Collections.ObjectModel;
+using static JWork.UI.Administracion.Common.Constantes;
 
 namespace JWork.UI.Administracion.AppMobile.ViewModels
 {
-    public partial class OficioViewModel : ViewModelGlobal
+    public partial class OficioViewModel : ViewModelGlobal, IQueryAttributable
     {
         [ObservableProperty]
         public int oficioId;
@@ -22,31 +24,59 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels
         [ObservableProperty]
         private AreaDto areaSeleccionada;
 
-        OficioDto _oficioDto;
-        public OficioViewModel()
+        private readonly OficioBL _oficioBL;
+        private readonly AreaBL _areaBL;
+        public OficioViewModel(OficioBL oficioBL, AreaBL areaBL)
         {
-            _oficioDto = new OficioDto();
-            PropertyChanged += OficioViewModel_PropertyChanged;
-
+            _oficioBL = oficioBL;
+            _areaBL = areaBL;
         }
 
-        void Inicializar()
-        {
 
-        }
-
-        private void OficioViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        public async Task InicializarAsync()
         {
-            if (e.PropertyName == nameof(AreaSeleccionada))
+            if (areaId <= 0)
             {
-                _oficioDto.AreaId = AreaSeleccionada.AreaId;
+                return;
+            }
+
+            try
+            {
+                var response = await _oficioBL.GetPorIdAsync(oficioId);
+
+                // Validar la respuesta
+                if (response.Status == System.Net.HttpStatusCode.OK && response.Entidad != null)
+                {
+                    oficioName = response.Entidad.Nombre;
+                    areaId = response.Entidad.AreaId;
+                    areaSeleccionada = response.Entidad.Area ?? new AreaDto();
+                    Common.Response<List<AreaDto>> arealst = await _areaBL.Buscar(new AreaDto() { });
+                    areas = new ObservableCollection<AreaDto>(arealst.Entidad ?? []);
+                }
+                else
+                {
+                    await MostrarError(response.Mensaje ?? string.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                await MostrarError($"Ocurrió un error al cargar los datos: {ex.Message}");
+
             }
         }
 
-      
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+            if (query.ContainsKey("id") && int.TryParse(query["id"]?.ToString(), out var id))
+            {
+                oficioId = id;
+            }
+        }
 
-        
-
-
+        private Task MostrarError(string mensaje)
+        {
+            return Task.CompletedTask;
+        }
     }
 }
