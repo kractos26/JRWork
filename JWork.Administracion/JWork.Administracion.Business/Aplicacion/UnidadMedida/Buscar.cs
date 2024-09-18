@@ -15,6 +15,14 @@ public class Buscar
         public string? Nombre { get; set; }
     }
 
+    public class UnidadMedidaBuscarPaginoCommand : IRequest<List<UnidadMedidaDto>>
+    {
+
+        public string? Nombre { get; set; }
+        public int NumeroPagina { get; set; } = 1;
+        public int TamanoPagina { get; set; } = 10;
+    }
+
     public class UnidadMedidaBuscarTodoCommand : IRequest<List<UnidadMedidaDto>>
     {
 
@@ -27,7 +35,8 @@ public class Buscar
 
     public class UnidadMedidaRegisterHandler : IRequestHandler<UnidadMedidaBuscarCommand, List<UnidadMedidaDto>>,
                                             IRequestHandler<UnidadMedidaBuscarTodoCommand, List<UnidadMedidaDto>>,
-                                            IRequestHandler<UnidadMedidaBuscarIdCommand, UnidadMedidaDto>
+                                            IRequestHandler<UnidadMedidaBuscarIdCommand, UnidadMedidaDto>,
+        IRequestHandler<UnidadMedidaBuscarPaginoCommand, List<UnidadMedidaDto>>
     {
         private readonly IRepositoryUnidadMedida _repositoryUnidadMedida;
         private readonly IMapper _mapper;
@@ -55,6 +64,12 @@ public class Buscar
         {
             var UnidadMedidaes = await _repositoryUnidadMedida.TraerUnoAsync(x=>x.UnidadMedidaId == request.UnidadMedidaId);
             return _mapper.Map<UnidadMedidaDto>(UnidadMedidaes);
+        }
+
+        public async Task<List<UnidadMedidaDto>> Handle(UnidadMedidaBuscarPaginoCommand request, CancellationToken cancellationToken)
+        {
+            List<JRWork.Administracion.DataAccess.Models.UnidadMedida> UnidadMedidaes = await _repositoryUnidadMedida.BuscarPaginadoAsync(x =>  x.Nombre == (request.Nombre ?? x.Nombre),request.NumeroPagina,request.TamanoPagina);
+            return _mapper.Map<List<UnidadMedidaDto>>(UnidadMedidaes);
         }
     }
 

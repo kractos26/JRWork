@@ -15,6 +15,17 @@ public class Buscar
         public string? Nombre { get; set; }
 
         public int? ActividadId { get; set; }
+
+       
+    }
+
+    public class HabilidadBuscarPaginadoCommand : IRequest<List<HabilidadDto>>
+    {
+        public string? Nombre { get; set; }
+
+        public int? ActividadId { get; set; }
+        public int NumeroPagina { get; set; } = 1;
+        public int TamanoPagina { get; set; } = 10;
     }
 
     public class HabilidadBuscarTodoCommand : IRequest<List<HabilidadDto>>
@@ -29,7 +40,8 @@ public class Buscar
 
     public class HabilidadRegisterHandler : IRequestHandler<HabilidadBuscarCommand, List<HabilidadDto>>,
                                             IRequestHandler<HabilidadBuscarTodoCommand, List<HabilidadDto>>,
-                                            IRequestHandler<HabilidadBuscarIdCommand, HabilidadDto>
+                                            IRequestHandler<HabilidadBuscarIdCommand, HabilidadDto>,
+        IRequestHandler<HabilidadBuscarPaginadoCommand, List<HabilidadDto>>
     {
         private readonly IRepositoryHabilidad _repositoryHabilidad;
         private readonly IMapper _mapper;
@@ -57,6 +69,12 @@ public class Buscar
         {
             var Habilidades = await _repositoryHabilidad.TraerUnoAsync(x=>x.HabilidadId == request.HabilidadId);
             return _mapper.Map<HabilidadDto>(Habilidades);
+        }
+
+        public async Task<List<HabilidadDto>> Handle(HabilidadBuscarPaginadoCommand request, CancellationToken cancellationToken)
+        {
+            List<JRWork.Administracion.DataAccess.Models.Habilidad> Habilidades = await _repositoryHabilidad.BuscarPaginadoAsync(x => x.ActividadId == (request.ActividadId ?? x.ActividadId) && x.Nombre == (request.Nombre ?? x.Nombre),request.NumeroPagina,request.TamanoPagina);
+            return _mapper.Map<List<HabilidadDto>>(Habilidades);
         }
     }
 

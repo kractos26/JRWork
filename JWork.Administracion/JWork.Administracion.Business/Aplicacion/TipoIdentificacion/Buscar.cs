@@ -15,6 +15,14 @@ public class Buscar
         public string? Nombre { get; set; } 
     }
 
+    public class TipoIdentificacionPaginadoBuscarCommand : IRequest<List<TipoIdentificacionDto>>
+    {
+        public string? Sigla { get; set; }
+        public string? Nombre { get; set; }
+        public int NumeroPagina { get; set; } = 1;
+        public int TamanoPagina { get; set; } = 10;
+    }
+
     public class TipoIdentificacionBuscarTodoCommand : IRequest<List<TipoIdentificacionDto>>
     {
 
@@ -27,7 +35,8 @@ public class Buscar
 
     public class TipoIdentificacionRegisterHandler : IRequestHandler<TipoIdentificacionBuscarCommand, List<TipoIdentificacionDto>>,
                                             IRequestHandler<TipoIdentificacionBuscarTodoCommand, List<TipoIdentificacionDto>>,
-                                            IRequestHandler<TipoIdentificacionBuscarIdCommand, TipoIdentificacionDto>
+                                            IRequestHandler<TipoIdentificacionBuscarIdCommand, TipoIdentificacionDto>,
+        IRequestHandler<TipoIdentificacionPaginadoBuscarCommand,List<TipoIdentificacionDto>>
     {
         private readonly IRepositoryTipoIdentificacion _repositoryTipoIdentificacion;
         private readonly IMapper _mapper;
@@ -55,6 +64,12 @@ public class Buscar
         {
             var TipoIdentificaciones = await _repositoryTipoIdentificacion.TraerUnoAsync(x=>x.TipoIdentificacionId == request.TipoIdentificacionId);
             return _mapper.Map<TipoIdentificacionDto>(TipoIdentificaciones);
+        }
+
+        public async Task<List<TipoIdentificacionDto>> Handle(TipoIdentificacionPaginadoBuscarCommand request, CancellationToken cancellationToken)
+        {
+            List<JRWork.Administracion.DataAccess.Models.TipoIdentificacion> TipoIdentificaciones = await _repositoryTipoIdentificacion.BuscarPaginadoAsync(x => x.Nombre == (request.Nombre ?? x.Nombre) && x.Sigla == (request.Sigla ?? x.Sigla),request.NumeroPagina,request.TamanoPagina);
+            return _mapper.Map<List<TipoIdentificacionDto>>(TipoIdentificaciones);
         }
     }
 

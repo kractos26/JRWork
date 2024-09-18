@@ -198,5 +198,32 @@ namespace JWork.Administracion.WebApi.Controllers
                 return BadRequest(response);
             }
         }
+
+        [HttpGet("BuscarPaginado")]
+        public async Task<ActionResult<Response<List<TipoIdentificacionDto>>>> BuscarPaginado([FromQuery] Buscar.TipoIdentificacionPaginadoBuscarCommand command)
+        {
+            try
+            {
+                List<TipoIdentificacionDto> actividadDtos = await _mediator.Send(command);
+
+                var response = new Response<List<TipoIdentificacionDto>>
+                {
+                    Mensaje = "Actividades encontradas correctamente",
+                    Entidad = actividadDtos,
+                    Status = System.Net.HttpStatusCode.OK
+                };
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                var response = new Response<List<ActividadDto>>
+                {
+                    Entidad = new List<ActividadDto>(),
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+                };
+                return BadRequest(response);
+            }
+        }
     }
 }

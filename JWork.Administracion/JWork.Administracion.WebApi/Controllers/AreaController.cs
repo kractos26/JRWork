@@ -202,5 +202,32 @@ namespace JWork.Administracion.WebApi.Controllers
             }
         }
 
+        [HttpGet("BuscarPaginado")]
+        public async Task<ActionResult<Response<List<ActividadDto>>>> BuscarPaginado([FromQuery] Buscar.AreaBuscarPaginadoCommand command)
+        {
+            try
+            {
+                List<AreaDto> actividadDtos = await _mediator.Send(command);
+
+                var response = new Response<List<AreaDto>>
+                {
+                    Mensaje = "Actividades encontradas correctamente",
+                    Entidad = actividadDtos,
+                    Status = System.Net.HttpStatusCode.OK
+                };
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                var response = new Response<List<ActividadDto>>
+                {
+                    Entidad = new List<ActividadDto>(),
+                    Mensaje = ex.Message,
+                    Status = System.Net.HttpStatusCode.BadRequest
+                };
+                return BadRequest(response);
+            }
+        }
+
     }
 }

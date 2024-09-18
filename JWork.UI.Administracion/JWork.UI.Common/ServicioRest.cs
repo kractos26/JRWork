@@ -44,8 +44,7 @@ namespace JWork.UI.Administracion.Common
 
         private static async Task<T?> EjecutarServicioGetAsync<T>(string? urlBase, string? metodo, object? parametros, HttpClient client)
         {
-            try
-            {
+           
                 UriBuilder urlBuilder = new($"{urlBase}/{metodo}");
                 NameValueCollection query = HttpUtility.ParseQueryString(string.Empty);
 
@@ -60,12 +59,7 @@ namespace JWork.UI.Administracion.Common
                 HttpResponseMessage response = await client.GetAsync(urlBuilder.ToString());
                 response.EnsureSuccessStatusCode();
                 return await ProcesarRespuesta<T>(response);
-            }
-            catch (HttpRequestException ex)
-            {
-
-                throw;
-            }
+            
         }
 
         private static async Task<T?> EjecutarServicioPostAsync<T>(string? urlBase, string? metodo, object? parametros, HttpClient client)

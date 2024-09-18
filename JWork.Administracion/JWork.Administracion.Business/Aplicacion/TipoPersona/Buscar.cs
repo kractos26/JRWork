@@ -15,6 +15,15 @@ public class Buscar
         public string? Nombre { get; set; } 
     }
 
+    public class TipoPersonaPaginadoBuscarCommand : IRequest<List<TipoPersonaDto>>
+    {
+
+        public string? Nombre { get; set; }
+        public int NumeroPagina { get; set; } = 1;
+        public int TamanoPagina { get; set; } = 10;
+    }
+
+
     public class TipoPersonaBuscarTodoCommand : IRequest<List<TipoPersonaDto>>
     {
 
@@ -27,7 +36,8 @@ public class Buscar
 
     public class TipoPersonaRegisterHandler : IRequestHandler<TipoPersonaBuscarCommand, List<TipoPersonaDto>>,
                                             IRequestHandler<TipoPersonaBuscarTodoCommand, List<TipoPersonaDto>>,
-                                            IRequestHandler<TipoPersonaBuscarIdCommand, TipoPersonaDto>
+                                            IRequestHandler<TipoPersonaBuscarIdCommand, TipoPersonaDto>,
+        IRequestHandler<TipoPersonaPaginadoBuscarCommand, List<TipoPersonaDto>>
     {
         private readonly IRepositoryTipoPersona _repositoryTipoPersona;
         private readonly IMapper _mapper;
@@ -55,6 +65,12 @@ public class Buscar
         {
             var TipoPersonaes = await _repositoryTipoPersona.TraerUnoAsync(x=>x.TipoPersonaId == request.TipoPersonaId);
             return _mapper.Map<TipoPersonaDto>(TipoPersonaes);
+        }
+
+        public async Task<List<TipoPersonaDto>> Handle(TipoPersonaPaginadoBuscarCommand request, CancellationToken cancellationToken)
+        {
+            List<JRWork.Administracion.DataAccess.Models.TipoPersona> TipoPersonaes = await _repositoryTipoPersona.BuscarPaginadoAsync(x => x.Nombre == (request.Nombre ?? x.Nombre),request.NumeroPagina,request.TamanoPagina);
+            return _mapper.Map<List<TipoPersonaDto>>(TipoPersonaes);
         }
     }
 

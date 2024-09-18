@@ -19,6 +19,17 @@ public class Buscar
         public decimal? CodigoPadre { get; set; }
     }
 
+    public class DivipolaBuscarPaginadoCommand : IRequest<List<DivipolaDto>>
+    {
+
+        public decimal? Codigo { get; set; }
+
+        public string? Nombre { get; set; }
+
+        public decimal? CodigoPadre { get; set; }
+        public int NumeroPagina { get; set; } = 1;
+        public int TamanoPagina { get; set; } = 10;
+    }
     public class DivipolaBuscarTodoCommand : IRequest<List<DivipolaDto>>
     {
 
@@ -31,7 +42,8 @@ public class Buscar
 
     public class DivipolaRegisterHandler : IRequestHandler<DivipolaBuscarCommand, List<DivipolaDto>>,
                                             IRequestHandler<DivipolaBuscarTodoCommand, List<DivipolaDto>>,
-                                            IRequestHandler<DivipolaBuscarIdCommand, DivipolaDto>
+                                            IRequestHandler<DivipolaBuscarIdCommand, DivipolaDto>,
+        IRequestHandler<DivipolaBuscarPaginadoCommand, List<DivipolaDto>>
     {
         private readonly IRepositoryDivipola _repositoryDivipola;
         private readonly IMapper _mapper;
@@ -59,6 +71,12 @@ public class Buscar
         {
             var Divipolaes = await _repositoryDivipola.TraerUnoAsync(x=>x.DivipolaId == request.DivipolaId);
             return _mapper.Map<DivipolaDto>(Divipolaes);
+        }
+
+        public async Task<List<DivipolaDto>> Handle(DivipolaBuscarPaginadoCommand request, CancellationToken cancellationToken)
+        {
+            List<JRWork.Administracion.DataAccess.Models.Divipola> Divipolaes = await _repositoryDivipola.BuscarPaginadoAsync(x =>  x.Codigo == (request.Codigo ?? x.Codigo) && x.Nombre == (request.Nombre ?? x.Nombre) && x.CodigoPadre == (request.CodigoPadre ?? x.CodigoPadre),request.NumeroPagina,request.TamanoPagina);
+            return _mapper.Map<List<DivipolaDto>>(Divipolaes);
         }
     }
 

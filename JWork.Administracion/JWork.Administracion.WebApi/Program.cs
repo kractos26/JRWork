@@ -170,44 +170,62 @@ static void ConfigurarMediaTRBucar(WebApplicationBuilder builder)
         cfg.RegisterServicesFromAssembly(typeof(Buscar.ActividadBuscarCommand).Assembly);
         cfg.RegisterServicesFromAssembly(typeof(Buscar.ActividadBuscarIdCommand).Assembly);
         cfg.RegisterServicesFromAssembly(typeof(Buscar.ActividadBuscarTodoCommand).Assembly);
+        cfg.RegisterServicesFromAssembly(typeof(Buscar.ActividadBuscarPaginadoCommand).Assembly);
 
         cfg.RegisterServicesFromAssembly(typeof(AreaBuscarCommand).Assembly);
         cfg.RegisterServicesFromAssembly(typeof(AreaBuscarIdCommand).Assembly);
         cfg.RegisterServicesFromAssembly(typeof(AreaBuscarTodoCommand).Assembly);
-
+        cfg.RegisterServicesFromAssembly(typeof(AreaBuscarPaginadoCommand).Assembly);
 
         cfg.RegisterServicesFromAssembly(typeof(ConceptoCalificacionBuscarCommand).Assembly);
         cfg.RegisterServicesFromAssembly(typeof(ConceptoCalificacionBuscarIdCommand).Assembly);
         cfg.RegisterServicesFromAssembly(typeof(ConceptoCalificacionBuscarTodoCommand).Assembly);
+        cfg.RegisterServicesFromAssembly(typeof(ConceptoCalificacionPaginadoBuscarCommand).Assembly);
+
+        
 
         cfg.RegisterServicesFromAssembly(typeof(DivipolaBuscarCommand).Assembly);
         cfg.RegisterServicesFromAssembly(typeof(DivipolaBuscarIdCommand).Assembly);
         cfg.RegisterServicesFromAssembly(typeof(DivipolaBuscarTodoCommand).Assembly);
+        cfg.RegisterServicesFromAssembly(typeof(DivipolaBuscarPaginadoCommand).Assembly);
 
 
         cfg.RegisterServicesFromAssembly(typeof(HabilidadBuscarCommand).Assembly);
         cfg.RegisterServicesFromAssembly(typeof(HabilidadBuscarIdCommand).Assembly);
         cfg.RegisterServicesFromAssembly(typeof(HabilidadBuscarTodoCommand).Assembly);
+        cfg.RegisterServicesFromAssembly(typeof(HabilidadBuscarPaginadoCommand).Assembly);
 
+        
         cfg.RegisterServicesFromAssembly(typeof(OficioBuscarCommand).Assembly);
         cfg.RegisterServicesFromAssembly(typeof(OficioBuscarIdCommand).Assembly);
         cfg.RegisterServicesFromAssembly(typeof(OficioBuscarTodoCommand).Assembly);
+        cfg.RegisterServicesFromAssembly(typeof(OficioBuscarPaginadoCommand).Assembly);
+
 
         cfg.RegisterServicesFromAssembly(typeof(TipoDocumentoBuscarCommand).Assembly);
         cfg.RegisterServicesFromAssembly(typeof(TipoDocumentoBuscarIdCommand).Assembly);
         cfg.RegisterServicesFromAssembly(typeof(TipoDocumentoBuscarTodoCommand).Assembly);
+        cfg.RegisterServicesFromAssembly(typeof(TipoDocumentoBuscarPaginadoCommand).Assembly);
 
-
+        
         cfg.RegisterServicesFromAssembly(typeof(TipoIdentificacionBuscarCommand).Assembly);
         cfg.RegisterServicesFromAssembly(typeof(TipoIdentificacionBuscarIdCommand).Assembly);
         cfg.RegisterServicesFromAssembly(typeof(TipoIdentificacionBuscarTodoCommand).Assembly);
+        cfg.RegisterServicesFromAssembly(typeof(TipoIdentificacionPaginadoBuscarCommand).Assembly);
+
 
         cfg.RegisterServicesFromAssembly(typeof(TipoPersonaBuscarCommand).Assembly);
         cfg.RegisterServicesFromAssembly(typeof(TipoPersonaBuscarIdCommand).Assembly);
         cfg.RegisterServicesFromAssembly(typeof(TipoPersonaBuscarTodoCommand).Assembly);
+        cfg.RegisterServicesFromAssembly(typeof(TipoPersonaPaginadoBuscarCommand).Assembly);
+
+        
 
         cfg.RegisterServicesFromAssembly(typeof(UnidadMedidaBuscarCommand).Assembly);
         cfg.RegisterServicesFromAssembly(typeof(UnidadMedidaBuscarIdCommand).Assembly);
         cfg.RegisterServicesFromAssembly(typeof(UnidadMedidaBuscarTodoCommand).Assembly);
+        cfg.RegisterServicesFromAssembly(typeof(UnidadMedidaBuscarPaginoCommand).Assembly);
+
+        
     });
 }
