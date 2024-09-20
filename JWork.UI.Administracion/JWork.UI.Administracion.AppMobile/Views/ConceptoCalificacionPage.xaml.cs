@@ -14,7 +14,6 @@ public partial class ConceptoCalificacionPage : ContentPage
 
     protected override async void OnAppearing()
     {
-        base.OnAppearing();
 		await _viewModel.Inicializar();
     }
 }

@@ -1,8 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using JWork.UI.Administracion.Business;
-using JWork.UI.Administracion.Models;
-using static JWork.UI.Administracion.Common.Constantes;
-using System.Collections.ObjectModel;
 
 namespace JWork.UI.Administracion.AppMobile.ViewModels
 {
@@ -28,6 +25,7 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels
         public DivipolaViewModel(DivipolaBL divipolaBL)
         {
             _divipolaBL = divipolaBL;
+            nombre = string.Empty;
         }
 
         public async Task Inicializar()
@@ -42,16 +40,13 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels
                 var response = await _divipolaBL.GetPorIdAsync(divipolaId);
 
                 // Validar la respuesta
-                if (response.Status == System.Net.HttpStatusCode.OK && response.Entidad != null)
+                if (response != null)
                 {
-                    Nombre = response.Entidad.Nombre;
-                    codigo = response.Entidad.Codigo;
-                    codigoPadre = response.Entidad.CodigoPadre;
+                    Nombre = response.Nombre;
+                    codigo = response.Codigo;
+                    codigoPadre = response.CodigoPadre;
                 }
-                else
-                {
-                    await MostrarError(response.Mensaje ?? string.Empty);
-                }
+                
             }
             catch (Exception ex)
             {

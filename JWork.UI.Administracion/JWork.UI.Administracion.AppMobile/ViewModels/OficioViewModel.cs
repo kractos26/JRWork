@@ -30,6 +30,9 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels
         {
             _oficioBL = oficioBL;
             _areaBL = areaBL;
+            oficioName = string.Empty;
+            areas = [];
+            areaSeleccionada = new();
         }
 
 
@@ -45,18 +48,18 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels
                 var response = await _oficioBL.GetPorIdAsync(oficioId);
 
                 // Validar la respuesta
-                if (response.Status == System.Net.HttpStatusCode.OK && response.Entidad != null)
+                if (response != null)
                 {
-                    oficioName = response.Entidad.Nombre;
-                    areaId = response.Entidad.AreaId;
-                    areaSeleccionada = response.Entidad.Area ?? new AreaDto();
-                    Common.Response<List<AreaDto>> arealst = await _areaBL.Buscar(new AreaDto() { });
-                    areas = new ObservableCollection<AreaDto>(arealst.Entidad ?? []);
+                    oficioName = response.Nombre;
+                    areaId = response.AreaId;
+                    areaSeleccionada = response.Area ?? new AreaDto();
+                    List<AreaDto> arealst = await _areaBL.Buscar(new () { 
+                    TotalRegistros = 20,
+                    NumeroPagina = 1,
+                    });
+                    areas = new ObservableCollection<AreaDto>(arealst ?? []);
                 }
-                else
-                {
-                    await MostrarError(response.Mensaje ?? string.Empty);
-                }
+                
             }
             catch (Exception ex)
             {

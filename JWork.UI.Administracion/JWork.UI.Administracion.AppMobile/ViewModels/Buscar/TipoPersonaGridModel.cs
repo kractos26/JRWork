@@ -10,17 +10,22 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels.Buscar
     public partial class TipoPersonaGridViewModel : ViewModelGlobal
     {
         [ObservableProperty]
-        public ObservableCollection<TipoPersonaDto> tipopersona;
+        public ObservableCollection<TipoPersonaDto> tipopersonas;
 
         [ObservableProperty]
         public TipoPersonaDto tipopersonaselecionada;
+
+        [ObservableProperty]
+        public string? mensaje;
 
         private readonly TipoPersonaBL _tipopersonaBL;
         private readonly INavigationService _navigationService;
         public TipoPersonaGridViewModel(TipoPersonaBL habilidadBL,INavigationService navigationService)
         {
             _tipopersonaBL = habilidadBL;
+            tipopersonas = [];
             _navigationService = navigationService;
+            tipopersonaselecionada = new();
             PropertyChanged += AreaGridViewModel_PropertyChanged;
         }
 
@@ -35,11 +40,21 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels.Buscar
 
         public async Task ObtenerData()
         {
-            Common.Response<List<TipoPersonaDto>> resp = await _tipopersonaBL.Buscar(new TipoPersonaDto() { });
-            if (resp.Entidad != null) 
+            try
             {
-                tipopersona = new ObservableCollection<TipoPersonaDto>(resp.Entidad);
+                List<TipoPersonaDto> resp = await _tipopersonaBL.Buscar(new Common.PaginadoRequest<TipoPersonaDto>() { 
+                TotalRegistros = 20,
+                NumeroPagina =1
+                });
+                if (resp != null)
+                {
+                    tipopersonas = new ObservableCollection<TipoPersonaDto>(resp);
 
+                }
+            }
+            catch (Exception ex)
+            {
+                mensaje = $"ocurrio un error {ex.Message}";
             }
         }
     }

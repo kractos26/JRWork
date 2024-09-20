@@ -8,7 +8,7 @@ namespace JWork.UI.Administracion.AppMobile
         {
             InitializeComponent();
             Routing.RegisterRoute(nameof(ActividadPage), typeof(ActividadPage));
-            Routing.RegisterRoute(nameof(AreaPage), typeof(AreaPage));
+            Routing.RegisterRoute(nameof(AreaPopup), typeof(AreaPopup));
             Routing.RegisterRoute(nameof(ConceptoCalificacionPage), typeof(ConceptoCalificacionPage));
             Routing.RegisterRoute(nameof(DivipolaPage), typeof(DivipolaPage));
             Routing.RegisterRoute(nameof(OficioPage), typeof(OficioPage));

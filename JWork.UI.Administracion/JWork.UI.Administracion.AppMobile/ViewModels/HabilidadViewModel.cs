@@ -32,6 +32,9 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels
         {
             _habilidadBL = habilidadBL;
             _actividadBL = actividadBL;
+            nombre = string.Empty;
+            actividades = [];
+            actividadSeleccionada = new();
         }
 
         public async Task Inicializar()
@@ -46,18 +49,18 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels
                 var response = await _habilidadBL.GetPorIdAsync(habilidadId);
 
                 // Validar la respuesta
-                if (response.Status == System.Net.HttpStatusCode.OK && response.Entidad != null)
+                if ( response != null)
                 {
-                    Nombre = response.Entidad.Nombre;
-                    actividadId = response.Entidad.ActividadId;
-                    actividadSeleccionada = response.Entidad.Actividad ?? new ActividadDto();
-                    Common.Response<List<ActividadDto>> actividalst = await _actividadBL.Buscar(new ActividadRequest() { });
-                    actividades = new ObservableCollection<ActividadDto>(actividalst.Entidad ?? []);
+                    Nombre = response.Nombre;
+                    actividadId = response.ActividadId;
+                    actividadSeleccionada = response.Actividad ?? new ActividadDto();
+                    List<ActividadDto> actividalst = await _actividadBL.Buscar(new () { 
+                        NumeroPagina = 1,
+                        TotalRegistros = 20,
+                    });
+                    actividades = new ObservableCollection<ActividadDto>(actividalst ?? []);
                 }
-                else
-                {
-                    await MostrarError(response.Mensaje ?? string.Empty);
-                }
+               
             }
             catch (Exception ex)
             {

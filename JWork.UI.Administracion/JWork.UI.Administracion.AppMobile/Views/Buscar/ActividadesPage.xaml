@@ -4,10 +4,11 @@
              x:Class="JWork.UI.Administracion.AppMobile.Views.Buscar.ActividadesPage"
              xmlns:model="clr-namespace:JWork.UI.Administracion.AppMobile.Models"
              Title="Actividades">
+    
     <ContentPage.ToolbarItems>
         <ToolbarItem Order="Primary" Priority="0" Clicked="Nuevo_Clicked">
             <ToolbarItem.IconImageSource>
-                <FontImageSource Glyph="add_circle" FontFamily="MaterialIcon" Color="Green" Size="25" />
+                <FontImageSource Glyph="add_circle" FontFamily="MaterialIcon" Color="black" Size="25" />
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
     </ContentPage.ToolbarItems>

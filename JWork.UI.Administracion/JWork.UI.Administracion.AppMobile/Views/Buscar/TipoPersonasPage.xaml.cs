@@ -16,7 +16,7 @@ public partial class TipoPersonasPage : ContentPage
 
     protected override async void OnAppearing()
     {
-        OnAppearing();
+       
         await _model.ObtenerData();
     }
 

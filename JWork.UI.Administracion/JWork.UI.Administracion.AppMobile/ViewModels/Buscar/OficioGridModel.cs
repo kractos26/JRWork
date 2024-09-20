@@ -15,12 +15,18 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels.Buscar
         [ObservableProperty]
         public OficioDto oficioseleccionado;
 
+        [ObservableProperty]
+        public string? mensaje;
         private readonly OficioBL _habilidadBL;
+
+
         private readonly INavigationService _navigationService;
         public OficioGridViewModel(OficioBL habilidadBL,INavigationService navigationService)
         {
             _habilidadBL = habilidadBL;
+            oficios = [];
             _navigationService = navigationService;
+            oficioseleccionado = new();
             PropertyChanged += AreaGridViewModel_PropertyChanged;
         }
 
@@ -35,11 +41,19 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels.Buscar
 
         public async Task ObtenerData()
         {
-            Common.Response<List<OficioDto>> resp = await _habilidadBL.Buscar(new OficioDto() { });
-            if (resp.Entidad != null) 
+            try
             {
-                oficios = new ObservableCollection<OficioDto>(resp.Entidad);
+                List<OficioDto> resp = await _habilidadBL.Buscar(new () { });
+                if (resp.Any())
+                {
+                    oficios = new ObservableCollection<OficioDto>(resp);
 
+                }
+            }
+            catch (Exception ex)
+            {
+
+                mensaje = $"ocurrio un error {ex.Message}";
             }
         }
     }

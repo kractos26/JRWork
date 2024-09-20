@@ -1,20 +1,19 @@
 using JWork.UI.Administracion.AppMobile.ViewModels;
+using CommunityToolkit.Maui.Views;
 
-namespace JWork.UI.Administracion.AppMobile.Views;
-
-public partial class AreaPage : ContentPage
+namespace JWork.UI.Administracion.AppMobile.Views
 {
-	private readonly AreaViewModel _model;
-	public AreaPage(AreaViewModel model)
-	{
-		_model = model;
-		InitializeComponent();
-		BindingContext = model;
-	}
-
-    protected override async void OnAppearing()
+    public partial class AreaPopup : Popup
     {
-        base.OnAppearing();
-		await _model.InicializarAsync();
+        private readonly AreaViewModel _viewModel;
+
+        public AreaPopup(AreaViewModel viewModel)
+        {
+            InitializeComponent(); 
+            _viewModel = viewModel; 
+            BindingContext = _viewModel; 
+        }
+
+        
     }
 }

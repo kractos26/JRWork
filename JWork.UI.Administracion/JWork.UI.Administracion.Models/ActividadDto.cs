@@ -2,11 +2,11 @@
 
 public class ActividadDto
 {
-    public int ActividadId { get; set; }
+    public int? ActividadId { get; set; }
 
     public string? Nombre { get; set; }
 
-    public int OficioId { get; set; }
+    public int? OficioId { get; set; }
 
     public OficioDto? Oficio { get; set; }
 }

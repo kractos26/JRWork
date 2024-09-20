@@ -15,7 +15,7 @@ public partial class UnidadMedidasPage : ContentPage
 
     protected override async void OnAppearing()
     {
-        OnAppearing();
+        
         await _model.ObtenerData();
     }
 }

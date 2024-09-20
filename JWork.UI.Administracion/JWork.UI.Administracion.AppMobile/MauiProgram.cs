@@ -1,12 +1,13 @@
-﻿using JWork.UI.Administracion.AppMobile.Services;
+﻿using CommunityToolkit.Maui;
+using JWork.UI.Administracion.AppMobile.Services;
 using JWork.UI.Administracion.AppMobile.ViewModels;
 using JWork.UI.Administracion.AppMobile.ViewModels.Buscar;
 using JWork.UI.Administracion.AppMobile.Views;
 using JWork.UI.Administracion.AppMobile.Views.Buscar;
 using JWork.UI.Administracion.Business;
 using JWork.UI.Administracion.Servicios;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Plugin.LocalNotification;
 
 namespace JWork.UI.Administracion.AppMobile
 {
@@ -16,13 +17,13 @@ namespace JWork.UI.Administracion.AppMobile
         {
             var builder = MauiApp.CreateBuilder();
             builder
-                .UseMauiApp<App>()
+                .UseMauiApp<App>().UseLocalNotification()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                     fonts.AddFont("MaterialIcons-Regular.ttf", "MaterialIcon");
-                });
+                }).UseMauiCommunityToolkit();
 
          
 
@@ -35,8 +36,9 @@ namespace JWork.UI.Administracion.AppMobile
             builder.Services.AddSingleton<INavigationService, NavigationService>();
 
             // Registro de páginas
+            builder.Services.AddSingleton<PopupService>();
             builder.Services.AddTransient<ActividadPage>();
-            builder.Services.AddTransient<AreaPage>();
+            builder.Services.AddTransient<AreaPopup>();
             builder.Services.AddTransient<OficioPage>();
             builder.Services.AddTransient<TipoDocumentoPage>();
             builder.Services.AddTransient<TipoIdentificacionPage>();

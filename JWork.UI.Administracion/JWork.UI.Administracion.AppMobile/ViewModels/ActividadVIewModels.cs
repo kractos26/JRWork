@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using JWork.UI.Administracion.Business;
+using JWork.UI.Administracion.Common;
 using JWork.UI.Administracion.Models;
 using System.Collections.ObjectModel;
 
@@ -22,8 +23,13 @@ public partial class ActividadViewModel : ViewModelGlobal, IQueryAttributable
     [ObservableProperty]
     private OficioDto oficioSeleccionado;
 
+    [ObservableProperty]
+    private string? mensajealerta;
+
     private readonly ActividadBL _actividadBL;
     private readonly OficioBL _oficioBL;
+
+   
 
     public ActividadViewModel(ActividadBL actividadBL, OficioBL oficioBL)
     {
@@ -35,20 +41,35 @@ public partial class ActividadViewModel : ViewModelGlobal, IQueryAttributable
 
     public async Task InicializarAsync()
     {
-        var actividadResponse = await _actividadBL.GetPorIdAsync(oficioId); 
-        if (actividadResponse?.Entidad != null)
+        try
         {
-            var actividad = actividadResponse.Entidad;
-            actividadId = actividad.ActividadId;
-            nombre = actividad.Nombre;
-            oficioId = actividad.OficioId;
-            oficioSeleccionado = actividad.Oficio ?? new OficioDto();
-        }
+            var actividadResponse = await _actividadBL.GetPorIdAsync(ActividadId);
+            if (actividadResponse != null)
+            {
+                ActividadDto actividad = actividadResponse;
 
-        var oficiolstResponse = await _oficioBL.GetTodoAsync();
-        if (oficiolstResponse?.Entidad != null)
+                actividadId = actividad.ActividadId ?? 0;
+                nombre = actividad.Nombre;
+                oficioId = actividad.OficioId ?? 0;
+                oficioSeleccionado = actividad.Oficio ?? new OficioDto();
+            }
+
+            var oficiolstResponse = await _oficioBL.Buscar(new Common.PaginadoRequest<OficioDto>()
+            {
+                TotalRegistros = 20,
+                NumeroPagina = 1
+            });
+            if (oficiolstResponse.Any())
+            {
+                oficios = new ObservableCollection<OficioDto>(oficiolstResponse);
+            }
+        }
+        catch(JWorkExecectioncs ex)
         {
-            oficios = new ObservableCollection<OficioDto>(oficiolstResponse.Entidad);
+           await GlobalAlertas.Error(ex.Message);
+        }
+        catch (Exception ex)
+        {
         }
     }
 

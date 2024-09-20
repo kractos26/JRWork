@@ -15,12 +15,16 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels.Buscar
         [ObservableProperty]
         public UnidadMedidaDto unidadmedidaselecionada;
 
+        [ObservableProperty]
+        public string? mensaje;
         private readonly UnidadMedidaBL _unidadmedidaBL;
         private readonly INavigationService _navigationService;
-        public UnidadMedidaGridViewModel(UnidadMedidaBL unidadmedidaBL,INavigationService navigationService)
+        public UnidadMedidaGridViewModel(UnidadMedidaBL unidadmedidaBL, INavigationService navigationService)
         {
             _unidadmedidaBL = unidadmedidaBL;
+            unidadmedida = [];
             _navigationService = navigationService;
+            unidadmedidaselecionada = new();
             PropertyChanged += AreaGridViewModel_PropertyChanged;
         }
 
@@ -35,11 +39,22 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels.Buscar
 
         public async Task ObtenerData()
         {
-            Common.Response<List<UnidadMedidaDto>> resp = await _unidadmedidaBL.Buscar(new UnidadMedidaDto() { });
-            if (resp.Entidad != null) 
+            try
             {
-                unidadmedida = new ObservableCollection<UnidadMedidaDto>(resp.Entidad);
 
+               List<UnidadMedidaDto> resp = await _unidadmedidaBL.Buscar(new Common.PaginadoRequest<UnidadMedidaDto>() { 
+                TotalRegistros = 20,
+                NumeroPagina = 1
+               });
+                if (resp != null)
+                {
+                    unidadmedida = new ObservableCollection<UnidadMedidaDto>(resp);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                mensaje = $"ocurrio un error {ex.Message}";
             }
         }
     }

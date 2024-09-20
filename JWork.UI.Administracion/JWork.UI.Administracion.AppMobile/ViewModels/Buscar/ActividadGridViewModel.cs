@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using JWork.UI.Administracion.AppMobile.Services;
 using JWork.UI.Administracion.AppMobile.Views;
 using JWork.UI.Administracion.Business;
+using JWork.UI.Administracion.Common;
 using JWork.UI.Administracion.Models;
 using JWork.UI.Administracion.Models.Request;
 using System.Collections.ObjectModel;
@@ -19,6 +20,9 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels.Buscar
 
         [ObservableProperty]
         public ActividadDto actividadselecionada;
+
+        [ObservableProperty]
+        private string? mensaje;
 
         private readonly ActividadBL _actividadBL;
         private readonly INavigationService _navigationService;
@@ -42,24 +46,41 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels.Buscar
 
         public async Task ObtenerData()
         {
-            Common.Response<List<ActividadDto>> resp = await _actividadBL.Buscar(new ActividadRequest() { });
-            if (resp.Entidad != null) 
+            try
             {
-                actividades = new ObservableCollection<ActividadDto>(resp.Entidad);
+                List<ActividadDto> resp = await _actividadBL.Buscar(new () {
+                    TotalRegistros = 20,
+                    NumeroPagina = 1
+                });
+                if (resp.Any())
+                {
+                    actividades = new ObservableCollection<ActividadDto>(resp);
 
+                }
+            }
+            catch(JWorkExecectioncs ex)
+            {
+                await MostrarError(ex.Message);
+            }
+            catch (Exception ex)
+            {
             }
         }
 
-        [RelayCommand]
-        private async Task Buscar()
+        private async Task MostrarError(string message)
         {
-            // Lógica de búsqueda de actividades basadas en el texto de búsqueda
+        }
+
+        [RelayCommand]
+        private  Task Buscar()
+        {
             if (!string.IsNullOrWhiteSpace(textoBusqueda))
             {
                 //// Simular búsqueda de actividades (aquí puedes hacer la llamada al servicio REST)
                 //var resultados = await ServicioRest.BuscarActividadesAsync(TextoBusqueda);
                 //Actividades = new ObservableCollection<ActividadDto>(resultados);
             }
+            return Task.CompletedTask;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using JWork.UI.Administracion.Business;
-using JWork.UI.Administracion.Models;
+using JWork.UI.Administracion.Common;
 
 namespace JWork.UI.Administracion.AppMobile.ViewModels
 {
@@ -42,26 +42,36 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels
             {
                 var response = await _conceptoCalificacionBL.GetPorIdAsync(ConceptoCalificacionId);
 
-                // Validar la respuesta
-                if (response.Status == System.Net.HttpStatusCode.OK && response.Entidad != null)
+                if (response != null)
                 {
-                    Nombre = response.Entidad.Nombre;
-                    Descripcion = response.Entidad.Descripcion;
+                    Nombre = response.Nombre;
+                    Descripcion = response.Descripcion;
                 }
-                else
-                {
-                    await MostrarError(response.Mensaje ?? string.Empty);
-                }
+                
+            }
+            catch(JWorkExecectioncs ex) 
+            {
+                await MostrarError(ex.Message);
             }
             catch (Exception ex)
             {
-                await MostrarError($"Ocurrió un error al cargar los datos: {ex.Message}");
             }
         }
 
         private Task MostrarError(string mensaje)
         {
-            return Task.CompletedTask;
+            ////var notification = new NotificationRequest
+            ////{
+            ////    NotificationId = 1001,
+            ////    Title = "Acción Completada",
+            ////    Description = "La acción se ha completado exitosamente.",
+            ////    ReturningData = "AcciónCompletada", // Datos adicionales si es necesario
+            ////    NotifyTime = DateTime.Now // Notificación inmediata
+            ////};
+
+            ////NotificationCenter.Current.Show(notification);
+            ///
+            return null;
         }
     }
 }

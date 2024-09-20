@@ -10,17 +10,22 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels.Buscar
     public partial class TipoDocumentoGridViewModel : ViewModelGlobal
     {
         [ObservableProperty]
-        public ObservableCollection<TipoDocumentoDto> tipodocumento;
+        public ObservableCollection<TipoDocumentoDto> tipodocumentos;
 
         [ObservableProperty]
         public TipoDocumentoDto tipodocumentoselecionada;
 
+        [ObservableProperty]
+        public string? mensaje;
+
         private readonly TipoDocumentoBL _tipodocumentoBL;
         private readonly INavigationService _navigationService;
-        public TipoDocumentoGridViewModel(TipoDocumentoBL tipodocumentoBL,INavigationService navigationService)
+        public TipoDocumentoGridViewModel(TipoDocumentoBL tipodocumentoBL, INavigationService navigationService)
         {
             _tipodocumentoBL = tipodocumentoBL;
             _navigationService = navigationService;
+            tipodocumentos = [];
+            tipodocumentoselecionada = new();
             PropertyChanged += AreaGridViewModel_PropertyChanged;
         }
 
@@ -35,11 +40,23 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels.Buscar
 
         public async Task ObtenerData()
         {
-            Common.Response<List<TipoDocumentoDto>> resp = await _tipodocumentoBL.Buscar(new TipoDocumentoDto() { });
-            if (resp.Entidad != null) 
+            try
             {
-                tipodocumento = new ObservableCollection<TipoDocumentoDto>(resp.Entidad);
+                var resp = await _tipodocumentoBL.Buscar(new()
+                {
+                    TotalRegistros = 20,
+                    NumeroPagina = 1
+                });
 
+                if (resp != null)
+                {
+                    tipodocumentos = new ObservableCollection<TipoDocumentoDto>(resp);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                mensaje = $"ocurrio un error {ex.Message}";
             }
         }
     }

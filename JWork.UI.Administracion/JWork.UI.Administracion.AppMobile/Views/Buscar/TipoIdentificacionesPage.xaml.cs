@@ -14,7 +14,7 @@ public partial class TipoIdentificacionesPage : ContentPage
 
     protected override async void OnAppearing()
     {
-        OnAppearing();
+        
         await _model.ObtenerData();
     }
 }

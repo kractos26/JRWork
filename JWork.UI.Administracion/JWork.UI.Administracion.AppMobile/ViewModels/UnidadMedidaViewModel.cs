@@ -33,14 +33,11 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels
                 var response = await _unidadMedidaBL.GetPorIdAsync(unidadMedidaId);
 
                 // Validar la respuesta
-                if (response.Status == System.Net.HttpStatusCode.OK && response.Entidad != null)
+                if (response != null)
                 {
-                    nombre = response.Entidad.Nombre;
+                    nombre = response.Nombre;
                 }
-                else
-                {
-                    await MostrarError(response.Mensaje ?? string.Empty);
-                }
+               
             }
             catch (Exception ex)
             {

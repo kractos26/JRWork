@@ -14,7 +14,7 @@ public partial class OficiosPage : ContentPage
 
     protected override async void OnAppearing()
     {
-        OnAppearing();
+        
         await _model.ObtenerData();
     }
 }

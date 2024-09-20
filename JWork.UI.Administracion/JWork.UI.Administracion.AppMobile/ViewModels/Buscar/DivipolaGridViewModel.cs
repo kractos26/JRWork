@@ -15,6 +15,9 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels.Buscar
         [ObservableProperty]
         public DivipolaDto divipolalecionada;
 
+        [ObservableProperty]
+        public string? mensaje;
+
         private readonly DivipolaBL _divipolaBL;
         private readonly INavigationService _navigationService;
         public DivipolaGridViewModel(DivipolaBL divipolaBL,
@@ -22,6 +25,8 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels.Buscar
         {
             _divipolaBL = divipolaBL;
             _navigationService = navigation;
+            divipolas = [];
+            divipolalecionada = new();
             PropertyChanged += AreaGridViewModel_PropertyChanged;
         }
 
@@ -36,11 +41,21 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels.Buscar
 
         public async Task ObtenerData()
         {
-            Common.Response<List<DivipolaDto>> resp = await _divipolaBL.Buscar(new DivipolaDto() { });
-            if (resp.Entidad != null) 
+            try
             {
-                divipolas = new ObservableCollection<DivipolaDto>(resp.Entidad);
+              List<DivipolaDto> resp = await _divipolaBL.Buscar(new () { 
+                    TotalRegistros = 20,
+                    NumeroPagina = 1
+                });
+                if (resp.Any())
+                {
+                    divipolas = new ObservableCollection<DivipolaDto>(resp);
 
+                }
+            }
+            catch (Exception ex)
+            {
+                mensaje = $"ocurrio un error {ex.Message}";
             }
         }
     }

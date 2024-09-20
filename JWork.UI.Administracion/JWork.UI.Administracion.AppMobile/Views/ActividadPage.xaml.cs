@@ -15,7 +15,7 @@ public partial class ActividadPage : ContentPage
 
     protected override async void OnAppearing()
     {
-        base.OnAppearing(); 
+        
         await _models.InicializarAsync();
     }
 }

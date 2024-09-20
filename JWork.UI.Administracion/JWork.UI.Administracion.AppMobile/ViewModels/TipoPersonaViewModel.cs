@@ -17,6 +17,7 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels
         public TipoPersonaViewModel(TipoPersonaBL tipoPersonaBL)
         {
             _tipoPersonaBL = tipoPersonaBL;
+            nombre = string.Empty;
         }
 
         public async Task InicializarAsync()
@@ -31,14 +32,11 @@ namespace JWork.UI.Administracion.AppMobile.ViewModels
                 var response = await _tipoPersonaBL.GetPorIdAsync(tipoPersonaId);
 
                 // Validar la respuesta
-                if (response.Status == System.Net.HttpStatusCode.OK && response.Entidad != null)
+                if (response != null)
                 {
-                    nombre = response.Entidad.Nombre;
+                    nombre = response.Nombre;
                 }
-                else
-                {
-                    await MostrarError(response.Mensaje ?? string.Empty);
-                }
+              
             }
             catch (Exception ex)
             {

@@ -1,24 +1,88 @@
-﻿using JWork.UI.Administracion.Common;
+﻿using AutoMapper;
+using JRWork.UI.Administracion.DataAccess.Models;
+using JWork.UI.Administracion.Common;
+using JWork.UI.Administracion.DataBase.Repositories.Interfaces;
 using JWork.UI.Administracion.Models;
-using JWork.UI.Administracion.Servicios;
 
 namespace JWork.UI.Administracion.Business
 {
     public class HabilidadBL
     {
-        private readonly HabilidadService _service;
-        public HabilidadBL(HabilidadService service)
+        private readonly IRepositoryHabilidad _repository;
+        private readonly IMapper _mapper;
+        public HabilidadBL(IRepositoryHabilidad repository, IMapper mapper)
         {
-            _service = service; 
+            _repository = repository;
+            _mapper = mapper;
         }
 
-        public async Task<Response<HabilidadDto>> Crear(HabilidadDto request) => await _service.CrearAsync(request);
-        public async Task<Response<HabilidadDto>> Modificar(HabilidadDto request) => await _service.ModificarAsync(request);
-        public async Task<Response<List<HabilidadDto>>> GetTodoAsync() => await _service.BuscarTodoAsync();
-        public async Task<Response<HabilidadDto>> GetPorIdAsync(int id) => await _service.BuscarPorIdAsync(id);
-        public async Task<Response<List<HabilidadDto>>> Buscar(HabilidadDto request) => await _service.Buscar(request);
-        public async Task<Response<bool>> Eliminar(int id) => await _service.EliminarAsync(id);
+        public async Task<HabilidadDto> Crear(HabilidadDto request)
+        {
+            Habilidad entidad = _mapper.Map<Habilidad>(request);
+            if (request.Nombre == null)
+            {
+                throw new JWorkExecectioncs("La habilidad ya se encuentra creada");
+            }
+            if(request.ActividadId == 0)
+            {
+                throw new JWorkExecectioncs("Elija la actividad a la cual va a pertenecer la habidad");
+
+            }
+
+            Habilidad? exist = await _repository.TraerUnoAsync(x => x.Nombre.ToLower() == request.Nombre.ToLower());
+            if (exist == null)
+            {
+                await _repository.AdicionarAsync(entidad);
+            }
+            else
+            {
+                throw new JWorkExecectioncs("La habilidad ya se encuentra creada");
+            }
+            return _mapper.Map<HabilidadDto>(entidad);
+        }
+
+        public async Task<HabilidadDto> Modificar(HabilidadDto request)
+        {
+            string mensaje = "El concepto de calificación no existe";
+
+            if (request.HabilidadId <= 0)
+            {
+                throw new JWorkExecectioncs(mensaje);
+            }
+            if (request.Nombre == null)
+            {
+                throw new JWorkExecectioncs("La habilidad ya se encuentra creada");
+            }
+            if (request.ActividadId == 0)
+            {
+                throw new JWorkExecectioncs("Elija la actividad a la cual va a pertenecer la habidad");
+
+            }
+            Habilidad? entidad = await _repository.TraerUnoAsync(x => x.HabilidadId == request.HabilidadId);
+            if (entidad != null)
+            {
+                _mapper.Map(request, entidad);
+                await _repository.ModificarAsync(entidad);
+            }
+            return _mapper.Map<HabilidadDto>(entidad);
+        }
 
 
+        public async Task<List<HabilidadDto>> Buscar(PaginadoRequest<HabilidadDto> request)
+        {
+            List<Habilidad> buscar = await _repository.BuscarPaginadoAsync(x => x.HabilidadId == (request.Entidad.HabilidadId > 0 ? request.Entidad.HabilidadId : x.HabilidadId) && x.Nombre == (request.Entidad.Nombre ?? x.Nombre) && x.ActividadId == (request.Entidad.ActividadId > 0 ? request.Entidad.ActividadId : x.ActividadId), request.NumeroPagina, request.TotalRegistros);
+            if (buscar.Count() > 0)
+            {
+                return _mapper.Map<List<HabilidadDto>>(buscar);
+            }
+            throw new JWorkExecectioncs("Registros no encontrados");
+
+        }
+
+        public async Task<HabilidadDto> GetPorIdAsync(int actividadId)
+        {
+            Habilidad? actividad = await _repository.TraerUnoAsync(x => x.HabilidadId == actividadId);
+            return _mapper.Map<HabilidadDto>(actividad);
+        }
     }
 }
