@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="JWork.UI.Administracion.Mobile.NewsMembershipPlanRadioButtonTemplate">
+
+    <RadioButton
+        Padding="0"
+        Value="{ Binding . }">
+
+        <RadioButton.ControlTemplate>
+            <ControlTemplate>
+                <Grid BindingContext="{ TemplateBinding BindingContext }">
+                    <!-- Unchecked State -->
+                    <Border
+                        x:Name="border"
+                        Grid.RowSpan="2"
+                        StrokeShape="RoundRectangle 12"
+                        StrokeThickness="{ OnPlatform
+                            Android=5,
+                            iOS=8
+                        }"
+                        Stroke="#E8E8E8"
+                        BackgroundColor="{ DynamicResource BackgroundSecondaryColor }"
+                        Padding="0">
+
+                        <!-- Content Container -->
+                        <Grid
+                            RowDefinitions="Auto,*"
+                            Margin="-5,-5,-5,0">
+                            <!-- Header Background -->
+                            <Border
+                                x:Name="header"
+                                BackgroundColor="#E8E8E8"
+                                HeightRequest="{ OnPlatform
+                                    Android=35,
+                                    iOS=30
+                                }"
+                                VerticalOptions="Start">
+                                <!-- Header Text -->
+                                <Label
+                                    x:Name="headerText"
+                                    Text="{ Binding Name, StringFormat='{0} Payment' }"
+                                    FontSize="{ StaticResource BaseFontSize }"
+                                    HorizontalOptions="Center"
+                                    VerticalTextAlignment="Center"
+                                    Margin="{ OnPlatform
+                                        Android='0,5,0,2',
+                                        iOS='0,0,0,2'
+                                    }"
+                                />
+                            </Border>
+                            <!-- Plan Info -->
+                            <VerticalStackLayout
+                                Grid.Row="1"
+                                Spacing="12"
+                                VerticalOptions="Center"
+                                Padding="18">
+                                <!-- Monthly Cost -->
+                                <Label
+                                    Text="{ Binding Price, StringFormat='${0} / month' }"
+                                    FontSize="{ StaticResource TitleFontSize }"
+                                    FontAttributes="Bold"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                />
+
+                                <!-- Tag -->
+                                <Border
+                                    IsVisible="{ Binding IsRecommended }"
+                                    HorizontalOptions="Center"
+                                    StrokeShape="RoundRectangle 8"
+                                    Style="{ DynamicResource BorderTagStyle }">
+                                    <Label
+                                        Text="Recommended"
+                                        FontSize="{ DynamicResource TagItemFontSize }"
+                                        TextColor="{ DynamicResource TagItemTextColor }"
+                                        VerticalOptions="Center"
+                                    />
+                                </Border>
+
+                                <!-- Copy Text -->
+                                <Label
+                                    Text="{ Binding Description }"
+                                    FontSize="12"
+                                    TextColor="{ DynamicResource TextSecondaryColor }"
+                                    HorizontalTextAlignment="Center"
+                                />
+                            </VerticalStackLayout>
+
+                        </Grid>
+                    </Border>
+
+                    <!-- Checked State -->
+                    <Border
+                        x:Name="checked"
+                        BackgroundColor="{ DynamicResource BackgroundColor }"
+                        StrokeShape="RoundRectangle 12"
+                        StrokeThickness="{ OnPlatform
+                            Android=6,
+                            iOS=8
+                        }"
+                        Stroke="{ DynamicResource PrimaryColor }"
+                        Padding="0">
+
+                        <!-- Content Container -->
+                        <Grid
+                            RowDefinitions="Auto,*"
+                            Margin="-5,-5,-5,0">
+                            <!-- Header Background -->
+                            <Border
+                                BackgroundColor="{ DynamicResource PrimaryColor }"
+                                HeightRequest="{ OnPlatform
+                                    Android=35,
+                                    iOS=30
+                                }">
+                                <!-- Header Text -->
+                                <Label
+                                    Text="{ Binding Name, StringFormat='{0} Payment' }"
+                                    FontSize="{ StaticResource BaseFontSize }"
+                                    TextColor="{ DynamicResource OnSurfaceColor }"
+                                    HorizontalOptions="Center"
+                                    VerticalTextAlignment="Center"
+                                    Margin="{ OnPlatform
+                                        Android='0,5,0,2',
+                                        iOS='0,0,0,2'
+                                    }"
+                                />
+                            </Border>
+                            <!-- Plan Info -->
+                            <VerticalStackLayout
+                                Grid.Row="1"
+                                Spacing="12"
+                                VerticalOptions="Center"
+                                Padding="18">
+
+                                <!-- Monthly Cost -->
+                                <Label
+                                    FontSize="{ StaticResource TitleFontSize }"
+                                    Text="{ Binding Price, StringFormat='${0} / month' }"
+                                    FontAttributes="Bold"
+                                    HorizontalOptions="Center"
+                                />
+
+                                <!-- Tag -->
+                                <Border
+                                    IsVisible="{ Binding IsRecommended }"
+                                    HorizontalOptions="Center"
+                                    StrokeShape="RoundRectangle 8"
+                                    Style="{ DynamicResource BorderTagStyle }">
+                                    <Label
+                                        Text="Recommended"
+                                        FontSize="{ DynamicResource TagItemFontSize }"
+                                        TextColor="{ DynamicResource TagItemTextColor }"
+                                        VerticalOptions="Center"
+                                    />
+                                </Border>
+
+                                <!-- Copy Text -->
+                                <Label
+                                    Text="{ Binding Description }"
+                                    FontSize="12"
+                                    TextColor="{ DynamicResource TextSecondaryColor }"
+                                    HorizontalTextAlignment="Center"
+                                />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroupList>
+                            <VisualStateGroup x:Name="CheckedStates">
+                                <VisualState x:Name="Checked">
+                                    <VisualState.Setters>
+                                        <Setter TargetName="checked" Property="Opacity" Value="1" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Unchecked">
+                                    <VisualState.Setters>
+                                        <Setter TargetName="checked" Property="Opacity" Value="0" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateGroupList>
+                    </VisualStateManager.VisualStateGroups>
+                </Grid>
+            </ControlTemplate>
+        </RadioButton.ControlTemplate>
+    </RadioButton>
+</ContentView>
+

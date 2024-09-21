@@ -4,7 +4,7 @@ public partial class Actividad
 {
     public int ActividadId { get; set; }
 
-    public string? Nombre { get; set; }
+    public string Nombre { get; set; } = null!;
 
     public int? OficioId { get; set; }
 

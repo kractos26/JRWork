@@ -25,7 +25,7 @@ namespace JWork.UI.Administracion.Business
             }
            
 
-            Area? exist = await _repository.TraerUnoAsync(x => x.Nombre.ToLower() == request.Nombre.ToLower());
+            Area? exist = await _repository.TraerUnoAsync(x => x.Nombre!.ToLower() == request.Nombre.ToLower());
             if (exist == null)
             {
                 await _repository.AdicionarAsync(entidad);

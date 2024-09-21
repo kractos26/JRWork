@@ -6,5 +6,5 @@ public partial class TipoDocumento
 {
     public int TipoDocumentoId { get; set; }
 
-    public string? Nombre { get; set; }
+    public string Nombre { get; set; } = null!;
 }

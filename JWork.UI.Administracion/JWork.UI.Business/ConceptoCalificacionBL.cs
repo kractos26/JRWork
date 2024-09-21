@@ -58,7 +58,7 @@ namespace JWork.UI.Administracion.Business
 
         public async Task<List<ConceptoCalificacionDto>> Buscar(PaginadoRequest<ConceptoCalificacionDto> request)
         {
-            List<ConceptoCalificacion> buscar = await _repository.BuscarPaginadoAsync(x => x.ConceptoCalificacionId == (request.Entidad.ConceptoCalificacionId > 0 ? request.Entidad.ConceptoCalificacionId : x.ConceptoCalificacionId) && x.Nombre == (request.Entidad.Nombre ?? x.Nombre), request.NumeroPagina, request.TotalRegistros);
+            List<ConceptoCalificacion> buscar = await _repository.BuscarPaginadoAsync(x => request.Entidad != null && x.ConceptoCalificacionId == (request.Entidad.ConceptoCalificacionId > 0 ? request.Entidad.ConceptoCalificacionId : x.ConceptoCalificacionId) && x.Nombre == (request.Entidad.Nombre ?? x.Nombre), request.NumeroPagina, request.TotalRegistros);
             if (buscar.Count() > 0)
             {
                 return _mapper.Map<List<ConceptoCalificacionDto>>(buscar);

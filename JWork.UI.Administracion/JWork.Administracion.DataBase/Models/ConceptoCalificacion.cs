@@ -6,7 +6,7 @@ public partial class ConceptoCalificacion
 {
     public int ConceptoCalificacionId { get; set; }
 
-    public string? Nombre { get; set; }
+    public string Nombre { get; set; } = null!;
 
     public string? Descripcion { get; set; }
 }

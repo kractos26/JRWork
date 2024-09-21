@@ -61,7 +61,7 @@ namespace JWork.UI.Administracion.Business
 
         public async Task<List<UnidadMedidaDto>> Buscar(PaginadoRequest<UnidadMedidaDto> request)
         {
-            List<UnidadMedida> buscar = await _repository.BuscarPaginadoAsync(x => x.UnidadMedidaId == (request.Entidad.UnidadMedidaId > 0 ? request.Entidad.UnidadMedidaId : x.UnidadMedidaId) && x.Nombre == (request.Entidad.Nombre ?? x.Nombre), request.NumeroPagina, request.TotalRegistros);
+            List<UnidadMedida> buscar = await _repository.BuscarPaginadoAsync(x => request.Entidad != null && x.UnidadMedidaId == (request.Entidad.UnidadMedidaId > 0 ? request.Entidad.UnidadMedidaId : x.UnidadMedidaId) && x.Nombre == (request.Entidad.Nombre ?? x.Nombre), request.NumeroPagina, request.TotalRegistros);
             if (buscar.Count() > 0)
             {
                 return _mapper.Map<List<UnidadMedidaDto>>(buscar);

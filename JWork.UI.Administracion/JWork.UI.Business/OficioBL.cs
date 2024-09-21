@@ -30,7 +30,7 @@ namespace JWork.UI.Administracion.Business
 
             }
 
-            Oficio? exist = await _repository.TraerUnoAsync(x => x.Nombre.ToLower() == request.Nombre.ToLower());
+            Oficio? exist = await _repository.TraerUnoAsync(x =>  x.Nombre.ToLower() == request.Nombre.ToLower());
             if (exist == null)
             {
                 await _repository.AdicionarAsync(entidad);
@@ -70,7 +70,7 @@ namespace JWork.UI.Administracion.Business
 
         public async Task<List<OficioDto>> Buscar(PaginadoRequest<OficioDto> request)
         {
-            List<Oficio> buscar = await _repository.BuscarPaginadoAsync(x => x.OficioId == (request.Entidad.OficioId > 0 ? request.Entidad.OficioId : x.OficioId) && x.Nombre == (request.Entidad.Nombre ?? x.Nombre) && x.AreaId == (request.Entidad.AreaId > 0 ? request.Entidad.AreaId : x.AreaId), request.NumeroPagina, request.TotalRegistros);
+            List<Oficio> buscar = await _repository.BuscarPaginadoAsync(x => request.Entidad != null && x.OficioId == (request.Entidad.OficioId > 0 ? request.Entidad.OficioId : x.OficioId) && x.Nombre == (request.Entidad.Nombre ?? x.Nombre) && x.AreaId == (request.Entidad.AreaId > 0 ? request.Entidad.AreaId : x.AreaId), request.NumeroPagina, request.TotalRegistros);
             if (buscar.Count() > 0)
             {
                 return _mapper.Map<List<OficioDto>>(buscar);

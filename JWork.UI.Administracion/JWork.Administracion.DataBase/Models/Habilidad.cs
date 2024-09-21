@@ -6,7 +6,7 @@ public partial class Habilidad
 {
     public int HabilidadId { get; set; }
 
-    public string? Nombre { get; set; }
+    public string Nombre { get; set; } = null!;
 
     public int? ActividadId { get; set; }
 

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="JWork.UI.Administracion.Mobile.Views.Buscar.NewsTopicsPage"
+    BackgroundColor="{ DynamicResource BackgroundColor }"
+    Title="Topicos"
+    IconImageSource="pages.png"
+    x:Name="root">
+
+    
+     
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Text="Crear"
+            Order="Primary"
+            Priority="0"
+            Command="{ Binding CreateCommand }">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="add_circle" 
+                   FontFamily="MaterialIcon" 
+                   Color="#FB7500" 
+                    FontAutoScalingEnabled="True"
+                   Size="200" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+        
+        <StackLayout>
+            <SearchBar
+        Placeholder="Buscar temas"
+        Text="{ Binding SearchText, Mode=TwoWay }"
+        Margin="24,0" />
+            <CollectionView
+     Margin="{ OnIdiom
+         Phone='24',
+         Tablet='100,24'
+     }"
+     ItemsSource="{ Binding Topics }"
+     VerticalScrollBarVisibility="Never">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout
+             Orientation="Vertical"
+             ItemSpacing="24"
+         />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <!-- CollectionView Template -->
+                        <Grid
+                 RowDefinitions="*,Auto"
+                 Padding="16,20"
+                 RowSpacing="10"
+                 HeightRequest="{ OnIdiom
+                     Phone='140',
+                     Tablet='200'
+                 }">
+
+
+                            <Border
+                     Grid.RowSpan="2"
+                     BackgroundColor="Transparent"
+                     StrokeShape="RoundRectangle 12"
+                     Margin="-16,-20"
+                     HeightRequest="{ OnIdiom
+                         Phone='140',
+                         Tablet='200'
+                     }">
+                                <View.GestureRecognizers>
+                                    <TapGestureRecognizer
+                             Command="{ Binding BindingContext.TopicTappedCommand, Source={x:Reference root} }"
+                             CommandParameter="{ Binding . }"
+                         />
+                                </View.GestureRecognizers>
+
+                            </Border>
+
+                            <Entry x:Name="nombre" Placeholder="Ingrese el área" FontSize="25" Scale="1" TextColor="Black"/>
+
+
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+   
+</ContentPage>

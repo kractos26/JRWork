@@ -7,7 +7,11 @@ namespace JRWork.Administracion.DataAccess.Models;
 
 public partial class JrworkContext : DbContext
 {
-   
+    public JrworkContext(DbContextOptions<JrworkContext> options)
+        : base(options)
+    {
+    }
+
     public virtual DbSet<Actividad> Actividad { get; set; }
 
     public virtual DbSet<Area> Area { get; set; }
@@ -30,7 +34,7 @@ public partial class JrworkContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "jwork.db3");
+        var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "jrwork.db");
         optionsBuilder.UseSqlite($"Filename={dbPath}");
     }
 

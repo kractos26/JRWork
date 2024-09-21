@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="JWork.UI.Administracion.Mobile.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:JWork.UI.Administracion.Mobile"
+    xmlns:views="clr-namespace:JWork.UI.Administracion.Mobile.Views.Buscar"
+    Shell.FlyoutBehavior="Flyout"
+    Title="JWork.UI.Administracion.Mobile"
+    BackgroundColor="#FFAB57"
+    FlyoutBackgroundColor="#FFAB57">
+
+    <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate local:MainPage}">
+        <ShellContent.Icon>
+            <FontImageSource FontFamily="MaterialIcon" Glyph="home" />
+        </ShellContent.Icon>
+    </ShellContent>
+
+    <ShellContent 
+        Title="Areas"
+        ContentTemplate="{DataTemplate views:AreasPage}">
+        <ShellContent.Icon>
+            <FontImageSource FontFamily="MaterialIcon" Glyph="business" />
+        </ShellContent.Icon>
+    </ShellContent>
+
+    <FlyoutItem Title="Actividades">
+        <Tab>
+            <ShellContent
+                Title="Actividades"
+                ContentTemplate="{DataTemplate views:ActividadesPage}">
+                <ShellContent.Icon>
+                    <FontImageSource FontFamily="MaterialIcon" Glyph="event" />
+                </ShellContent.Icon>
+            </ShellContent>
+        </Tab>
+    </FlyoutItem>
+
+    <FlyoutItem Title="Conceptos de calificaciones">
+        <Tab>
+            <ShellContent
+                Title="Conceptos de calificaciones"
+                ContentTemplate="{DataTemplate views:ConceptoCalificacionesPage}">
+                <ShellContent.Icon>
+                    <FontImageSource FontFamily="MaterialIcon" Glyph="grade" />
+                </ShellContent.Icon>
+            </ShellContent>
+        </Tab>
+    </FlyoutItem>
+
+    <FlyoutItem Title="Divipola">
+        <Tab>
+            <ShellContent
+                Title="División Politica"
+                ContentTemplate="{DataTemplate views:DivipolasPage}">
+                <ShellContent.Icon>
+                    <FontImageSource FontFamily="MaterialIcon" Glyph="location_city" />
+                </ShellContent.Icon>
+            </ShellContent>
+        </Tab>
+    </FlyoutItem>
+
+    <FlyoutItem Title="Habilidades" Route="HabilidadPage">
+        <Tab>
+            <ShellContent
+                Title="Habilidades"
+                ContentTemplate="{DataTemplate views:HabilidadesPage}">
+                <ShellContent.Icon>
+                    <FontImageSource FontFamily="MaterialIcon" Glyph="build" />
+                   
+                </ShellContent.Icon>
+            </ShellContent>
+        </Tab>
+    </FlyoutItem>
+
+    <FlyoutItem Title="Oficios">
+        <Tab>
+            <ShellContent
+                Title="Oficios"
+                ContentTemplate="{DataTemplate views:OficiosPage}">
+                <ShellContent.Icon>
+                    <FontImageSource FontFamily="MaterialIcon" Glyph="work" />
+                </ShellContent.Icon>
+            </ShellContent>
+        </Tab>
+    </FlyoutItem>
+
+    <FlyoutItem Title="Tipo Documentos">
+        <Tab>
+            <ShellContent
+                Title="Tipo Documentos"
+                ContentTemplate="{DataTemplate views:TiposDocumentosPage}">
+                <ShellContent.Icon>
+                    <FontImageSource FontFamily="MaterialIcon" Glyph="description" />
+                </ShellContent.Icon>
+            </ShellContent>
+        </Tab>
+    </FlyoutItem>
+
+    <FlyoutItem Title="Tipos de Identificaciones">
+        <Tab>
+            <ShellContent
+                Title="Tipos de Identificaciones"
+                ContentTemplate="{DataTemplate views:TiposIdentificacionesPage}">
+                <ShellContent.Icon>
+                    <FontImageSource FontFamily="MaterialIcon" Glyph="badge" />
+                </ShellContent.Icon>
+            </ShellContent>
+        </Tab>
+    </FlyoutItem>
+
+    <FlyoutItem Title="Tipos de Personas">
+        <Tab>
+            <ShellContent
+                Title="Tipos de Personas"
+                ContentTemplate="{DataTemplate views:TipoPersonasPage}">
+                <ShellContent.Icon>
+                    <FontImageSource FontFamily="MaterialIcon" Glyph="person" />
+                </ShellContent.Icon>
+            </ShellContent>
+        </Tab>
+    </FlyoutItem>
+
+    <FlyoutItem Title="Unidades de Medidas">
+        <Tab>
+            <ShellContent
+                Title="Unidades de Medidas"
+                ContentTemplate="{DataTemplate views:UnidadesMedidasPage}">
+                <ShellContent.Icon>
+                    <FontImageSource FontFamily="MaterialIcon" Glyph="straighten" />
+                </ShellContent.Icon>
+            </ShellContent>
+        </Tab>
+    </FlyoutItem>
+
+</Shell>
