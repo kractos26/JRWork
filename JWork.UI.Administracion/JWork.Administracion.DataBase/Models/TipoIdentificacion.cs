@@ -1,9 +1,15 @@
-﻿namespace JRWork.UI.Administracion.DataAccess.Models;
+﻿using SQLite;
+using System.ComponentModel.DataAnnotations;
 
-    public class TipoIdentificacion
-    {
-        public int TipoIdentificacionId { get; set; }
-        public string Sigla { get; set; } = null!;
-        public string Nombre { get; set; } = null!; 
-    }
+namespace JRWork.UI.Administracion.DataAccess.Models;
+
+[Table("TipoIdentificacion")]
+
+public class TipoIdentificacion
+{
+    [Key]
+    public int TipoIdentificacionId { get; set; }
+    public string Sigla { get; set; } = null!;
+    public string Nombre { get; set; } = null!;
+}
 

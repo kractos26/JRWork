@@ -1,5 +1,6 @@
 ﻿
 using JRWork.UI.Administracion.DataAccess.Models;
+using JWork.UI.Administracion.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -7,10 +8,12 @@ namespace JRWork.Administracion.DataAccess.Models;
 
 public partial class JrworkContext : DbContext
 {
-    public JrworkContext(DbContextOptions<JrworkContext> options)
-        : base(options)
+    private readonly IDatabaseRutaService _databaseRuta;
+    public JrworkContext(IDatabaseRutaService databaseRuta)
     {
+        _databaseRuta = databaseRuta;
     }
+ 
 
     public virtual DbSet<Actividad> Actividad { get; set; }
 
@@ -34,10 +37,16 @@ public partial class JrworkContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "jrwork.db");
-        optionsBuilder.UseSqlite($"Filename={dbPath}");
+        string conexion = $"Filename = {_databaseRuta.GetRuta("jwork.db")}";
+        optionsBuilder.UseSqlite(conexion);
+        var context = new JrworkContext(_databaseRuta);
+       var res = context.Database.EnsureCreated();
     }
 
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+    }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

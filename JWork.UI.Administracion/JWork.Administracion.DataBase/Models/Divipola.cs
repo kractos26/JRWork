@@ -1,7 +1,12 @@
-﻿namespace JRWork.UI.Administracion.DataAccess.Models;
+﻿using SQLite;
+using System.ComponentModel.DataAnnotations;
 
+namespace JRWork.UI.Administracion.DataAccess.Models;
+
+[Table("Divipola")]
 public partial class Divipola
 {
+    [Key]
     public int DivipolaId { get; set; }
 
     public decimal Codigo { get; set; }

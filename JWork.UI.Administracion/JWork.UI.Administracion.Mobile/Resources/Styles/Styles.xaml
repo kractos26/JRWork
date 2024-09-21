@@ -47,6 +47,8 @@
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>
+        <Setter Property="FontAttributes" Value="Bold" />
+
     </Style>
 
     <Style TargetType="CheckBox">

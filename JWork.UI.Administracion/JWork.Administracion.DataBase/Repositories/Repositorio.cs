@@ -11,6 +11,7 @@ public class Repositorio<T> : IRepositorio<T>, IDisposable where T : class
     public Repositorio(JrworkContext contex)
     {
         this._context = contex;
+        bool res = _context.Database.EnsureCreated();
 
     }
 

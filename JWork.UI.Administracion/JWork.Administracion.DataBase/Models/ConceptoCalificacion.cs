@@ -1,9 +1,14 @@
 ﻿
 
+using SQLite;
+using System.ComponentModel.DataAnnotations;
+
 namespace JRWork.UI.Administracion.DataAccess.Models;
 
+[Table("ConceptoCalificacion")]
 public partial class ConceptoCalificacion
 {
+    [Key]
     public int ConceptoCalificacionId { get; set; }
 
     public string Nombre { get; set; } = null!;

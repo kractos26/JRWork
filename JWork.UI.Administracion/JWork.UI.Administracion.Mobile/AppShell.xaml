@@ -44,7 +44,7 @@
                 Title="Conceptos de calificaciones"
                 ContentTemplate="{DataTemplate views:ConceptoCalificacionesPage}">
                 <ShellContent.Icon>
-                    <FontImageSource FontFamily="MaterialIcon" Glyph="grade" />
+                    <FontImageSource FontFamily="MaterialIcon" Glyph="grade"  />
                 </ShellContent.Icon>
             </ShellContent>
         </Tab>

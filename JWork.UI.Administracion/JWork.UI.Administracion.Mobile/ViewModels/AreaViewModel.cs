@@ -69,17 +69,20 @@ public partial class AreaViewModel : ViewModelGlobal, IQueryAttributable
         {
             AreaDto area = new()
             {
-                Nombre = nombre
+                Nombre = Nombre
             };
             await _areaBL.Crear(area);
+            await Application.Current?.MainPage?.DisplayAlert("Éxito", "Creado", "Ok",flowDirection:FlowDirection.LeftToRight);
+
         }
-        catch(JWorkExecectioncs ex)
+        catch (JWorkExecectioncs ex)
         {
-          await GlobalAlertas.Error(ex.Message);
+            await Application.Current?.MainPage?.DisplayAlert("Error", ex.Message, "Ok", flowDirection: FlowDirection.LeftToRight);
+
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-           
+            await Application.Current?.MainPage?.DisplayAlert("Error", ex.Message, "Ok", flowDirection: FlowDirection.LeftToRight);
         }
     }
 }

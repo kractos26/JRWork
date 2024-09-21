@@ -50,6 +50,7 @@
             <Entry
        Grid.Row="1"
        Placeholder="Digite aqui el área"
+                Text="{Binding Nombre,Mode=TwoWay}"
        VerticalOptions="End" 
             HorizontalOptions="Fill"
        Margin="5"/>
@@ -60,7 +61,7 @@
        BackgroundColor="#007BFF"
        TextColor="Black"
        CornerRadius="12"
-       Command="{Binding CreateCommand}"
+       Command="{Binding CrearCommand}"
                 Margin="0,0,0,10"
                 >
                 <Button.ImageSource>

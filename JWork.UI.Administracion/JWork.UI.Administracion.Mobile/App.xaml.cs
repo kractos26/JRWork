@@ -10,13 +10,27 @@ namespace JWork.UI.Administracion.Mobile
         public App(JrworkContext context)
         {
             _context = context;
-           
+
             SQLitePCL.Batteries.Init();
-            _context.Database.Migrate();
+          
+
+
+            try
+            {
+                _context.Database.Migrate();
+                bool created = _context.Database.EnsureCreated();
+                Console.WriteLine($"Database created: {created}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error creating database: {ex.Message}");
+            }
+
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
             TaskScheduler.UnobservedTaskException += OnUnobservedTaskException;
             UserAppTheme = AppTheme.Light;
-            MainPage =  new AppShell();
+            MainPage = new AppShell();
+
             InitializeComponent();
         }
 

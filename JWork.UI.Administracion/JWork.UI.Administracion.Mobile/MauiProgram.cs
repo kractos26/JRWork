@@ -12,6 +12,9 @@ using JRWork.Administracion.DataAccess.Repositories;
 using JRWork.Administracion.DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using UXDivers.Grial;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
+using JWork.UI.Administracion.DataBase;
 
 namespace JWork.UI.Administracion.Mobile
 {
@@ -39,17 +42,23 @@ namespace JWork.UI.Administracion.Mobile
                     handlers.AddHandler<Label, JWork.UI.Administracion.Mobile.LabelHandler>();
                 });
 
-                   
-                
+
+
 
 
 
 
 #if DEBUG
-
+            builder.Logging.AddDebug(); // Para ver los logs en la salida de depuración
+           
 #endif
+            var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "jrwork.db");
             builder.Services.AddDbContext<JrworkContext>(options =>
-            options.UseSqlite("Data Source=jrwork.db"));
+            options.UseSqlite($"Filename={dbPath}").EnableSensitiveDataLogging()
+                   .LogTo(Console.WriteLine, LogLevel.Information)
+            
+            );
+
 
             builder.Services.AddAutoMapper(typeof(MappingProfile));
 
@@ -133,8 +142,8 @@ namespace JWork.UI.Administracion.Mobile
             builder.Services.AddTransient<IRepositoryOficio, RepositoryOficio>();
             builder.Services.AddTransient<IRepositoryUnidadMedida, RepositoryUnidadMedida>();
             builder.Services.AddTransient<IRepositoryTipoPersona, RepositoryTipoPersona>();
-
-
+            builder.Services.AddSingleton<IDatabaseRutaService, DatabaseRutaService>();
+       
             return builder.Build();
         }
     }

@@ -1,7 +1,13 @@
-﻿namespace JRWork.UI.Administracion.DataAccess.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using SQLite;
+using System.ComponentModel.DataAnnotations;
 
+namespace JRWork.UI.Administracion.DataAccess.Models;
+
+[Table("Actividad")]
 public partial class Actividad
 {
+    [Key]
     public int ActividadId { get; set; }
 
     public string Nombre { get; set; } = null!;
