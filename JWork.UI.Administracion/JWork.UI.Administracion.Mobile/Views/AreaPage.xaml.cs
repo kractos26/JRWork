@@ -9,8 +9,17 @@ public partial class AreaPopup : Popup
 
     public AreaPopup(AreaViewModel viewModel)
     {
-       InitializeComponent();
+        InitializeComponent();
         _viewModel = viewModel;
         BindingContext = _viewModel;
     }
+
+    private async void ClosePopup()
+    {
+
+        MessagingCenter.Send(this, "Cerrar");
+        Close();
+
+    }
+
 }

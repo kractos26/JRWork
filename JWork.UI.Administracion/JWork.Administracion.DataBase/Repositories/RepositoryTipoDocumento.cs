@@ -1,39 +1,33 @@
-﻿using JRWork.Administracion.DataAccess.Models;
-using JRWork.UI.Administracion.DataAccess.Models;
+﻿using JWork.UI.Administracion.DataBase.Models;
 using JWork.UI.Administracion.DataBase.Repositories.Interfaces;
 using System.Linq.Expressions;
 
-namespace JRWork.Administracion.DataAccess.Repositories;
+namespace JWork.UI.Administracion.DataBase.Repositories;
 
-public class RepositoryTipoDocumento : IRepositoryTipoDocumento
+public class RepositoryTipoDocumento(IRepositorio<TipoDocumento> repositorio) : IRepositoryTipoDocumento
 {
-    private readonly IRepositorio<TipoDocumento> _repositorio;
-    public RepositoryTipoDocumento(IRepositorio<TipoDocumento> repositorio)
-    {
-        _repositorio = repositorio;
-    }
-    public async Task<TipoDocumento> AdicionarAsync(TipoDocumento Entidad) => await _repositorio.AdicionarAsync(Entidad);
-    public Task<List<TipoDocumento>> BuscarPaginadoAsync(Expression<Func<TipoDocumento, bool>> predicado, int numeroPagina, int tamanoPagina) => _repositorio.BuscarPaginadoAsync(predicado, numeroPagina, tamanoPagina);
+    public async Task<TipoDocumento> AdicionarAsync(TipoDocumento Entidad) => await repositorio.AdicionarAsync(Entidad);
+    public Task<List<TipoDocumento>> BuscarPaginadoAsync(Expression<Func<TipoDocumento, bool>> predicado, int numeroPagina, int tamanoPagina) => repositorio.BuscarPaginadoAsync(predicado, numeroPagina, tamanoPagina);
 
 
-    public async Task<List<TipoDocumento>> BuscarAsync(Expression<Func<TipoDocumento, bool>> predicado) => await _repositorio.BuscarAsync(predicado);
+    public async Task<List<TipoDocumento>> BuscarAsync(Expression<Func<TipoDocumento, bool>> predicado) => await repositorio.BuscarAsync(predicado);
     
 
-    public async Task<bool> EliminarAsync(TipoDocumento Entidad) => await _repositorio.EliminarAsync(Entidad);
+    public async Task<bool> EliminarAsync(TipoDocumento Entidad) => await repositorio.EliminarAsync(Entidad);
    
 
-    public async Task<List<TipoDocumento>> GetAllAsync() => await _repositorio.GetAllAsync();
+    public async Task<List<TipoDocumento>> GetAllAsync() => await repositorio.GetAllAsync();
     
 
-    public async Task GuardarAsync() => await _repositorio.GuardarAsync();
+    public async Task GuardarAsync() => await repositorio.GuardarAsync();
    
 
-    public Task<TipoDocumento> ModificarAsync(TipoDocumento Entidad) => _repositorio.ModificarAsync(Entidad);
+    public Task<TipoDocumento> ModificarAsync(TipoDocumento Entidad) => repositorio.ModificarAsync(Entidad);
 
 
-    public async Task<TipoDocumento?> TraerUltimoAsync(Expression<Func<TipoDocumento, bool>> predicado) => await _repositorio.TraerUltimoAsync(predicado);
+    public async Task<TipoDocumento?> TraerUltimoAsync(Expression<Func<TipoDocumento, bool>> predicado) => await repositorio.TraerUltimoAsync(predicado);
 
 
-    public async Task<TipoDocumento?> TraerUnoAsync(Expression<Func<TipoDocumento, bool>> predicado) => await _repositorio.TraerUnoAsync(predicado);
+    public async Task<TipoDocumento?> TraerUnoAsync(Expression<Func<TipoDocumento, bool>> predicado) => await repositorio.TraerUnoAsync(predicado);
   
 }

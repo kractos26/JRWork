@@ -24,19 +24,19 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
 
         public async Task InicializarAsync()
         {
-            if (tipoDocumentoId <= 0)
+            if (TipoDocumentoId <= 0)
             {
                 return;
             }
 
             try
             {
-                var response = await _tipodocumentoBL.GetPorIdAsync(tipoDocumentoId);
+                var response = await _tipodocumentoBL.GetPorIdAsync(TipoDocumentoId);
 
                 // Validar la respuesta
                 if (response != null)
                 {
-                    nombre = response.Nombre;
+                    Nombre = response.Nombre;
                 }
                 
             }
@@ -52,7 +52,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
         {
             if (query.ContainsKey("id") && int.TryParse(query["id"]?.ToString(), out var id))
             {
-                tipoDocumentoId = id;
+                TipoDocumentoId = id;
             }
         }
 

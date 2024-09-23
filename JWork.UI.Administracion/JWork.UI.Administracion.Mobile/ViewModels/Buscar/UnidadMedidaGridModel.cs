@@ -30,9 +30,9 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
 
         private async void AreaGridViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(unidadmedidaselecionada))
+            if (e.PropertyName == nameof(Unidadmedidaselecionada))
             {
-                string uri = $"{nameof(UnidadMedidaPage)}?id={unidadmedidaselecionada.UnidadMedidaId}";
+                string uri = $"{nameof(UnidadMedidaPage)}?id={Unidadmedidaselecionada.UnidadMedidaId}";
                 await _navigationService.GotoAsync(uri);
             }
         }
@@ -43,18 +43,19 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
             {
 
                List<UnidadMedidaDto> resp = await _unidadmedidaBL.Buscar(new Common.PaginadoRequest<UnidadMedidaDto>() { 
+                   Entidad = new(),
                 TotalRegistros = 20,
                 NumeroPagina = 1
                });
                 if (resp != null)
                 {
-                    unidadmedida = new ObservableCollection<UnidadMedidaDto>(resp);
+                    Unidadmedida = new ObservableCollection<UnidadMedidaDto>(resp);
 
                 }
             }
             catch (Exception ex)
             {
-                mensaje = $"ocurrio un error {ex.Message}";
+                Mensaje = $"ocurrio un error {ex.Message}";
             }
         }
     }

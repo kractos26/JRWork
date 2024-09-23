@@ -2,7 +2,7 @@
 {
     public class PaginadoRequest<T>
     {
-        public T? Entidad { get; set; }
+        public required T Entidad { get; set; }
         public int NumeroPagina { get; set; }
         public int TotalRegistros { get; set; }
     }

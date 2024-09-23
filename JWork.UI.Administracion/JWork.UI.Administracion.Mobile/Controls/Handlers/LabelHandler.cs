@@ -8,6 +8,7 @@ namespace JWork.UI.Administracion.Mobile
     /// </summary>
     public class LabelHandler : MauiLabelHandler
     {
+        [Obsolete]
         public LabelHandler()
             : base(Mapper)
         {

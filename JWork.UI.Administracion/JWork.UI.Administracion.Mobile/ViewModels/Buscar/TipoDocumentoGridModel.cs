@@ -31,9 +31,9 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
 
         private async void AreaGridViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(tipodocumentoselecionada))
+            if (e.PropertyName == nameof(Tipodocumentoselecionada))
             {
-                string uri = $"{nameof(TipoDocumentoPage)}?id={tipodocumentoselecionada.TipoDocumentoId}";
+                string uri = $"{nameof(TipoDocumentoPage)}?id={Tipodocumentoselecionada.TipoDocumentoId}";
                 await _navigationService.GotoAsync(uri);
             }
         }
@@ -44,19 +44,20 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
             {
                 var resp = await _tipodocumentoBL.Buscar(new()
                 {
+                    Entidad = new(),
                     TotalRegistros = 20,
                     NumeroPagina = 1
                 });
 
                 if (resp != null)
                 {
-                    tipodocumentos = new ObservableCollection<TipoDocumentoDto>(resp);
+                    Tipodocumentos = new (resp);
 
                 }
             }
             catch (Exception ex)
             {
-                mensaje = $"ocurrio un error {ex.Message}";
+                Mensaje = $"ocurrio un error {ex.Message}";
             }
         }
     }

@@ -27,29 +27,29 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
         {
             if (query.ContainsKey("id") && int.TryParse(query["id"]?.ToString(), out var id))
             {
-                conceptoCalificacionId = id;
+                ConceptoCalificacionId = id;
             }
         }
 
         public async Task Inicializar()
         {
-            if (conceptoCalificacionId <= 0)
+            if (ConceptoCalificacionId <= 0)
             {
                 return;
             }
 
             try
             {
-                var response = await _conceptoCalificacionBL.GetPorIdAsync(conceptoCalificacionId);
+                var response = await _conceptoCalificacionBL.GetPorIdAsync(ConceptoCalificacionId);
 
                 if (response != null)
                 {
-                    nombre = response.Nombre;
-                    descripcion = response.Descripcion;
+                    Nombre = response.Nombre;
+                    Descripcion = response.Descripcion;
                 }
                 
             }
-            catch(JWorkExecectioncs ex) 
+            catch(JWorkException ex) 
             {
                 await GlobalAlertas.Error(ex.Message);
             }

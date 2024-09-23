@@ -32,10 +32,10 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
 
         private async void AreaGridViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(conceptoCalificacionselecionada))
+            if (e.PropertyName == nameof(ConceptoCalificacionselecionada))
             {
 
-                string uri = $"{nameof(ConceptoCalificacionPage)}?id={conceptoCalificacionselecionada.ConceptoCalificacionId}";
+                string uri = $"{nameof(ConceptoCalificacionPage)}?id={ConceptoCalificacionselecionada.ConceptoCalificacionId}";
                 await _navigationService.GotoAsync(uri);
             }
         }
@@ -45,19 +45,20 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
             try
             {
                 List<ConceptoCalificacionDto> resp = await _conceptoCalificacionBL.Buscar(new () { 
+                    Entidad = new(),
                 TotalRegistros = 20,
                 NumeroPagina = 1
                 });
                 if (resp != null)
                 {
-                    conceptosCalificaciones = new ObservableCollection<ConceptoCalificacionDto>(resp);
+                    ConceptosCalificaciones = new ObservableCollection<ConceptoCalificacionDto>(resp);
 
                 }
             }
             catch (Exception ex)
             {
 
-                mensaje = $"ocurrio un error {ex.Message}";
+                Mensaje = $"ocurrio un error {ex.Message}";
             }
         }
     }

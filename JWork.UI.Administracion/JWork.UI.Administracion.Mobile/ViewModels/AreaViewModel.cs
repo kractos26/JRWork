@@ -1,57 +1,50 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using JWork.UI.Administracion.Business;
 using JWork.UI.Administracion.Common;
+using JWork.UI.Administracion.Mobile.Service;
+using JWork.UI.Administracion.Mobile.Views;
+using JWork.UI.Administracion.Mobile.Views.Buscar;
 using JWork.UI.Administracion.Models;
-using static JWork.UI.Administracion.Common.Constantes;
 
 namespace JWork.UI.Administracion.Mobile.ViewModels;
 
-public partial class AreaViewModel : ViewModelGlobal, IQueryAttributable
+public partial class AreaViewModel(AreaBL areaBL, IServiceProvider _serviceProvider) : ViewModelGlobal, IQueryAttributable
 {
     [ObservableProperty]
     public int areaId;
 
     [ObservableProperty]
-    public string nombre;
-
-    private readonly AreaBL _areaBL;
-
+    public string nombre = string.Empty;
     [ObservableProperty]
-    public string mensaje;
-    public AreaViewModel(AreaBL areaBL)
-    {
-        _areaBL = areaBL;
-        nombre = string.Empty;
-        mensaje = string.Empty;
-    }
-
-
+    public string mensaje = string.Empty;
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        if (query.ContainsKey("id") && int.TryParse(query["id"]?.ToString(), out var id))
+        if (!(!query.ContainsKey("id") || !int.TryParse(query["id"]?.ToString(), out int id)))
         {
-            areaId = id;
+            AreaId = id;
         }
     }
 
     public async Task InicializarAsync()
     {
-        if (areaId <= 0)
+        if (AreaId <= 0)
         {
             return;
         }
 
         try
         {
-            AreaDto area = await _areaBL.GetPorIdAsync(areaId);
+            AreaDto area = await areaBL.GetPorIdAsync(AreaId);
             if (area != null)
             {
-                nombre = area!.Nombre ?? string.Empty;
+                Nombre = area!.Nombre ?? string.Empty;
             }
         }
-        catch (JWorkExecectioncs ex)
+        catch (JWorkException ex)
         {
             await GlobalAlertas.Error(ex.Message);
         }
@@ -71,18 +64,61 @@ public partial class AreaViewModel : ViewModelGlobal, IQueryAttributable
             {
                 Nombre = Nombre
             };
-            await _areaBL.Crear(area);
-            await Application.Current?.MainPage?.DisplayAlert("Éxito", "Creado", "Ok",flowDirection:FlowDirection.LeftToRight);
+            AreaDto respu = await areaBL.Crear(area);
+            if (respu.AreaId > 0)
+            {
+                await Shell.Current.GoToAsync(nameof(AreasPage));
+                await MostrarAlertaToast("El area fue creada correctamente", false);
+            }
 
         }
-        catch (JWorkExecectioncs ex)
+        catch (JWorkException ex)
         {
-            await Application.Current?.MainPage?.DisplayAlert("Error", ex.Message, "Ok", flowDirection: FlowDirection.LeftToRight);
-
+            await MostrarAlerta("El area fue creada correctamente", true);
         }
         catch (Exception ex)
         {
-            await Application.Current?.MainPage?.DisplayAlert("Error", ex.Message, "Ok", flowDirection: FlowDirection.LeftToRight);
+            await MostrarAlerta("El area fue creada correctamente", true);
         }
     }
+
+
+    public async Task MostrarAlerta(string mensaje, bool esError)
+    {
+        // Cambia los colores según si es un error o éxito
+        var backgroundColor = esError ? Colors.Red : Colors.Green;
+        var textColor = Colors.White;
+        var duration = TimeSpan.FromSeconds(3);
+
+        var snackbarOptions = new SnackbarOptions
+        {
+            BackgroundColor = backgroundColor,
+            TextColor = textColor,
+            ActionButtonTextColor = Colors.White,
+            CornerRadius = new CornerRadius(10),
+            Font = Microsoft.Maui.Font.SystemFontOfSize(14)
+        };
+
+
+        var snackbar = Snackbar.Make(mensaje, action: async () =>
+        {
+           
+        }, "Cerrar", duration, snackbarOptions);
+
+        await snackbar.Show();
+    }
+
+    public async Task MostrarAlertaToast(string mensaje, bool esError)
+    {
+        // Cambia los colores según si es un error o éxito
+        var backgroundColor = esError ? Colors.Red : Colors.Green;
+        var textColor = Colors.White;
+        var duration = ToastDuration.Short;  // También puedes usar ToastDuration.Long
+
+        // Crear el Toast con las propiedades necesarias
+        var toast = Toast.Make(mensaje, duration, 16);  // El último parámetro es la altura en DP
+        await toast.Show();
+    }
+
+
 }

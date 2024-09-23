@@ -1,4 +1,4 @@
-﻿using JRWork.UI.Administracion.DataAccess.Models;
+﻿using JWork.UI.Administracion.DataBase.Models;
 
 namespace JWork.UI.Administracion.DataBase.Repositories.Interfaces;
 

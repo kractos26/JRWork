@@ -7,58 +7,51 @@ using static JWork.UI.Administracion.Common.Constantes;
 
 namespace JWork.UI.Administracion.Mobile.ViewModels
 {
-    public partial class HabilidadViewModel : ViewModelGlobal,IQueryAttributable
+    public partial class HabilidadViewModel(HabilidadBL habilidadBL, ActividadBL actividadBL) : ViewModelGlobal,IQueryAttributable
     {
         [ObservableProperty]
         public int habilidadId;
 
 
         [ObservableProperty]
-        public string nombre;
+        public string nombre = string.Empty;
 
 
         [ObservableProperty]
         public int actividadId;
 
         [ObservableProperty]
-        private ObservableCollection<ActividadDto> actividades;
+        private ObservableCollection<ActividadDto> actividades = [];
 
 
         [ObservableProperty]
-        private ActividadDto actividadSeleccionada;
-        private readonly HabilidadBL _habilidadBL;
-        private readonly ActividadBL _actividadBL;
-        public HabilidadViewModel(HabilidadBL habilidadBL,ActividadBL actividadBL)
-        {
-            _habilidadBL = habilidadBL;
-            _actividadBL = actividadBL;
-            nombre = string.Empty;
-            actividades = [];
-            actividadSeleccionada = new();
-        }
+        private ActividadDto actividadSeleccionada = new();
+        private readonly HabilidadBL _habilidadBL = habilidadBL;
+        private readonly ActividadBL _actividadBL = actividadBL;
 
         public async Task Inicializar()
         {
-            if (habilidadId <= 0)
+            if (HabilidadId <= 0)
             {
                 return;
             }
 
             try
             {
-                var response = await _habilidadBL.GetPorIdAsync(habilidadId);
+                var response = await _habilidadBL.GetPorIdAsync(HabilidadId);
 
                 // Validar la respuesta
                 if ( response != null)
                 {
-                    nombre = response.Nombre;
-                    actividadId = response.ActividadId;
-                    actividadSeleccionada = response.Actividad ?? new ActividadDto();
+                    Nombre = response.Nombre;
+                    ActividadId = response.ActividadId;
+                    ActividadSeleccionada = response.Actividad ?? new ActividadDto();
                     List<ActividadDto> actividalst = await _actividadBL.Buscar(new () { 
+                        Entidad = new(),
                         NumeroPagina = 1,
                         TotalRegistros = 20,
                     });
-                    actividades = new ObservableCollection<ActividadDto>(actividalst ?? []);
+                    Actividades = new ObservableCollection<ActividadDto>(actividalst ?? []);
                 }
                
             }
@@ -70,6 +63,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
 
         private Task MostrarError(string mensaje)
         {
+            Shell.Current.DisplayAlert("Error", mensaje, "Cancelar");
             return Task.CompletedTask;
         }
 
@@ -77,7 +71,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
         {
             if (query.ContainsKey("id") && int.TryParse(query["id"]?.ToString(), out var id))
             {
-                habilidadId = id;
+                HabilidadId = id;
             }
         }
     }

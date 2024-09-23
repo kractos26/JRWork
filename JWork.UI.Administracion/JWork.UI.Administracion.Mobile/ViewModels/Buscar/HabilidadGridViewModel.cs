@@ -31,9 +31,9 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
 
         private async void AreaGridViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(habilidadlecionada))
+            if (e.PropertyName == nameof(Habilidadlecionada))
             {
-                string uri = $"{nameof(HabilidadPage)}?id={habilidadlecionada.HabilidadId}";
+                string uri = $"{nameof(HabilidadPage)}?id={Habilidadlecionada.HabilidadId}";
                 await _navigationService.GotoAsync(uri);
             }
         }
@@ -43,18 +43,19 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
             try
             {
                List<HabilidadDto> resp = await _habilidadBL.Buscar(new () {
+                   Entidad = new(),
                TotalRegistros = 20,
                NumeroPagina = 1
                });
                 if (resp.Any())
                 {
-                    areas = new ObservableCollection<HabilidadDto>(resp);
+                    Areas = new ObservableCollection<HabilidadDto>(resp);
 
                 }
             }
             catch (Exception ex)
             {
-                mensaje = $"ocurrio un error {ex.Message}";
+                Mensaje = $"ocurrio un error {ex.Message}";
             }
         }
     }

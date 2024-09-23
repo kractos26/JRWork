@@ -14,7 +14,7 @@
             <ToolbarItem.IconImageSource>
                 <FontImageSource Glyph="add_circle" 
                   FontFamily="MaterialIcon" 
-                  Color="#FB7500" 
+                  Color="#FF7300" 
                    FontAutoScalingEnabled="True"
                   Size="200" />
             </ToolbarItem.IconImageSource>
@@ -59,22 +59,14 @@
                         Phone='140',
                         Tablet='200'
                     }">
-                                <View.GestureRecognizers>
-                                    <TapGestureRecognizer
-                            Command="{ Binding BindingContext.TopicTappedCommand, Source={x:Reference root} }"
-                            CommandParameter="{ Binding . }"
-                        />
-                                </View.GestureRecognizers>
-
-
                             </Border>
 
                             <Label
                     Text="{ Binding Nombre }"
-                    FontSize="{ StaticResource TitleFontSize }"
-                    TextColor="{ DynamicResource OnSurfaceColor }"
-                    HorizontalOptions="Start"
-                    VerticalOptions="End"
+                    FontSize="30"
+                                
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="Center"
                 />
 
 

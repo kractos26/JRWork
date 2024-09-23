@@ -38,9 +38,9 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
 
         private async void ActividadGridViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(actividadselecionada))
+            if (e.PropertyName == nameof(Actividadselecionada))
             {
-                string uri = $"{nameof(ActividadPage)}?id={actividadselecionada.ActividadId}";
+                string uri = $"{nameof(ActividadPage)}?id={Actividadselecionada.ActividadId}";
                 await _navigationService.GotoAsync(uri);
             }
         }
@@ -50,16 +50,17 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
             try
             {
                 List<ActividadDto> resp = await _actividadBL.Buscar(new () {
+                    Entidad = new(),
                     TotalRegistros = 20,
                     NumeroPagina = 1
                 });
                 if (resp.Any())
                 {
-                    actividades = new ObservableCollection<ActividadDto>(resp);
+                    Actividades = new ObservableCollection<ActividadDto>(resp);
 
                 }
             }
-            catch(JWorkExecectioncs ex)
+            catch(JWorkException ex)
             {
                 await GlobalAlertas.Error(ex.Message);
             }
@@ -73,7 +74,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
         [RelayCommand]
         private  Task Buscar()
         {
-            if (!string.IsNullOrWhiteSpace(textoBusqueda))
+            if (!string.IsNullOrWhiteSpace(TextoBusqueda))
             {
                 //// Simular búsqueda de actividades (aquí puedes hacer la llamada al servicio REST)
                 //var resultados = await ServicioRest.BuscarActividadesAsync(TextoBusqueda);

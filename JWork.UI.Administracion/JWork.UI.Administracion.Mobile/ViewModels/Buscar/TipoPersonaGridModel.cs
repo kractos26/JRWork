@@ -4,6 +4,7 @@ using JWork.UI.Administracion.Business;
 using JWork.UI.Administracion.Models;
 using System.Collections.ObjectModel;
 using JWork.UI.Administracion.Mobile.Service;
+using JWork.UI.Administracion.Common;
 
 namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
 {
@@ -31,9 +32,9 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
 
         private async void AreaGridViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(tipopersonaselecionada))
+            if (e.PropertyName == nameof(Tipopersonaselecionada))
             {
-                string uri = $"{nameof(TipoPersonaPage)}?id={tipopersonaselecionada.TipoPersonaId}";
+                string uri = $"{nameof(TipoPersonaPage)}?id={Tipopersonaselecionada.TipoPersonaId}";
                 await _navigationService.GotoAsync(uri);
             }
         }
@@ -42,19 +43,20 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
         {
             try
             {
-                List<TipoPersonaDto> resp = await _tipopersonaBL.Buscar(new Common.PaginadoRequest<TipoPersonaDto>() { 
+                List<TipoPersonaDto> resp = await _tipopersonaBL.Buscar(new PaginadoRequest<TipoPersonaDto>() { 
+                    Entidad = new (),
                 TotalRegistros = 20,
                 NumeroPagina =1
                 });
                 if (resp != null)
                 {
-                    tipopersonas = new ObservableCollection<TipoPersonaDto>(resp);
+                    Tipopersonas = new ObservableCollection<TipoPersonaDto>(resp);
 
                 }
             }
             catch (Exception ex)
             {
-                mensaje = $"ocurrio un error {ex.Message}";
+                Mensaje = $"ocurrio un error {ex.Message}";
             }
         }
     }

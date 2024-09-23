@@ -1,17 +1,15 @@
 /* [grial-metadata] id: Grial#JsonHelper.cs version: 1.0.1 */
 using UXDivers.Grial;
-using System;
-using System.Collections.Generic;
-using System.IO;
+
 using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace JWork.UI.Administracion.Mobile
+namespace JWork.UI.Administracion.Mobile.Helpers
 {
     public class JsonHelper
     {
-        private static JsonHelper _Instance;
+        private static JsonHelper? _Instance;
         private JsonResources _resources;
 
         private JsonHelper()
@@ -23,10 +21,7 @@ namespace JWork.UI.Administracion.Mobile
         {
             get
             {
-                if (_Instance == null)
-                {
-                    _Instance = new JsonHelper();
-                }
+                _Instance ??= new JsonHelper();
 
                 return _Instance;
             }
@@ -41,7 +36,7 @@ namespace JWork.UI.Administracion.Mobile
                 name = viewModel.GetType().Name;
                 if (name.EndsWith(ViewModelSuffix, StringComparison.Ordinal))
                 {
-                    name = name.Substring(0, name.Length - ViewModelSuffix.Length);
+                    name = name[..^ViewModelSuffix.Length];
                 }
 
                 name += "Page.xaml";
@@ -61,7 +56,7 @@ namespace JWork.UI.Administracion.Mobile
 
         private class JsonResources
         {
-            private static ICultureService _CultureService;
+            private static ICultureService? _CultureService;
 
             private readonly Dictionary<string, JObject> _sources;
             private readonly string[] _resourceNames;
@@ -76,25 +71,22 @@ namespace JWork.UI.Administracion.Mobile
             {
                 get
                 {
-                    if (_CultureService == null)
-                    {
-                        _CultureService = ServiceHelper.GetService<ICultureService>();
-                    }
+                    _CultureService ??= ServiceHelper.GetService<ICultureService>();
 
                     return _CultureService;
                 }
             }
 
-            public JObject GetResource(string source)
+            public JObject? GetResource(string source)
             {
                 var culture = CultureService.CurrentCulture;
                 var key = $"{culture.Name}/{source}";
 
-                if (!_sources.TryGetValue(key, out JObject result))
+                if (!_sources.TryGetValue(key, out var result))
                 {
                     var assembly = typeof(JsonHelper).Assembly;
 
-                    string fullResourceName = null;
+                    string? fullResourceName = null;
                     for (var i = 0; i < _resourceNames.Length; i++)
                     {
                         if (_resourceNames[i].EndsWith(source, StringComparison.Ordinal))
@@ -109,7 +101,7 @@ namespace JWork.UI.Administracion.Mobile
                         return null;
                     }
 
-                    Assembly satelliteAssembly = null;
+                    Assembly? satelliteAssembly = null;
                     if (culture.TwoLetterISOLanguageName != "en")
                     {
                         try
@@ -167,8 +159,8 @@ namespace JWork.UI.Administracion.Mobile
                 {
                     if (update != null)
                     {
-                        var reference = (string)value;
-                        if (reference.StartsWith('$'))
+                        string? reference = (string)value;
+                        if (reference!.StartsWith('$'))
                         {
                             var target = root.SelectToken(reference);
                             if (target != null)
@@ -191,7 +183,7 @@ namespace JWork.UI.Administracion.Mobile
                 value = current["$id"];
                 if (value != null)
                 {
-                    refdic[(string)value] = current;
+                    refdic[(string)value!] = current;
                     current.Remove("$id");
 
                     if (current.Property("Id") == null)

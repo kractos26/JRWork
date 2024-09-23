@@ -1,8 +1,8 @@
-﻿using JRWork.UI.Administracion.DataAccess.Models;
+﻿using JWork.UI.Administracion.DataBase.Models;
 using JWork.UI.Administracion.DataBase.Repositories.Interfaces;
 using System.Linq.Expressions;
 
-namespace JRWork.Administracion.DataAccess.Repositories;
+namespace JWork.UI.Administracion.DataBase.Repositories;
 
 public class RepositoryHabilidad : IRepositoryHabilidad
 {

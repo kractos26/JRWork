@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using JRWork.UI.Administracion.DataAccess.Models;
+using JWork.UI.Administracion.DataBase.Models;
 using JWork.UI.Administracion.Common;
 using JWork.UI.Administracion.DataBase.Repositories.Interfaces;
 using JWork.UI.Administracion.Models;
@@ -7,36 +7,31 @@ using JWork.UI.Administracion.Models;
 
 namespace JWork.UI.Administracion.Business
 {
-    public class ActividadBL
+    public class ActividadBL(IRepositoryActividad repository, IMapper mapper)
     {
-        private readonly IRepositoryActividad _repository;
-        private readonly IMapper _mapper;
-        public ActividadBL(IRepositoryActividad repository, IMapper mapper)
-        {
-            _repository = repository;
-            _mapper = mapper;
-        }
+        private readonly IRepositoryActividad _repository = repository;
+        private readonly IMapper _mapper = mapper;
 
         public async Task<ActividadDto> Crear(ActividadDto request)
         {
             Actividad entidad = _mapper.Map<Actividad>(request);
             if (request.Nombre == null)
             {
-                throw new JWorkExecectioncs("Ingresa la actividad");
+                throw new JWorkException("Ingresa la actividad");
             }
             if (request.OficioId == 0)
             {
-                throw new JWorkExecectioncs("La activiad debe ir relacionada a un oficio");
+                throw new JWorkException("La activiad debe ir relacionada a un oficio");
             }
 
-            Actividad? exist = await _repository.TraerUnoAsync(x => x.Nombre.ToLower() == request.Nombre.ToLower());
+            Actividad? exist = await _repository.TraerUnoAsync(x => x.Nombre.Equals(request.Nombre, StringComparison.CurrentCultureIgnoreCase));
             if (exist == null)
             {
                 await _repository.AdicionarAsync(entidad);
             }
             else
             {
-                throw new JWorkExecectioncs("La actividad ya se encuentra creada");
+                throw new JWorkException("La actividad ya se encuentra creada");
             }
             return _mapper.Map<ActividadDto>(entidad);
         }
@@ -47,7 +42,7 @@ namespace JWork.UI.Administracion.Business
 
             if (request.ActividadId <= 0)
             {
-                throw new JWorkExecectioncs(mensaje);
+                throw new JWorkException(mensaje);
             }
             Actividad? entidad = await _repository.TraerUnoAsync(x => x.ActividadId == request.ActividadId);
             if (entidad != null)
@@ -61,13 +56,8 @@ namespace JWork.UI.Administracion.Business
 
         public async Task<List<ActividadDto>> Buscar(PaginadoRequest<ActividadDto> request)
         {
-            List<Actividad> buscar = await _repository.BuscarPaginadoAsync(x=>x.ActividadId == (request.Entidad.ActividadId ?? x.ActividadId) && x.Nombre == (request.Entidad.Nombre ?? x.Nombre) && x.OficioId == (request.Entidad.OficioId ?? x.OficioId) , request.NumeroPagina,request.TotalRegistros);
-            if(buscar.Count() > 0)
-            {
-                return _mapper.Map<List<ActividadDto>>(buscar);
-            }
-            throw new JWorkExecectioncs("Registros no encontrados");
-            
+            List<Actividad> buscar = await _repository.BuscarPaginadoAsync(x=> request.Entidad != null && x.ActividadId == (request.Entidad.ActividadId ?? x.ActividadId) && x.Nombre == (request.Entidad.Nombre ?? x.Nombre) && x.OficioId == (request.Entidad.OficioId ?? x.OficioId) , request.NumeroPagina,request.TotalRegistros);
+            return buscar.Count > 0 ? _mapper.Map<List<ActividadDto>>(buscar) : throw new JWorkException("Registros no encontrados");
         }
 
         public async Task<ActividadDto> GetPorIdAsync(int actividadId)

@@ -2,6 +2,7 @@ using Android.AdServices.Topics;
 using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using JWork.UI.Administracion.Mobile;
+using JWork.UI.Administracion.Mobile.Helpers;
 using System.Collections.ObjectModel;
 
 public partial class NewsTopicsViewModel : ObservableObject

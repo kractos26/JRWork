@@ -1,19 +1,13 @@
-﻿using JRWork.Administracion.DataAccess.Models;
+﻿using JWork.UI.Administracion.DataBase.Models;
 using JWork.UI.Administracion.DataBase.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace JRWork.Administracion.DataAccess.Repositories;
+namespace JWork.UI.Administracion.DataBase.Repositories;
 
-public class Repositorio<T> : IRepositorio<T>, IDisposable where T : class
+public class Repositorio<T>(JWorkContext contex) : IRepositorio<T>, IDisposable where T : class
 {
-    private readonly JrworkContext _context;
-    public Repositorio(JrworkContext contex)
-    {
-        this._context = contex;
-        bool res = _context.Database.EnsureCreated();
-
-    }
+    private readonly JWorkContext _context = contex;
 
     public async Task<T> AdicionarAsync(T Entidad)
     {

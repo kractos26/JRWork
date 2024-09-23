@@ -58,8 +58,8 @@
             <Button 
        Grid.Row="2"
        Text="Crear"
-       BackgroundColor="#007BFF"
-       TextColor="Black"
+       BackgroundColor="#FF7300"
+       TextColor="#FFFFFF"
        CornerRadius="12"
        Command="{Binding CrearCommand}"
                 Margin="0,0,0,10"

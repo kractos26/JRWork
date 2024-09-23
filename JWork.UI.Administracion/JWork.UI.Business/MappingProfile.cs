@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using JRWork.UI.Administracion.DataAccess.Models;
+using JWork.UI.Administracion.DataBase.Models;
 using JWork.UI.Administracion.Models;
 
 namespace JWork.UI.Administracion.Business;

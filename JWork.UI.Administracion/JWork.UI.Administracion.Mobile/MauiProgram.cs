@@ -8,13 +8,14 @@ using JWork.UI.Administracion.Servicios;
 using Plugin.LocalNotification;
 using JWork.UI.Administracion.Mobile.Service;
 using JWork.UI.Administracion.DataBase.Repositories.Interfaces;
-using JRWork.Administracion.DataAccess.Repositories;
-using JRWork.Administracion.DataAccess.Models;
+using JWork.UI.Administracion.DataBase.Repositories;
 using Microsoft.EntityFrameworkCore;
 using UXDivers.Grial;
-using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Logging;
-using JWork.UI.Administracion.DataBase;
+using JWork.UI.Administracion.Common;
+using JWork.UI.Administracion.DataBase.Models;
+using JWork.UI.Administracion.Mobile.Platforms.Android;
+
 
 namespace JWork.UI.Administracion.Mobile
 {
@@ -46,15 +47,9 @@ namespace JWork.UI.Administracion.Mobile
 
 
 
-
-
-#if DEBUG
-            builder.Logging.AddDebug(); // Para ver los logs en la salida de depuración
-           
-#endif
-            var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "jrwork.db");
-            builder.Services.AddDbContext<JrworkContext>(options =>
-            options.UseSqlite($"Filename={dbPath}").EnableSensitiveDataLogging()
+            string dbPath = new DatabaseRutaService().GetRuta("jwork.db");
+            builder.Services.AddDbContext<JWorkContext>(options =>
+            options.UseSqlite($"Data Source={dbPath}").EnableSensitiveDataLogging()
                    .LogTo(Console.WriteLine, LogLevel.Information)
             
             );

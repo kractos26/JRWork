@@ -3,7 +3,7 @@
 using SQLite;
 
 using System.ComponentModel.DataAnnotations;
-namespace JRWork.UI.Administracion.DataAccess.Models;
+namespace JWork.UI.Administracion.DataBase.Models;
 
 [Table("Habilidad")]
 public partial class Habilidad

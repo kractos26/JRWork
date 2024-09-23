@@ -1,17 +1,13 @@
-﻿using JRWork.Administracion.DataAccess.Models;
-using JRWork.UI.Administracion.DataAccess.Models;
+﻿using JWork.UI.Administracion.DataBase.Models;
 using JWork.UI.Administracion.DataBase.Repositories.Interfaces;
 using System.Linq.Expressions;
 
-namespace JRWork.Administracion.DataAccess.Repositories;
+namespace JWork.UI.Administracion.DataBase.Repositories;
 
-public class RepositoryDivipola : IRepositoryDivipola
+public class RepositoryDivipola(IRepositorio<Divipola> repocitorio) : IRepositoryDivipola
 {
-    private readonly IRepositorio<Divipola> _repocitorio;
-    public RepositoryDivipola(IRepositorio<Divipola> repocitorio)
-    {
-        _repocitorio = repocitorio;
-    }
+    private readonly IRepositorio<Divipola> _repocitorio = repocitorio;
+
     public async Task<Divipola> AdicionarAsync(Divipola Entidad) => await _repocitorio.AdicionarAsync(Entidad);
 
 

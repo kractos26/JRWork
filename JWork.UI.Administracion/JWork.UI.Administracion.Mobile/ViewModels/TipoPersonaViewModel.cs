@@ -5,36 +5,29 @@ using static JWork.UI.Administracion.Common.Constantes;
 
 namespace JWork.UI.Administracion.Mobile.ViewModels
 {
-    public partial class TipoPersonaViewModel : ViewModelGlobal,IQueryAttributable
+    public partial class TipoPersonaViewModel(TipoPersonaBL tipoPersonaBL) : ViewModelGlobal,IQueryAttributable
     {
         [ObservableProperty]
         public int tipoPersonaId;
 
         [ObservableProperty]
-        public string nombre;
-
-        private readonly TipoPersonaBL _tipoPersonaBL;
-        public TipoPersonaViewModel(TipoPersonaBL tipoPersonaBL)
-        {
-            _tipoPersonaBL = tipoPersonaBL;
-            nombre = string.Empty;
-        }
+        public string nombre = string.Empty;
 
         public async Task InicializarAsync()
         {
-            if (tipoPersonaId <= 0)
+            if (TipoPersonaId <= 0)
             {
                 return;
             }
 
             try
             {
-                var response = await _tipoPersonaBL.GetPorIdAsync(tipoPersonaId);
+                var response = await tipoPersonaBL.GetPorIdAsync(TipoPersonaId);
 
                 // Validar la respuesta
                 if (response != null)
                 {
-                    nombre = response.Nombre;
+                    Nombre = response.Nombre;
                 }
               
             }
@@ -48,16 +41,16 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            if (query.ContainsKey("id") && int.TryParse(query["id"]?.ToString(), out var id))
+            if (!(!query.ContainsKey("id") || !int.TryParse(query["id"]?.ToString(), out var id)))
             {
-                tipoPersonaId = id;
+                TipoPersonaId = id;
             }
         }
 
-        private Task MostrarError(string mensaje)
+        private static Task MostrarError(string mensaje)
         {
+            Shell.Current.DisplayAlert("", mensaje, "ok");
             return Task.CompletedTask;
         }
-
     }
 }

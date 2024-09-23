@@ -30,21 +30,21 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
 
         public async Task Inicializar()
         {
-            if (divipolaId <= 0)
+            if (DivipolaId <= 0)
             {
                 return;
             }
 
             try
             {
-                var response = await _divipolaBL.GetPorIdAsync(divipolaId);
+                var response = await _divipolaBL.GetPorIdAsync(DivipolaId);
 
                 // Validar la respuesta
                 if (response != null)
                 {
-                    nombre = response.Nombre;
-                    codigo = response.Codigo;
-                    codigoPadre = response.CodigoPadre;
+                    Nombre = response.Nombre;
+                    Codigo = response.Codigo;
+                    CodigoPadre = response.CodigoPadre;
                 }
                 
             }
@@ -63,7 +63,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
         {
             if (query.ContainsKey("id") && int.TryParse(query["id"]?.ToString(), out var id))
             {
-                divipolaId = id;
+                DivipolaId = id;
             }
         }
     }

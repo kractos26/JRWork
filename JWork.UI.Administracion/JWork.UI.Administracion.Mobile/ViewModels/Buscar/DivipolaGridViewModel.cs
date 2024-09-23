@@ -32,9 +32,9 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
 
         private async void AreaGridViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(divipolalecionada))
+            if (e.PropertyName == nameof(Divipolalecionada))
             {
-                string uri = $"{nameof(DivipolaPage)}?id={divipolalecionada.DivipolaId}";
+                string uri = $"{nameof(DivipolaPage)}?id={Divipolalecionada.DivipolaId}";
                 await _navigationService.GotoAsync(uri);
             }
         }
@@ -44,18 +44,19 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
             try
             {
               List<DivipolaDto> resp = await _divipolaBL.Buscar(new () { 
+                  Entidad = new(),
                     TotalRegistros = 20,
                     NumeroPagina = 1
                 });
                 if (resp.Any())
                 {
-                    divipolas = new ObservableCollection<DivipolaDto>(resp);
+                    Divipolas = new ObservableCollection<DivipolaDto>(resp);
 
                 }
             }
             catch (Exception ex)
             {
-                mensaje = $"ocurrio un error {ex.Message}";
+                Mensaje = $"ocurrio un error {ex.Message}";
             }
         }
     }

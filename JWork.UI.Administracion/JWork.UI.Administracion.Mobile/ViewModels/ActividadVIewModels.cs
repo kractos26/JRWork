@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 
 namespace JWork.UI.Administracion.Mobile.ViewModels;
 
-public partial class ActividadViewModel : ViewModelGlobal, IQueryAttributable
+public partial class ActividadViewModel(ActividadBL actividadBL, OficioBL oficioBL) : ViewModelGlobal, IQueryAttributable
 {
     [ObservableProperty]
     private int actividadId;
@@ -18,53 +18,44 @@ public partial class ActividadViewModel : ViewModelGlobal, IQueryAttributable
     private int oficioId;
 
     [ObservableProperty]
-    private ObservableCollection<OficioDto>? oficios;
+    private ObservableCollection<OficioDto>? oficios = new ObservableCollection<OficioDto>();
 
     [ObservableProperty]
-    private OficioDto oficioSeleccionado;
+    private OficioDto oficioSeleccionado = new OficioDto();
 
     [ObservableProperty]
     private string? mensajealerta;
 
-    private readonly ActividadBL _actividadBL;
-    private readonly OficioBL _oficioBL;
-
-   
-
-    public ActividadViewModel(ActividadBL actividadBL, OficioBL oficioBL)
-    {
-        _actividadBL = actividadBL;
-        _oficioBL = oficioBL;
-        oficios = new ObservableCollection<OficioDto>();
-        oficioSeleccionado = new OficioDto();
-    }
+    private readonly ActividadBL _actividadBL = actividadBL;
+    private readonly OficioBL _oficioBL = oficioBL;
 
     public async Task InicializarAsync()
     {
         try
         {
-            var actividadResponse = await _actividadBL.GetPorIdAsync(actividadId);
+            var actividadResponse = await _actividadBL.GetPorIdAsync(ActividadId);
             if (actividadResponse != null)
             {
                 ActividadDto actividad = actividadResponse;
 
-                actividadId = actividad.ActividadId ?? 0;
-                nombre = actividad.Nombre;
-                oficioId = actividad.OficioId ?? 0;
-                oficioSeleccionado = actividad.Oficio ?? new OficioDto();
+                ActividadId = actividad.ActividadId ?? 0;
+                Nombre = actividad.Nombre;
+                OficioId = actividad.OficioId ?? 0;
+                OficioSeleccionado = actividad.Oficio ?? new OficioDto();
             }
 
             var oficiolstResponse = await _oficioBL.Buscar(new Common.PaginadoRequest<OficioDto>()
             {
+                Entidad = new(),
                 TotalRegistros = 20,
                 NumeroPagina = 1
             });
             if (oficiolstResponse.Any())
             {
-                oficios = new ObservableCollection<OficioDto>(oficiolstResponse);
+                Oficios = new ObservableCollection<OficioDto>(oficiolstResponse);
             }
         }
-        catch(JWorkExecectioncs ex)
+        catch(JWorkException ex)
         {
            await GlobalAlertas.Error(ex.Message);
         }
@@ -75,9 +66,9 @@ public partial class ActividadViewModel : ViewModelGlobal, IQueryAttributable
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        if (query.ContainsKey("id") && int.TryParse(query["id"]?.ToString(), out var id))
+        if (!(!query.ContainsKey("id") || !int.TryParse(query["id"]?.ToString(), out int id)))
         {
-            oficioId = id;
+            OficioId = id;
         }
     }
 }

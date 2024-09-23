@@ -42,16 +42,16 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
             _serviceProvider = serviceProvider;
 
             areas = new ObservableCollection<AreaDto>();
-            areaSeleccionada = new AreaDto();
+            AreaSeleccionada = new AreaDto();
 
             PropertyChanged += AreaGridViewModel_PropertyChanged;
         }
 
         private async void AreaGridViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(areaSeleccionada) && areaSeleccionada != null)
+            if (e.PropertyName == nameof(AreaSeleccionada) && AreaSeleccionada != null)
             {
-                string uri = $"{nameof(AreaPopup)}?id={areaSeleccionada.AreaId}";
+                string uri = $"{nameof(AreaPopup)}?id={AreaSeleccionada.AreaId}";
                 await _navigationService.GotoAsync(uri);
             }
         }
@@ -61,16 +61,16 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
             try
             {
                 List<AreaDto> resp = await _areaBL.Buscar(new()
-                {
+                {Entidad = new(),
                     NumeroPagina = 1,
                     TotalRegistros = 20
                 });
-                if (resp.Any())
+                if (resp.Count != 0)
                 {
-                    areas = new ObservableCollection<AreaDto>(resp);
+                    Areas = new ObservableCollection<AreaDto>(resp);
                 }
             }
-            catch (JWorkExecectioncs ex)
+            catch (JWorkException ex)
             {
                 await GlobalAlertas.Error(ex.Message);
             }
@@ -91,34 +91,37 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
 
                 if (popup != null)
                 {
-                    await Application.Current?.MainPage?.ShowPopupAsync(popup);
+                    Shell.Current.ShowPopup(popup);
 
-                    popup.Closed += (s, e) =>
+                    popup.Closed += async (s, e) =>
                     {
-                        iconModal = "add_circle";
-                        iconColor = Colors.Green;
+                        
+                        await RefreshAreas();
+                        
                     };
 
                     popup.Opened += (s, e) =>
                     {
-                        iconModal = "cancelar";
-                        iconColor = Colors.Red;
+                        IconModal = "cancelar";
+                        IconColor = Colors.Red;
                     };
                 }
                 else
                 {
-                    // Opcional: Maneja el caso en el que popup es null, si es necesario
-                    // Por ejemplo, puedes registrar un mensaje de error o mostrar una notificación
-                    // Log.Error("El popup no pudo ser creado.");
+                    
                 }
             }
             catch (Exception ex)
             {
 
-                await Application.Current?.MainPage?.DisplayAlert("❌ Erro", ex.Message, "Ok");
+                await Shell.Current.DisplayAlert("❌ Erro", ex.Message, "Ok");
 
             }
         }
 
+        private async Task RefreshAreas()
+        {
+           await ObtenerData();
+        }
     }
 }

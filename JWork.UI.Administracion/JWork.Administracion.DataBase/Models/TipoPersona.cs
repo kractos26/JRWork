@@ -2,7 +2,7 @@
 using SQLite;
 
 using System.ComponentModel.DataAnnotations;
-namespace JRWork.UI.Administracion.DataAccess.Models;
+namespace JWork.UI.Administracion.DataBase.Models;
 
 [Table("TipoPersona")]
 public partial class TipoPersona

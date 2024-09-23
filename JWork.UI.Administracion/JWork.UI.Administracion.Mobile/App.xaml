@@ -1,46 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:JWork.UI.Administracion.Mobile" xmlns:grial="http://uxdivers.com/grial" xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls" xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:JWork.UI.Administracion.Mobile"
+             
+
     x:Class="JWork.UI.Administracion.Mobile.App">
 
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <local:MyCustomTheme />
-                <ResourceDictionary
-                    Source="Resources/Styles/Colors.xaml" />
-                <ResourceDictionary
-                    Source="Resources/Styles/Styles.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
-        
-            <Style TargetType="ContentPage" ApplyToDerivedTypes="true">
-                <Setter Property="BackgroundColor" Value="{ DynamicResource BackgroundSecondaryColor }" />
-                <Setter Property="NavigationPage.BackButtonTitle" Value="" />
-                <Setter Property="ios:Page.UseSafeArea" Value="False" />
-            </Style>
-
-            <Style TargetType="NavigationPage" ApplyToDerivedTypes="true">
-                <Setter Property="BarBackgroundColor" Value="{ DynamicResource BackgroundSecondaryColor }" />
-                <Setter Property="BarTextColor" Value="{ DynamicResource TextColor }" />
-                <Setter Property="BackgroundColor" Value="{ DynamicResource BackgroundSecondaryColor }" />
-                <Setter Property="grial:GrialNavigationPage.HideShadow" Value="True" />
-            </Style>
-
-            <Style TargetType="Grid" ApplyToDerivedTypes="true">
-                <Setter Property="grial:LayoutProperties.IgnoreSafeArea" Value="True" />
-            </Style>
-
-            <Style TargetType="Label" ApplyToDerivedTypes="true">
-                <Setter Property="FontFamily" Value="{ StaticResource AppFontFamily }" />
-                <Setter Property="FontSize" Value="{ StaticResource BaseFontSize }" />
-                <Setter Property="TextColor" Value="{ DynamicResource TextColor }" />
-                <Setter Property="HorizontalTextAlignment" Value="Start" />
-            </Style>
-
-            <Style TargetType="Image">
-                <Setter Property="Aspect" Value="AspectFill" />
-                <Setter Property="IsOpaque" Value="{ OnPlatform Android=true, Default=false }" />
-            </Style>
-
-</ResourceDictionary>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

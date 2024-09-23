@@ -7,7 +7,7 @@ using UIKit;
 using Microsoft.Maui;
 #endif
 
-namespace JWork.UI.Administracion.Mobile;
+namespace JWork.UI.Administracion.Mobile.Controls.Handlers;
 
 #if NET8_0_OR_GREATER
 /// <summary>

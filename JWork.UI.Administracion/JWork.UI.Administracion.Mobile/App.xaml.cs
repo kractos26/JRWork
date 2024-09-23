@@ -1,62 +1,48 @@
-/* [grial-metadata] id: Grial#App.xaml version: 1.1.3 */
-using JRWork.Administracion.DataAccess.Models;
-using Microsoft.EntityFrameworkCore;
-
 namespace JWork.UI.Administracion.Mobile
 {
     public partial class App : Application
     {
-        private readonly JrworkContext _context;
-        public App(JrworkContext context)
+        public App()
         {
-            _context = context;
-
-            SQLitePCL.Batteries.Init();
-          
-
-
-            try
-            {
-                _context.Database.Migrate();
-                bool created = _context.Database.EnsureCreated();
-                Console.WriteLine($"Database created: {created}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error creating database: {ex.Message}");
-            }
-
-            AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
-            TaskScheduler.UnobservedTaskException += OnUnobservedTaskException;
-            UserAppTheme = AppTheme.Light;
-            MainPage = new AppShell();
-
             InitializeComponent();
+            AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
+
+            if (OnUnobservedTaskException != null)
+            {
+                TaskScheduler.UnobservedTaskException += OnUnobservedTaskException;
+            }
+
+            // Configurar el tema de la app
+            UserAppTheme = AppTheme.Light;
+
+            // Establecer la MainPage
+            MainPage = new AppShell();
         }
 
-        private void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+  
+
+        // Manejo de excepciones no controladas
+        private void OnUnhandledException(object? sender, UnhandledExceptionEventArgs? e)
         {
-            Exception? ex = e.ExceptionObject as Exception;
-            HandleException(ex ?? new Exception());
+            if (e?.ExceptionObject is Exception ex)
+            {
+                HandleException(ex);
+            }
         }
 
-        private void OnUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+        private void OnUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
         {
             HandleException(e.Exception);
-            e.SetObserved();
+            e.SetObserved(); 
         }
 
-        private void HandleException(Exception ex)
+        private static void HandleException(Exception ex)
         {
-            if (ex != null)
+            Console.WriteLine($"Error: {ex.Message}");
+            MainThread.BeginInvokeOnMainThread(async () =>
             {
-                Console.WriteLine($"Error: {ex.Message}");
-
-                MainThread.BeginInvokeOnMainThread(async () =>
-                {
-                    await MainPage.DisplayAlert("Error", "Ha ocurrido un error inesperado.", "OK");
-                });
-            }
+                await Shell.Current.DisplayAlert("Error", "Ha ocurrido un error inesperado.", "OK");
+            });
         }
     }
 }

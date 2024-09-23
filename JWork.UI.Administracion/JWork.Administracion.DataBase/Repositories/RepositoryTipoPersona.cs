@@ -1,17 +1,13 @@
-﻿using JRWork.Administracion.DataAccess.Models;
-using JRWork.UI.Administracion.DataAccess.Models;
+﻿using JWork.UI.Administracion.DataBase.Models;
 using JWork.UI.Administracion.DataBase.Repositories.Interfaces;
 using System.Linq.Expressions;
 
-namespace JRWork.Administracion.DataAccess.Repositories;
+namespace JWork.UI.Administracion.DataBase.Repositories;
 
-public class RepositoryTipoPersona : IRepositoryTipoPersona
+public class RepositoryTipoPersona(IRepositorio<TipoPersona> repositorio) : IRepositoryTipoPersona
 {
-    private readonly IRepositorio<TipoPersona> _repositorio;
-    public RepositoryTipoPersona(IRepositorio<TipoPersona> repositorio)
-    {
-        _repositorio  = repositorio;
-    }
+    private readonly IRepositorio<TipoPersona> _repositorio = repositorio;
+
     public async Task<TipoPersona> AdicionarAsync(TipoPersona Entidad) => await _repositorio.AdicionarAsync(Entidad);
 
     public Task<List<TipoPersona>> BuscarPaginadoAsync(Expression<Func<TipoPersona, bool>> predicado, int numeroPagina, int tamanoPagina) => _repositorio.BuscarPaginadoAsync(predicado, numeroPagina, tamanoPagina);

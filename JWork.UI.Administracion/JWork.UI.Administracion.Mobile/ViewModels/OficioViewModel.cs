@@ -37,26 +37,27 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
 
         public async Task InicializarAsync()
         {
-            if (areaId <= 0)
+            if (AreaId <= 0)
             {
                 return;
             }
 
             try
             {
-                OficioDto response = await _oficioBL.GetPorIdAsync(oficioId);
+                OficioDto response = await _oficioBL.GetPorIdAsync(OficioId);
 
                 // Validar la respuesta
                 if (response != null)
                 {
-                    oficioName = response.Nombre;
-                    areaId = response.AreaId;
-                    areaSeleccionada = response.Area ?? new AreaDto();
+                    OficioName = response.Nombre;
+                    AreaId = response.AreaId;
+                    AreaSeleccionada = response.Area ?? new AreaDto();
                     List<AreaDto> arealst = await _areaBL.Buscar(new () { 
+                        Entidad = new(),
                     TotalRegistros = 20,
                     NumeroPagina = 1,
                     });
-                    areas = new ObservableCollection<AreaDto>(arealst ?? []);
+                    Areas = new ObservableCollection<AreaDto>(arealst ?? []);
                 }
                 
             }
@@ -72,12 +73,13 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
         {
             if (query.ContainsKey("id") && int.TryParse(query["id"]?.ToString(), out var id))
             {
-                oficioId = id;
+                OficioId = id;
             }
         }
 
         private Task MostrarError(string mensaje)
         {
+            Shell.Current.DisplayAlert("Error", mensaje, "Cancelar");
             return Task.CompletedTask;
         }
     }
