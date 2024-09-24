@@ -1,7 +1,4 @@
-﻿
-using System.Runtime.Serialization;
-
-namespace JWork.UI.Administracion.Common;
+﻿namespace JWork.UI.Administracion.Common;
 /// <summary>
 /// Excepción personalizada para el sistema JWork.
 /// </summary>

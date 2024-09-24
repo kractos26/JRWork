@@ -15,13 +15,13 @@ public class RepositoryArea(IRepositorio<Area> repocitorio) : IRepositoryArea
     public async Task<List<Area>> BuscarAsync(Expression<Func<Area, bool>> predicado) => await _repocitorio.BuscarAsync(predicado);
 
     public async Task<bool> EliminarAsync(Area Entidad) => await _repocitorio.EliminarAsync(Entidad);
-   
+
 
     public async Task<List<Area>> GetAllAsync() => await _repocitorio.GetAllAsync();
-    
+
 
     public async Task GuardarAsync() => await _repocitorio.GuardarAsync();
-    
+
 
     public async Task<Area> ModificarAsync(Area Entidad) => await _repocitorio.ModificarAsync(Entidad);
 
@@ -30,5 +30,5 @@ public class RepositoryArea(IRepositorio<Area> repocitorio) : IRepositoryArea
 
 
     public async Task<Area?> TraerUnoAsync(Expression<Func<Area, bool>> predicado) => await _repocitorio.TraerUnoAsync(predicado);
-    
+
 }

@@ -52,14 +52,15 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
                     OficioName = response.Nombre;
                     AreaId = response.AreaId;
                     AreaSeleccionada = response.Area ?? new AreaDto();
-                    List<AreaDto> arealst = await _areaBL.Buscar(new () { 
+                    List<AreaDto> arealst = await _areaBL.Buscar(new()
+                    {
                         Entidad = new(),
-                    TotalRegistros = 20,
-                    NumeroPagina = 1,
+                        TotalRegistros = 20,
+                        NumeroPagina = 1,
                     });
                     Areas = new ObservableCollection<AreaDto>(arealst ?? []);
                 }
-                
+
             }
             catch (Exception ex)
             {

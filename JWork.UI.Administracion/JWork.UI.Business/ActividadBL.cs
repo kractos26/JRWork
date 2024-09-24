@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using JWork.UI.Administracion.DataBase.Models;
 using JWork.UI.Administracion.Common;
+using JWork.UI.Administracion.DataBase.Models;
 using JWork.UI.Administracion.DataBase.Repositories.Interfaces;
 using JWork.UI.Administracion.Models;
 
@@ -56,13 +56,13 @@ namespace JWork.UI.Administracion.Business
 
         public async Task<List<ActividadDto>> Buscar(PaginadoRequest<ActividadDto> request)
         {
-            List<Actividad> buscar = await _repository.BuscarPaginadoAsync(x=> request.Entidad != null && x.ActividadId == (request.Entidad.ActividadId ?? x.ActividadId) && x.Nombre == (request.Entidad.Nombre ?? x.Nombre) && x.OficioId == (request.Entidad.OficioId ?? x.OficioId) , request.NumeroPagina,request.TotalRegistros);
+            List<Actividad> buscar = await _repository.BuscarPaginadoAsync(x => request.Entidad != null && x.ActividadId == (request.Entidad.ActividadId ?? x.ActividadId) && x.Nombre == (request.Entidad.Nombre ?? x.Nombre) && x.OficioId == (request.Entidad.OficioId ?? x.OficioId), request.NumeroPagina, request.TotalRegistros);
             return buscar.Count > 0 ? _mapper.Map<List<ActividadDto>>(buscar) : throw new JWorkException("Registros no encontrados");
         }
 
         public async Task<ActividadDto> GetPorIdAsync(int actividadId)
         {
-            Actividad? actividad = await  _repository.TraerUnoAsync(x=>x.ActividadId==actividadId);
+            Actividad? actividad = await _repository.TraerUnoAsync(x => x.ActividadId == actividadId);
             return _mapper.Map<ActividadDto>(actividad);
         }
     }

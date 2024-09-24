@@ -14,12 +14,6 @@ public partial class AreaPopup : Popup
         BindingContext = _viewModel;
     }
 
-    private async void ClosePopup()
-    {
 
-        MessagingCenter.Send(this, "Cerrar");
-        Close();
-
-    }
 
 }

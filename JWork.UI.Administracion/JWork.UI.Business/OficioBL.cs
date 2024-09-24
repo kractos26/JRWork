@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using JWork.UI.Administracion.DataBase.Models;
 using JWork.UI.Administracion.Common;
+using JWork.UI.Administracion.DataBase.Models;
 using JWork.UI.Administracion.DataBase.Repositories.Interfaces;
 using JWork.UI.Administracion.Models;
 
@@ -25,7 +25,7 @@ namespace JWork.UI.Administracion.Business
 
             }
 
-            Oficio? exist = await _repository.TraerUnoAsync(x =>  x.Nombre.Equals(request.Nombre, StringComparison.CurrentCultureIgnoreCase));
+            Oficio? exist = await _repository.TraerUnoAsync(x => x.Nombre.Equals(request.Nombre, StringComparison.CurrentCultureIgnoreCase));
             if (exist == null)
             {
                 await _repository.AdicionarAsync(entidad);

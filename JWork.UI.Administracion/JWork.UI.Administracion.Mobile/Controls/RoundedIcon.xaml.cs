@@ -3,7 +3,7 @@ namespace JWork.UI.Administracion.Mobile
 {
     public partial class RoundedIcon : ContentView
     {
-        
-      
+
+
     }
 }

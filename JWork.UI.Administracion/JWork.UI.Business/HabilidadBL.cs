@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using JWork.UI.Administracion.DataBase.Models;
 using JWork.UI.Administracion.Common;
+using JWork.UI.Administracion.DataBase.Models;
 using JWork.UI.Administracion.DataBase.Repositories.Interfaces;
 using JWork.UI.Administracion.Models;
 
@@ -18,7 +18,7 @@ namespace JWork.UI.Administracion.Business
             {
                 throw new JWorkException("La habilidad ya se encuentra creada");
             }
-            if(request.ActividadId == 0)
+            if (request.ActividadId == 0)
             {
                 throw new JWorkException("Elija la actividad a la cual va a pertenecer la habidad");
 

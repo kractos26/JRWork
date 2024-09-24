@@ -1,12 +1,11 @@
 ﻿using JWork.UI.Administracion.Common;
 using JWork.UI.Administracion.Models;
-using Microsoft.Extensions.Options;
 
 namespace JWork.UI.Administracion.Servicios
 {
     public class AreaService
     {
-        
+
         public async Task<Response<AreaDto>> CrearAsync(AreaDto Area)
         {
             ParametrosServicio servicio = new()

@@ -21,7 +21,7 @@
 
     <ShellContent 
         Title="Areas"
-        ContentTemplate="{DataTemplate views:AreasPage}">
+        ContentTemplate="{DataTemplate views:AreasPage}" Route="AreasPage">
         <ShellContent.Icon>
             <FontImageSource FontFamily="MaterialIcon" Glyph="business" Color="#FFC107" Size="24"/>
         </ShellContent.Icon>

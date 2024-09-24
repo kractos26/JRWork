@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using JWork.UI.Administracion.DataBase.Models;
 using JWork.UI.Administracion.Common;
+using JWork.UI.Administracion.DataBase.Models;
 using JWork.UI.Administracion.DataBase.Repositories.Interfaces;
 using JWork.UI.Administracion.Models;
 
@@ -56,7 +56,7 @@ namespace JWork.UI.Administracion.Business
 
         public async Task<List<TipoPersonaDto>> Buscar(PaginadoRequest<TipoPersonaDto> request)
         {
-            List<TipoPersona> buscar = await _repository.BuscarPaginadoAsync(x =>request.Entidad != null && x.TipoPersonaId == (request.Entidad.TipoPersonaId > 0 ? request.Entidad.TipoPersonaId : x.TipoPersonaId) && x.Nombre == (request.Entidad.Nombre ?? x.Nombre), request.NumeroPagina, request.TotalRegistros);
+            List<TipoPersona> buscar = await _repository.BuscarPaginadoAsync(x => request.Entidad != null && x.TipoPersonaId == (request.Entidad.TipoPersonaId > 0 ? request.Entidad.TipoPersonaId : x.TipoPersonaId) && x.Nombre == (request.Entidad.Nombre ?? x.Nombre), request.NumeroPagina, request.TotalRegistros);
             if (buscar.Count > 0)
             {
                 return _mapper.Map<List<TipoPersonaDto>>(buscar);

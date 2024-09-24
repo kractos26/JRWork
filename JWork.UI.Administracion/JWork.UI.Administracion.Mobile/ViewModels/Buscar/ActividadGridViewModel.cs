@@ -1,13 +1,12 @@
 ﻿
-using JWork.UI.Administracion.Mobile.Views;
-
-using JWork.UI.Administracion.Mobile.Service;
-using JWork.UI.Administracion.Business;
-using JWork.UI.Administracion.Models;
-using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
-using JWork.UI.Administracion.Common;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using JWork.UI.Administracion.Business;
+using JWork.UI.Administracion.Common;
+using JWork.UI.Administracion.Mobile.Service;
+using JWork.UI.Administracion.Mobile.Views;
+using JWork.UI.Administracion.Models;
+using System.Collections.ObjectModel;
 
 namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
 {
@@ -27,7 +26,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
 
         private readonly ActividadBL _actividadBL;
         private readonly INavigationService _navigationService;
-        public  ActividadGridViewModel(ActividadBL actividadBL,INavigationService navigationService)
+        public ActividadGridViewModel(ActividadBL actividadBL, INavigationService navigationService)
         {
             _actividadBL = actividadBL;
             actividadselecionada = new ActividadDto();
@@ -49,7 +48,8 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
         {
             try
             {
-                List<ActividadDto> resp = await _actividadBL.Buscar(new () {
+                List<ActividadDto> resp = await _actividadBL.Buscar(new()
+                {
                     Entidad = new(),
                     TotalRegistros = 20,
                     NumeroPagina = 1
@@ -60,7 +60,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
 
                 }
             }
-            catch(JWorkException ex)
+            catch (JWorkException ex)
             {
                 await GlobalAlertas.Error(ex.Message);
             }
@@ -72,7 +72,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
 
 
         [RelayCommand]
-        private  Task Buscar()
+        private Task Buscar()
         {
             if (!string.IsNullOrWhiteSpace(TextoBusqueda))
             {

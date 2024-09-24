@@ -4,14 +4,12 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using JWork.UI.Administracion.Business;
 using JWork.UI.Administracion.Common;
-using JWork.UI.Administracion.Mobile.Service;
-using JWork.UI.Administracion.Mobile.Views;
 using JWork.UI.Administracion.Mobile.Views.Buscar;
 using JWork.UI.Administracion.Models;
 
 namespace JWork.UI.Administracion.Mobile.ViewModels;
 
-public partial class AreaViewModel(AreaBL areaBL, IServiceProvider _serviceProvider) : ViewModelGlobal, IQueryAttributable
+public partial class AreaViewModel(AreaBL areaBL) : ViewModelGlobal, IQueryAttributable
 {
     [ObservableProperty]
     public int areaId;
@@ -67,17 +65,18 @@ public partial class AreaViewModel(AreaBL areaBL, IServiceProvider _serviceProvi
             AreaDto respu = await areaBL.Crear(area);
             if (respu.AreaId > 0)
             {
-                await Shell.Current.GoToAsync(nameof(AreasPage));
-                await MostrarAlertaToast("El area fue creada correctamente", false);
+                await MostrarAlerta("El area creada correctamente", false);
             }
 
         }
         catch (JWorkException ex)
         {
+            Console.WriteLine(ex.Message);
             await MostrarAlerta("El area fue creada correctamente", true);
         }
         catch (Exception ex)
         {
+            Console.WriteLine(ex.Message);
             await MostrarAlerta("El area fue creada correctamente", true);
         }
     }
@@ -88,7 +87,7 @@ public partial class AreaViewModel(AreaBL areaBL, IServiceProvider _serviceProvi
         // Cambia los colores según si es un error o éxito
         var backgroundColor = esError ? Colors.Red : Colors.Green;
         var textColor = Colors.White;
-        var duration = TimeSpan.FromSeconds(3);
+        var duration = TimeSpan.FromSeconds(4);
 
         var snackbarOptions = new SnackbarOptions
         {
@@ -97,28 +96,15 @@ public partial class AreaViewModel(AreaBL areaBL, IServiceProvider _serviceProvi
             ActionButtonTextColor = Colors.White,
             CornerRadius = new CornerRadius(10),
             Font = Microsoft.Maui.Font.SystemFontOfSize(14)
+
         };
 
 
         var snackbar = Snackbar.Make(mensaje, action: async () =>
         {
-           
+            await Shell.Current.GoToAsync(nameof(AreasPage));
         }, "Cerrar", duration, snackbarOptions);
 
         await snackbar.Show();
     }
-
-    public async Task MostrarAlertaToast(string mensaje, bool esError)
-    {
-        // Cambia los colores según si es un error o éxito
-        var backgroundColor = esError ? Colors.Red : Colors.Green;
-        var textColor = Colors.White;
-        var duration = ToastDuration.Short;  // También puedes usar ToastDuration.Long
-
-        // Crear el Toast con las propiedades necesarias
-        var toast = Toast.Make(mensaje, duration, 16);  // El último parámetro es la altura en DP
-        await toast.Show();
-    }
-
-
 }

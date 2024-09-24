@@ -4,7 +4,6 @@ using Microsoft.Maui.Layouts;
 using CoreGraphics;
 using UIKit;
 #else
-using Microsoft.Maui;
 #endif
 
 namespace JWork.UI.Administracion.Mobile.Controls.Handlers;

@@ -32,7 +32,7 @@ public class Repositorio<T>(JWorkContext contex) : IRepositorio<T>, IDisposable 
         if (_context.Entry(Entidad).State == EntityState.Deleted)
         { _context.Set<T>().Attach(Entidad); }
         _context.Entry(Entidad).State = EntityState.Deleted;
-       return await _context.SaveChangesAsync() > 0;
+        return await _context.SaveChangesAsync() > 0;
     }
 
     public Task<List<T>> GetAllAsync() => _context.Set<T>().ToListAsync();

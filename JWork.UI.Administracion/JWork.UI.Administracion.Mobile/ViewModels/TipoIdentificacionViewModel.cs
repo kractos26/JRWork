@@ -3,7 +3,7 @@ using JWork.UI.Administracion.Business;
 
 namespace JWork.UI.Administracion.Mobile.ViewModels
 {
-    public partial class TipoIdentificacionViewModel : ViewModelGlobal,IQueryAttributable
+    public partial class TipoIdentificacionViewModel : ViewModelGlobal, IQueryAttributable
     {
         [ObservableProperty]
         public int tipoIdentificacionId;
@@ -22,7 +22,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
             sigla = string.Empty;
         }
 
- 
+
 
         public async Task InicializarAsync()
         {
@@ -36,11 +36,11 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
                 var response = await _tipoIdentificacionBL.GetPorIdAsync(TipoIdentificacionId);
 
                 // Validar la respuesta
-                if ( response != null)
+                if (response != null)
                 {
                     Nombre = response.Nombre;
                 }
-               
+
             }
             catch (Exception ex)
             {

@@ -7,8 +7,8 @@ public partial class ActividadPage : ContentPage
     private readonly ActividadViewModel _models;
 
     public ActividadPage(ActividadViewModel models)
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         _models = models;
         BindingContext = _models;
     }

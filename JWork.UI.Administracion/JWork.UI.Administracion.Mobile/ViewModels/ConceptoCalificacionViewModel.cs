@@ -14,7 +14,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
         }
 
         [ObservableProperty]
-        private  int conceptoCalificacionId;
+        private int conceptoCalificacionId;
 
         [ObservableProperty]
         private string? nombre;
@@ -47,9 +47,9 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
                     Nombre = response.Nombre;
                     Descripcion = response.Descripcion;
                 }
-                
+
             }
-            catch(JWorkException ex) 
+            catch (JWorkException ex)
             {
                 await GlobalAlertas.Error(ex.Message);
             }
@@ -58,6 +58,6 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
             }
         }
 
-       
+
     }
 }

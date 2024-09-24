@@ -3,7 +3,7 @@
     public class Constantes
     {
         public static string UrlBase = "http://10.0.2.2:1070";
-        
+
         public static class UrlArea
         {
             public static string Post => "api/Area/Crear";

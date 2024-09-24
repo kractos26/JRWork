@@ -1,13 +1,11 @@
 ﻿using JWork.UI.Administracion.Common;
 using JWork.UI.Administracion.Models;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 
 namespace JWork.UI.Administracion.Servicios
 {
     public class DivipolaService
     {
-       
+
         public async Task<Response<DivipolaDto>> CrearAsync(DivipolaDto Divipola)
         {
             ParametrosServicio servicio = new()

@@ -7,7 +7,7 @@ namespace JWork.UI.Administracion.Mobile
         public string? Image { get; set; }
         public string? SectionTitle { get; set; }
         public string? NewsCount { get; set; }
-        public string? When { get; set; }        
+        public string? When { get; set; }
     }
 
     public class NewsMembershipPlan

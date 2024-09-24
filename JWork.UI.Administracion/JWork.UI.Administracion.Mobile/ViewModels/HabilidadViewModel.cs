@@ -1,13 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using JWork.UI.Administracion.Business;
 using JWork.UI.Administracion.Models;
-using JWork.UI.Administracion.Models.Request;
 using System.Collections.ObjectModel;
-using static JWork.UI.Administracion.Common.Constantes;
 
 namespace JWork.UI.Administracion.Mobile.ViewModels
 {
-    public partial class HabilidadViewModel(HabilidadBL habilidadBL, ActividadBL actividadBL) : ViewModelGlobal,IQueryAttributable
+    public partial class HabilidadViewModel(HabilidadBL habilidadBL, ActividadBL actividadBL) : ViewModelGlobal, IQueryAttributable
     {
         [ObservableProperty]
         public int habilidadId;
@@ -41,19 +39,20 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
                 var response = await _habilidadBL.GetPorIdAsync(HabilidadId);
 
                 // Validar la respuesta
-                if ( response != null)
+                if (response != null)
                 {
                     Nombre = response.Nombre;
                     ActividadId = response.ActividadId;
                     ActividadSeleccionada = response.Actividad ?? new ActividadDto();
-                    List<ActividadDto> actividalst = await _actividadBL.Buscar(new () { 
+                    List<ActividadDto> actividalst = await _actividadBL.Buscar(new()
+                    {
                         Entidad = new(),
                         NumeroPagina = 1,
                         TotalRegistros = 20,
                     });
                     Actividades = new ObservableCollection<ActividadDto>(actividalst ?? []);
                 }
-               
+
             }
             catch (Exception ex)
             {

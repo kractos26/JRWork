@@ -1,7 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using JWork.UI.Administracion.Business;
-using JWork.UI.Administracion.Models;
-using System.Collections.ObjectModel;
 
 namespace JWork.UI.Administracion.Mobile.ViewModels
 {
@@ -38,7 +36,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
                 {
                     Nombre = response.Nombre;
                 }
-                
+
             }
             catch (Exception ex)
             {

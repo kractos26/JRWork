@@ -19,7 +19,7 @@ namespace JWork.UI.Administracion.Mobile
             MainPage = new AppShell();
         }
 
-  
+
 
         // Manejo de excepciones no controladas
         private void OnUnhandledException(object? sender, UnhandledExceptionEventArgs? e)
@@ -33,7 +33,7 @@ namespace JWork.UI.Administracion.Mobile
         private void OnUnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
         {
             HandleException(e.Exception);
-            e.SetObserved(); 
+            e.SetObserved();
         }
 
         private static void HandleException(Exception ex)

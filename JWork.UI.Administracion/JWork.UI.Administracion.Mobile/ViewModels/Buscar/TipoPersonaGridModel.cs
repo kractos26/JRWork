@@ -1,10 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using JWork.UI.Administracion.Mobile.Views;
 using JWork.UI.Administracion.Business;
+using JWork.UI.Administracion.Common;
+using JWork.UI.Administracion.Mobile.Service;
+using JWork.UI.Administracion.Mobile.Views;
 using JWork.UI.Administracion.Models;
 using System.Collections.ObjectModel;
-using JWork.UI.Administracion.Mobile.Service;
-using JWork.UI.Administracion.Common;
 
 namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
 {
@@ -21,7 +21,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
 
         private readonly TipoPersonaBL _tipopersonaBL;
         private readonly INavigationService _navigationService;
-        public TipoPersonaGridViewModel(TipoPersonaBL habilidadBL,INavigationService navigationService)
+        public TipoPersonaGridViewModel(TipoPersonaBL habilidadBL, INavigationService navigationService)
         {
             _tipopersonaBL = habilidadBL;
             tipopersonas = [];
@@ -43,10 +43,11 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
         {
             try
             {
-                List<TipoPersonaDto> resp = await _tipopersonaBL.Buscar(new PaginadoRequest<TipoPersonaDto>() { 
-                    Entidad = new (),
-                TotalRegistros = 20,
-                NumeroPagina =1
+                List<TipoPersonaDto> resp = await _tipopersonaBL.Buscar(new PaginadoRequest<TipoPersonaDto>()
+                {
+                    Entidad = new(),
+                    TotalRegistros = 20,
+                    NumeroPagina = 1
                 });
                 if (resp != null)
                 {

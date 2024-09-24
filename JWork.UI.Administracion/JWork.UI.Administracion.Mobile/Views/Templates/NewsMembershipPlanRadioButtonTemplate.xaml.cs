@@ -3,8 +3,8 @@ namespace JWork.UI.Administracion.Mobile;
 
 public partial class NewsMembershipPlanRadioButtonTemplate : ContentView
 {
-	public NewsMembershipPlanRadioButtonTemplate()
-	{
-		InitializeComponent();
-	}
+    public NewsMembershipPlanRadioButtonTemplate()
+    {
+        InitializeComponent();
+    }
 }

@@ -27,27 +27,25 @@
             <SearchBar
        Placeholder="Buscar áreas"
        Text="{ Binding TextoBusqueda, Mode=TwoWay }"
+                TextChanged="OnBuscar"
        Margin="24,0" />
 
             <CollectionView
     Margin="{ OnIdiom
         Phone='24',
         Tablet='100,24'}" ItemsSource="{ Binding Areas,Mode=TwoWay}"
-        VerticalScrollBarVisibility="Never">
+        VerticalScrollBarVisibility="Default">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical"
-                ItemSpacing="24"/>
+                ItemSpacing="10"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid
+                        <Grid 
                 RowDefinitions="*,Auto"
-                Padding="16,20"
+                Padding="10,14"
                 RowSpacing="10"
-                HeightRequest="{ OnIdiom
-                    Phone='140',
-                    Tablet='200'
-                }">
+                HeightRequest="100">
 
 
                             <Border
@@ -55,20 +53,31 @@
                     BackgroundColor="Transparent"
                     StrokeShape="RoundRectangle 12"
                     Margin="-16,-20"
-                    HeightRequest="{ OnIdiom
-                        Phone='140',
-                        Tablet='200'
-                    }">
+                                WidthRequest="300"
+                    HeightRequest="100">
                             </Border>
 
                             <Label
                     Text="{ Binding Nombre }"
-                    FontSize="30"
+                    FontSize="24"
                                 
                     HorizontalOptions="CenterAndExpand"
                     VerticalOptions="Center"
                 />
 
+                            <Button
+                                WidthRequest="60"
+                                HeightRequest="60"
+                                BackgroundColor="#FF7300"
+                                CornerRadius="30"
+                                HorizontalOptions="End"
+                                VerticalOptions="Center"
+                                BorderColor="#FFC107"
+                                BorderWidth="2">    
+                                <Button.ImageSource>
+                                    <FontImageSource Glyph="edit" FontFamily="MaterialIcon" Size="24"  />
+                                </Button.ImageSource>
+                            </Button>
 
 
                         </Grid>

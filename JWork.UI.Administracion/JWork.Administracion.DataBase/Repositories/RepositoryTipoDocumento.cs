@@ -11,16 +11,16 @@ public class RepositoryTipoDocumento(IRepositorio<TipoDocumento> repositorio) : 
 
 
     public async Task<List<TipoDocumento>> BuscarAsync(Expression<Func<TipoDocumento, bool>> predicado) => await repositorio.BuscarAsync(predicado);
-    
+
 
     public async Task<bool> EliminarAsync(TipoDocumento Entidad) => await repositorio.EliminarAsync(Entidad);
-   
+
 
     public async Task<List<TipoDocumento>> GetAllAsync() => await repositorio.GetAllAsync();
-    
+
 
     public async Task GuardarAsync() => await repositorio.GuardarAsync();
-   
+
 
     public Task<TipoDocumento> ModificarAsync(TipoDocumento Entidad) => repositorio.ModificarAsync(Entidad);
 
@@ -29,5 +29,5 @@ public class RepositoryTipoDocumento(IRepositorio<TipoDocumento> repositorio) : 
 
 
     public async Task<TipoDocumento?> TraerUnoAsync(Expression<Func<TipoDocumento, bool>> predicado) => await repositorio.TraerUnoAsync(predicado);
-  
+
 }

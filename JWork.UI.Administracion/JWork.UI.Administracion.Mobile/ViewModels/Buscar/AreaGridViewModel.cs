@@ -1,20 +1,20 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using JWork.UI.Administracion.Mobile.Views;
-using JWork.UI.Administracion.Business;
-using JWork.UI.Administracion.Models;
-using System.Collections.ObjectModel;
+﻿using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Views;
-using CommunityToolkit.Maui;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using JWork.UI.Administracion.Business;
 using JWork.UI.Administracion.Common;
 using JWork.UI.Administracion.Mobile.Service;
+using JWork.UI.Administracion.Mobile.Views;
+using JWork.UI.Administracion.Models;
+using System.Collections.ObjectModel;
 
 namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
 {
     public partial class AreaGridViewModel : ViewModelGlobal
     {
         [ObservableProperty]
-        private string? textoBusqueda;
+        private string textoBusqueda = null!;
 
         [ObservableProperty]
         private ObservableCollection<AreaDto> areas;
@@ -41,7 +41,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
             _popupService = popupService;
             _serviceProvider = serviceProvider;
 
-            areas = new ObservableCollection<AreaDto>();
+            areas = [];
             AreaSeleccionada = new AreaDto();
 
             PropertyChanged += AreaGridViewModel_PropertyChanged;
@@ -61,7 +61,11 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
             try
             {
                 List<AreaDto> resp = await _areaBL.Buscar(new()
-                {Entidad = new(),
+                {
+                    Entidad = new()
+                    {
+                        Nombre = TextoBusqueda
+                    },
                     NumeroPagina = 1,
                     TotalRegistros = 20
                 });
@@ -76,7 +80,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
             }
             catch (Exception)
             {
-                // Handle errors appropriately
+
             }
         }
 
@@ -95,9 +99,9 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
 
                     popup.Closed += async (s, e) =>
                     {
-                        
+
                         await RefreshAreas();
-                        
+
                     };
 
                     popup.Opened += (s, e) =>
@@ -108,7 +112,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
                 }
                 else
                 {
-                    
+
                 }
             }
             catch (Exception ex)
@@ -121,7 +125,19 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
 
         private async Task RefreshAreas()
         {
-           await ObtenerData();
+            await ObtenerData();
+        }
+
+        [RelayCommand]
+        public async Task Buscar()
+        {
+            await ObtenerData();
+        }
+
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+            AreaPopup popup = _serviceProvider.GetRequiredService<AreaPopup>();
+            popup.Close();
         }
     }
 }

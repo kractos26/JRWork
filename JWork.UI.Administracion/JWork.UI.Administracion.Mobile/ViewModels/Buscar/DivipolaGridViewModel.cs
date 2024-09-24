@@ -1,9 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using JWork.UI.Administracion.Mobile.Views;
 using JWork.UI.Administracion.Business;
+using JWork.UI.Administracion.Mobile.Service;
+using JWork.UI.Administracion.Mobile.Views;
 using JWork.UI.Administracion.Models;
 using System.Collections.ObjectModel;
-using JWork.UI.Administracion.Mobile.Service;
 
 namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
 {
@@ -43,8 +43,9 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
         {
             try
             {
-              List<DivipolaDto> resp = await _divipolaBL.Buscar(new () { 
-                  Entidad = new(),
+                List<DivipolaDto> resp = await _divipolaBL.Buscar(new()
+                {
+                    Entidad = new(),
                     TotalRegistros = 20,
                     NumeroPagina = 1
                 });

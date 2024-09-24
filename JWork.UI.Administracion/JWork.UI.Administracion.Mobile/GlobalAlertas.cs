@@ -1,6 +1,5 @@
 ﻿using Plugin.LocalNotification;
 using Plugin.LocalNotification.AndroidOption;
-using Plugin.LocalNotification.iOSOption;
 
 namespace JWork.UI.Administracion.Mobile;
 
@@ -21,10 +20,10 @@ public class GlobalAlertas
 
             Android = new AndroidOptions
             {
-               
+
             },
 
-            
+
         };
 
         await LocalNotificationCenter.Current.Show(notification);

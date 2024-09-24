@@ -1,12 +1,11 @@
 ﻿using JWork.UI.Administracion.Common;
 using JWork.UI.Administracion.Models;
-using Microsoft.Extensions.Options;
 
 namespace JWork.UI.Administracion.Servicios
 {
     public class TipoIdentificacionService
     {
-       
+
         public async Task<Response<TipoIdentificacionDto>> CrearAsync(TipoIdentificacionDto TipoIdentificacion)
         {
             ParametrosServicio servicio = new()

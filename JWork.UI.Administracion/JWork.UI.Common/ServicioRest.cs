@@ -1,6 +1,4 @@
 ﻿using System.Collections.Specialized;
-using System.Net;
-using System.Net.Security;
 using System.Text;
 using System.Text.Json;
 using System.Web;
@@ -29,8 +27,8 @@ namespace JWork.UI.Administracion.Common
     {
         public static async Task<T?> EjecutarServicioAsync<T>(ParametrosServicio request)
         {
-           
-            HttpClient client =  InicializarCliente(request.Encabezado, request.ValidarSertificado,request.UrlBase);
+
+            HttpClient client = InicializarCliente(request.Encabezado, request.ValidarSertificado, request.UrlBase);
 
             return request.Verbo switch
             {
@@ -44,22 +42,22 @@ namespace JWork.UI.Administracion.Common
 
         private static async Task<T?> EjecutarServicioGetAsync<T>(string? urlBase, string? metodo, object? parametros, HttpClient client)
         {
-           
-                UriBuilder urlBuilder = new($"{urlBase}/{metodo}");
-                NameValueCollection query = HttpUtility.ParseQueryString(string.Empty);
 
-                if (parametros != null)
+            UriBuilder urlBuilder = new($"{urlBase}/{metodo}");
+            NameValueCollection query = HttpUtility.ParseQueryString(string.Empty);
+
+            if (parametros != null)
+            {
+                foreach (var prop in parametros.GetType().GetProperties())
                 {
-                    foreach (var prop in parametros.GetType().GetProperties())
-                    {
-                        query[prop.Name] = prop.GetValue(parametros)?.ToString();
-                    }
-                    urlBuilder.Query = query.ToString();
+                    query[prop.Name] = prop.GetValue(parametros)?.ToString();
                 }
-                HttpResponseMessage response = await client.GetAsync(urlBuilder.ToString());
-                response.EnsureSuccessStatusCode();
-                return await ProcesarRespuesta<T>(response);
-            
+                urlBuilder.Query = query.ToString();
+            }
+            HttpResponseMessage response = await client.GetAsync(urlBuilder.ToString());
+            response.EnsureSuccessStatusCode();
+            return await ProcesarRespuesta<T>(response);
+
         }
 
         private static async Task<T?> EjecutarServicioPostAsync<T>(string? urlBase, string? metodo, object? parametros, HttpClient client)
@@ -111,7 +109,7 @@ namespace JWork.UI.Administracion.Common
             }
         }
 
-        private static HttpClient InicializarCliente(Dictionary<string, object>? encabezados, bool validarCertificadoServidor,string urlbase)
+        private static HttpClient InicializarCliente(Dictionary<string, object>? encabezados, bool validarCertificadoServidor, string urlbase)
         {
 
             HttpClientHandler handler = new HttpClientHandler();

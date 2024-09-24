@@ -4,9 +4,9 @@ public interface IDatabaseRutaService
 {
     public string GetRuta(string archivo);
     public string GetRuta();
-    public void AjustePermisos(string archivo,object activity);
+    public void AjustePermisos(string archivo, object activity);
     Task SolicitarPermisos(Object activity);
-  
+
 }
 
 

@@ -1,20 +1,20 @@
 using CommunityToolkit.Maui;
+using JWork.UI.Administracion.Business;
+using JWork.UI.Administracion.Common;
+using JWork.UI.Administracion.DataBase.Models;
+using JWork.UI.Administracion.DataBase.Repositories;
+using JWork.UI.Administracion.DataBase.Repositories.Interfaces;
+using JWork.UI.Administracion.Mobile.Platforms.Android;
+using JWork.UI.Administracion.Mobile.Service;
 using JWork.UI.Administracion.Mobile.ViewModels;
 using JWork.UI.Administracion.Mobile.ViewModels.Buscar;
 using JWork.UI.Administracion.Mobile.Views;
 using JWork.UI.Administracion.Mobile.Views.Buscar;
-using JWork.UI.Administracion.Business;
 using JWork.UI.Administracion.Servicios;
-using Plugin.LocalNotification;
-using JWork.UI.Administracion.Mobile.Service;
-using JWork.UI.Administracion.DataBase.Repositories.Interfaces;
-using JWork.UI.Administracion.DataBase.Repositories;
 using Microsoft.EntityFrameworkCore;
-using UXDivers.Grial;
 using Microsoft.Extensions.Logging;
-using JWork.UI.Administracion.Common;
-using JWork.UI.Administracion.DataBase.Models;
-using JWork.UI.Administracion.Mobile.Platforms.Android;
+using Plugin.LocalNotification;
+using UXDivers.Grial;
 
 
 namespace JWork.UI.Administracion.Mobile
@@ -51,7 +51,7 @@ namespace JWork.UI.Administracion.Mobile
             builder.Services.AddDbContext<JWorkContext>(options =>
             options.UseSqlite($"Data Source={dbPath}").EnableSensitiveDataLogging()
                    .LogTo(Console.WriteLine, LogLevel.Information)
-            
+
             );
 
 
@@ -138,7 +138,7 @@ namespace JWork.UI.Administracion.Mobile
             builder.Services.AddTransient<IRepositoryUnidadMedida, RepositoryUnidadMedida>();
             builder.Services.AddTransient<IRepositoryTipoPersona, RepositoryTipoPersona>();
             builder.Services.AddSingleton<IDatabaseRutaService, DatabaseRutaService>();
-       
+
             return builder.Build();
         }
     }

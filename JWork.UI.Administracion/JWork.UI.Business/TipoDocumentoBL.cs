@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using JWork.UI.Administracion.DataBase.Models;
 using JWork.UI.Administracion.Common;
+using JWork.UI.Administracion.DataBase.Models;
 using JWork.UI.Administracion.DataBase.Repositories.Interfaces;
 using JWork.UI.Administracion.Models;
 
@@ -18,7 +18,7 @@ namespace JWork.UI.Administracion.Business
             {
                 throw new JWorkException("El tipo de documento ya se encuentra creada");
             }
-            
+
 
             TipoDocumento? exist = await _repository.TraerUnoAsync(x => x.Nombre.Equals(request.Nombre, StringComparison.CurrentCultureIgnoreCase));
             if (exist == null)
@@ -44,7 +44,7 @@ namespace JWork.UI.Administracion.Business
             {
                 throw new JWorkException("EL tipo de documento ya se encuentra creada");
             }
-         
+
             TipoDocumento? entidad = await _repository.TraerUnoAsync(x => x.TipoDocumentoId == request.TipoDocumentoId);
             if (entidad != null)
             {
@@ -56,7 +56,7 @@ namespace JWork.UI.Administracion.Business
 
         public async Task<List<TipoDocumentoDto>> Buscar(PaginadoRequest<TipoDocumentoDto> request)
         {
-            List<TipoDocumento> buscar = await _repository.BuscarPaginadoAsync(x => request.Entidad != null && x.TipoDocumentoId == (request.Entidad.TipoDocumentoId > 0 ? request.Entidad.TipoDocumentoId : x.TipoDocumentoId) && x.Nombre == (request.Entidad.Nombre ?? x.Nombre) , request.NumeroPagina, request.TotalRegistros);
+            List<TipoDocumento> buscar = await _repository.BuscarPaginadoAsync(x => request.Entidad != null && x.TipoDocumentoId == (request.Entidad.TipoDocumentoId > 0 ? request.Entidad.TipoDocumentoId : x.TipoDocumentoId) && x.Nombre == (request.Entidad.Nombre ?? x.Nombre), request.NumeroPagina, request.TotalRegistros);
             if (buscar.Count > 0)
             {
                 return _mapper.Map<List<TipoDocumentoDto>>(buscar);

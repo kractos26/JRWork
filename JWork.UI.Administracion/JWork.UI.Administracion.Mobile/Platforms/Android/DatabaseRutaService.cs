@@ -1,10 +1,10 @@
-﻿using Android.OS;
+﻿using Android.App;
+using Android.Content.PM;
+using Android.OS;
 using AndroidX.Core.App;
 using AndroidX.Core.Content;
-using Android.Content.PM;
-using Android.App;
-using A = Android;
 using JWork.UI.Administracion.Common;
+using A = Android;
 
 
 namespace JWork.UI.Administracion.Mobile.Platforms.Android;
@@ -18,7 +18,7 @@ public class DatabaseRutaService : IDatabaseRutaService
             {
                 if (ContextCompat.CheckSelfPermission(A.App.Application.Context, A.Manifest.Permission.WriteExternalStorage) != (int)Permission.Granted)
                 {
-                  var activid =  (Activity)actividad;
+                    var activid = (Activity)actividad;
                     ActivityCompat.RequestPermissions(activid, [A.Manifest.Permission.WriteExternalStorage], 0);
                 }
             }

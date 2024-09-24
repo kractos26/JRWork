@@ -3,7 +3,7 @@ using JWork.UI.Administracion.Business;
 
 namespace JWork.UI.Administracion.Mobile.ViewModels
 {
-    public partial class DivipolaViewModel : ViewModelGlobal,IQueryAttributable
+    public partial class DivipolaViewModel : ViewModelGlobal, IQueryAttributable
     {
         [ObservableProperty]
         public int divipolaId;
@@ -46,7 +46,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
                     Codigo = response.Codigo;
                     CodigoPadre = response.CodigoPadre;
                 }
-                
+
             }
             catch (Exception ex)
             {

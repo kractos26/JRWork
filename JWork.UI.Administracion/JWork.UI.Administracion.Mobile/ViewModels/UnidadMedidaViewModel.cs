@@ -14,7 +14,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
         public string? nombre;
 
         private readonly UnidadMedidaBL _unidadMedidaBL;
-        
+
         public UnidadMedidaViewModel(UnidadMedidaBL unidadMedidaBL)
         {
             _unidadMedidaBL = unidadMedidaBL;
@@ -22,7 +22,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
 
         public async Task InicializarAsync()
         {
-            if (UnidadMedidaId  <= 0)
+            if (UnidadMedidaId <= 0)
             {
                 return;
             }
@@ -36,7 +36,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
                 {
                     Nombre = response.Nombre;
                 }
-               
+
             }
             catch (Exception ex)
             {

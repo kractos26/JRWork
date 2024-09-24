@@ -1,8 +1,6 @@
-using Android.AdServices.Topics;
 using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using JWork.UI.Administracion.Mobile;
-using JWork.UI.Administracion.Mobile.Helpers;
 using System.Collections.ObjectModel;
 
 public partial class NewsTopicsViewModel : ObservableObject
@@ -49,7 +47,7 @@ public partial class NewsTopicsViewModel : ObservableObject
         try
         {
             Topics.Clear();
-            JsonHelper.Instance.LoadViewModel(this, source: "News.json", pageName: "NewsTopicsPage.xaml");
+           
         }
         catch (Exception ex)
         {

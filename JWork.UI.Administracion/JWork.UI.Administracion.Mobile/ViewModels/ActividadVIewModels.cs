@@ -55,9 +55,9 @@ public partial class ActividadViewModel(ActividadBL actividadBL, OficioBL oficio
                 Oficios = new ObservableCollection<OficioDto>(oficiolstResponse);
             }
         }
-        catch(JWorkException ex)
+        catch (JWorkException ex)
         {
-           await GlobalAlertas.Error(ex.Message);
+            await GlobalAlertas.Error(ex.Message);
         }
         catch (Exception)
         {

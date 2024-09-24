@@ -1,11 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using JWork.UI.Administracion.Business;
-using JWork.UI.Administracion.Models;
-using static JWork.UI.Administracion.Common.Constantes;
 
 namespace JWork.UI.Administracion.Mobile.ViewModels
 {
-    public partial class TipoPersonaViewModel(TipoPersonaBL tipoPersonaBL) : ViewModelGlobal,IQueryAttributable
+    public partial class TipoPersonaViewModel(TipoPersonaBL tipoPersonaBL) : ViewModelGlobal, IQueryAttributable
     {
         [ObservableProperty]
         public int tipoPersonaId;
@@ -29,7 +27,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
                 {
                     Nombre = response.Nombre;
                 }
-              
+
             }
             catch (Exception ex)
             {
