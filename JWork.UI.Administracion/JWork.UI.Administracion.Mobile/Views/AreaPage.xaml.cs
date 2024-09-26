@@ -5,13 +5,22 @@ namespace JWork.UI.Administracion.Mobile.Views;
 
 public partial class AreaPopup : Popup
 {
-    private readonly AreaViewModel _viewModel;
 
-    public AreaPopup(AreaViewModel viewModel)
+
+    public AreaPopup(AreaViewModel? viewModel)
     {
-        InitializeComponent();
-        _viewModel = viewModel;
-        BindingContext = _viewModel;
+		try
+		{
+			InitializeComponent();
+            BindingContext = viewModel ?? throw new ArgumentNullException(nameof(viewModel), "El ViewModel no puede ser null.");
+
+        }
+        catch (Exception ex)
+		{
+            Console.WriteLine($"Error al inicializar el Popup: {ex.Message}\nStackTrace: {ex.StackTrace}");
+            Shell.Current.DisplayAlert("Error", "No se pudo inicializar el Popup correctamente", "OK");
+
+        }
     }
 
 

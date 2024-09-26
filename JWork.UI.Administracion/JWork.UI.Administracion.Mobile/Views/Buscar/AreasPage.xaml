@@ -16,7 +16,7 @@
                   FontFamily="MaterialIcon" 
                   Color="#FF7300" 
                    FontAutoScalingEnabled="True"
-                  Size="200" />
+                  Size="300" />
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
     </ContentPage.ToolbarItems>
@@ -30,14 +30,14 @@
                 TextChanged="OnBuscar"
        Margin="24,0" />
 
-            <CollectionView
+            <CollectionView SelectedItem="{Binding AreaSeleccionada}"
     Margin="{ OnIdiom
         Phone='24',
         Tablet='100,24'}" ItemsSource="{ Binding Areas,Mode=TwoWay}"
-        VerticalScrollBarVisibility="Default">
+        VerticalScrollBarVisibility="Default" VerticalOptions="FillAndExpand">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical"
-                ItemSpacing="10"/>
+                ItemSpacing="20"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
@@ -62,24 +62,24 @@
                     FontSize="24"
                                 
                     HorizontalOptions="CenterAndExpand"
-                    VerticalOptions="Center"
+                    VerticalOptions="EndAndExpand"
                 />
-
                             <Button
                                 WidthRequest="60"
                                 HeightRequest="60"
                                 BackgroundColor="#FF7300"
                                 CornerRadius="30"
                                 HorizontalOptions="End"
-                                VerticalOptions="Center"
+                                VerticalOptions="StartAndExpand"
                                 BorderColor="#FFC107"
-                                BorderWidth="2">    
+                                BorderWidth="2"
+                                  Command="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, Path=BindingContext.EditarCommand}"
+                                   CommandParameter="{Binding .}"
+                                >
                                 <Button.ImageSource>
                                     <FontImageSource Glyph="edit" FontFamily="MaterialIcon" Size="24"  />
                                 </Button.ImageSource>
                             </Button>
-
-
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -87,7 +87,4 @@
             </CollectionView>
         </StackLayout>
     </ContentPage.Content>
-
-
-
 </ContentPage>

@@ -40,9 +40,13 @@ public partial class JWorkContext(IDatabaseRutaService databaseRuta) : DbContext
 
         try
         {
-            string ruta = _databaseRuta.GetRuta("jwork.db");
-            string conexion = $"Data Source = {ruta}";
-            optionsBuilder.UseSqlite(conexion);
+            if(!optionsBuilder.IsConfigured)
+            {
+                string ruta = _databaseRuta.GetRuta("jwork.db");
+                string conexion = $"Data Source = {ruta}";
+                optionsBuilder.UseSqlite(conexion).EnableSensitiveDataLogging();
+            }
+           
         }
         catch (Exception ex)
         {

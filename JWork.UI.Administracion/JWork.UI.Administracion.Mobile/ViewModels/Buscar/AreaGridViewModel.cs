@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -33,6 +34,8 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
         private readonly PopupService _popupService;
         private readonly IServiceProvider _serviceProvider;
 
+        private AreaPopup? _popup; // Mantener la referencia al popup actual
+
         public AreaGridViewModel(AreaBL areaBL, INavigationService navigationService,
             PopupService popupService, IServiceProvider serviceProvider)
         {
@@ -41,7 +44,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
             _popupService = popupService;
             _serviceProvider = serviceProvider;
 
-            areas = [];
+            areas = new ObservableCollection<AreaDto>();
             AreaSeleccionada = new AreaDto();
 
             PropertyChanged += AreaGridViewModel_PropertyChanged;
@@ -51,8 +54,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
         {
             if (e.PropertyName == nameof(AreaSeleccionada) && AreaSeleccionada != null)
             {
-                string uri = $"{nameof(AreaPopup)}?id={AreaSeleccionada.AreaId}";
-                await _navigationService.GotoAsync(uri);
+                await AbrirModal();
             }
         }
 
@@ -69,6 +71,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
                     NumeroPagina = 1,
                     TotalRegistros = 20
                 });
+
                 if (resp.Count != 0)
                 {
                     Areas = new ObservableCollection<AreaDto>(resp);
@@ -78,48 +81,71 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
             {
                 await GlobalAlertas.Error(ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                await Shell.Current.DisplaySnackbar(ex.Message);
             }
         }
 
+        [RelayCommand]
+        private async Task Editar(AreaDto area)
+        {
+            try
+            {
+                AreaSeleccionada = area;
+                await AbrirModal();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
 
         [RelayCommand]
         private async Task Crear()
         {
+            AreaSeleccionada = new AreaDto();
+            await AbrirModal();
+        }
+
+        private async Task AbrirModal()
+        {
             try
             {
-                // Obtén el popup desde el service provider
-                AreaPopup popup = _serviceProvider.GetRequiredService<AreaPopup>();
-
-                if (popup != null)
+                // Verificar si ya hay un popup abierto
+                if (_popup != null)
                 {
-                    Shell.Current.ShowPopup(popup);
+                    return; // Si ya hay un popup abierto, no hacemos nada
+                }
 
-                    popup.Closed += async (s, e) =>
-                    {
+                AreaViewModel viewModel = _serviceProvider.GetRequiredService<AreaViewModel>();
 
-                        await RefreshAreas();
-
-                    };
-
-                    popup.Opened += (s, e) =>
-                    {
-                        IconModal = "cancelar";
-                        IconColor = Colors.Red;
-                    };
+                // Si seleccionamos un área existente, llenamos los campos
+                if (AreaSeleccionada.AreaId > 0)
+                {
+                    viewModel.AreaId = AreaSeleccionada.AreaId;
+                    viewModel.Nombre = AreaSeleccionada.Nombre;
+                    viewModel.Mensaje = string.Empty;
+                    _popup = new AreaPopup(viewModel);
                 }
                 else
                 {
-
+                    // Si no hay área seleccionada, abrimos un popup para crear una nueva
+                    _popup = _serviceProvider.GetRequiredService<AreaPopup>();
                 }
+
+                // Evento para manejar el cierre del popup
+                _popup.Closed += async (s, e) =>
+                {
+                    _popup = null; // Limpiar la referencia al cerrar
+                    await RefreshAreas();
+                };
+
+                Shell.Current.ShowPopup(_popup); // Mostrar el popup
             }
             catch (Exception ex)
             {
-
-                await Shell.Current.DisplayAlert("❌ Erro", ex.Message, "Ok");
-
+                await Shell.Current.DisplayAlert("❌ Error", ex.Message, "Ok");
             }
         }
 
@@ -136,8 +162,12 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            AreaPopup popup = _serviceProvider.GetRequiredService<AreaPopup>();
-            popup.Close();
+            // Cerrar cualquier popup abierto al navegar
+            if (_popup != null)
+            {
+                _popup.Close();
+                _popup = null;
+            }
         }
     }
 }

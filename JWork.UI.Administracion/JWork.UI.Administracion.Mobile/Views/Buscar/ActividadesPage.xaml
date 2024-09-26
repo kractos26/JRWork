@@ -42,11 +42,10 @@
                 FontFamily="MaterialIcon" />
 
         <CollectionView Grid.Row="1"
-                        ItemsSource="{Binding Areas}">
+                        ItemsSource="{Binding Areas}" VerticalOptions="FillAndExpand">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout Padding="10" Orientation="Vertical">
-                        <!-- Mostrar el nombre de la actividad -->
                         <Label Text="{Binding Nombre}" 
                                FontAttributes="Bold"
                                FontSize="Medium" />

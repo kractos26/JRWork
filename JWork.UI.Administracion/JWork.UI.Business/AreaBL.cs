@@ -50,7 +50,11 @@ public class AreaBL(IRepositoryArea repository, IMapper mapper)
 
     public async Task<List<AreaDto>> Buscar(PaginadoRequest<AreaDto> request)
     {
-        List<Area> buscar = await _repository.BuscarPaginadoAsync(x => x.AreaId == (request.Entidad.AreaId > 0 ? request.Entidad.AreaId : x.AreaId) && x.Nombre.Contains(request.Entidad.Nombre.ToLower() ?? x.Nombre.ToLower()), request.NumeroPagina, request.TotalRegistros);
+        List<Area> buscar = await _repository.BuscarPaginadoAsync(
+    x => x.AreaId == (request.Entidad.AreaId > 0 ? request.Entidad.AreaId : x.AreaId) &&
+         (string.IsNullOrEmpty(request.Entidad.Nombre) || x.Nombre.ToLower().Contains(request.Entidad.Nombre.ToLower())),
+    request.NumeroPagina, request.TotalRegistros);
+
         if (buscar.Count > 0)
         {
             return _mapper.Map<List<AreaDto>>(buscar);

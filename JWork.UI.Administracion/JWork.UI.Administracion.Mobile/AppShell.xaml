@@ -9,7 +9,7 @@
     Title="JWork.UI.Administracion.Mobile"
     BackgroundColor="#FFFFFF"
     FlyoutBackgroundColor="#FFFFFF">
-
+  
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}">

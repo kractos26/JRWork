@@ -1,4 +1,5 @@
 ﻿using JWork.UI.Administracion.Mobile.Views;
+using JWork.UI.Administracion.Mobile.Views.Buscar;
 
 namespace JWork.UI.Administracion.Mobile
 {
@@ -16,6 +17,8 @@ namespace JWork.UI.Administracion.Mobile
             Routing.RegisterRoute(nameof(TipoPersonaPage), typeof(TipoPersonaPage));
             Routing.RegisterRoute(nameof(UnidadMedidaPage), typeof(UnidadMedidaPage));
             Routing.RegisterRoute(nameof(TipoIdentificacionPage), typeof(TipoIdentificacionPage));
+            Routing.RegisterRoute(nameof(AreasPage), typeof(AreasPage));
+
         }
     }
 }

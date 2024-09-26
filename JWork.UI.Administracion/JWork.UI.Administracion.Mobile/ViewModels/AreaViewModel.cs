@@ -9,8 +9,18 @@ using JWork.UI.Administracion.Models;
 
 namespace JWork.UI.Administracion.Mobile.ViewModels;
 
-public partial class AreaViewModel(AreaBL areaBL) : ViewModelGlobal, IQueryAttributable
+public partial class AreaViewModel : ViewModelGlobal
 {
+    private readonly AreaBL _areaBL;
+    public AreaViewModel(AreaBL areaBL)
+    {
+        _areaBL = areaBL;
+        if (_areaBL == null)
+        {
+            throw new InvalidOperationException("El servicio AreaBL no está inicializado.");
+        }
+        IsNotificationVisible = false;
+    }
     [ObservableProperty]
     public int areaId;
 
@@ -19,53 +29,30 @@ public partial class AreaViewModel(AreaBL areaBL) : ViewModelGlobal, IQueryAttri
     [ObservableProperty]
     public string mensaje = string.Empty;
 
-    public void ApplyQueryAttributes(IDictionary<string, object> query)
-    {
-        if (!(!query.ContainsKey("id") || !int.TryParse(query["id"]?.ToString(), out int id)))
-        {
-            AreaId = id;
-        }
-    }
-
-    public async Task InicializarAsync()
-    {
-        if (AreaId <= 0)
-        {
-            return;
-        }
-
-        try
-        {
-            AreaDto area = await areaBL.GetPorIdAsync(AreaId);
-            if (area != null)
-            {
-                Nombre = area!.Nombre ?? string.Empty;
-            }
-        }
-        catch (JWorkException ex)
-        {
-            await GlobalAlertas.Error(ex.Message);
-        }
-        catch (Exception)
-        {
-        }
-
-    }
-
 
     [RelayCommand]
-    private async Task Crear()
+    private async Task Guardar()
     {
         try
         {
             AreaDto area = new()
             {
+                AreaId = AreaId,
                 Nombre = Nombre
             };
-            AreaDto respu = await areaBL.Crear(area);
-            if (respu.AreaId > 0)
+
+            if (area.AreaId > 0)
             {
-                await MostrarAlerta("El area creada correctamente", false);
+                area = await _areaBL.Modificar(area);
+            }
+            else
+            {
+                area = await _areaBL.Crear(area);
+            }
+
+            if (area.AreaId > 0)
+            {
+                await MostrarAlerta("Operación exitosa", false);
             }
 
         }
@@ -84,27 +71,20 @@ public partial class AreaViewModel(AreaBL areaBL) : ViewModelGlobal, IQueryAttri
 
     public async Task MostrarAlerta(string mensaje, bool esError)
     {
-        // Cambia los colores según si es un error o éxito
-        var backgroundColor = esError ? Colors.Red : Colors.Green;
-        var textColor = Colors.White;
-        var duration = TimeSpan.FromSeconds(4);
+        // Establece el mensaje y el color
+        Mensaje = mensaje;
+        NotificationColor = esError ? Colors.Red : Colors.Green;
+        IsNotificationVisible = true;
 
-        var snackbarOptions = new SnackbarOptions
-        {
-            BackgroundColor = backgroundColor,
-            TextColor = textColor,
-            ActionButtonTextColor = Colors.White,
-            CornerRadius = new CornerRadius(10),
-            Font = Microsoft.Maui.Font.SystemFontOfSize(14)
+        // Muestra el mensaje durante unos segundos
+        await Task.Delay(4000);
 
-        };
-
-
-        var snackbar = Snackbar.Make(mensaje, action: async () =>
-        {
-            await Shell.Current.GoToAsync(nameof(AreasPage));
-        }, "Cerrar", duration, snackbarOptions);
-
-        await snackbar.Show();
+        // Oculta el mensaje
+        IsNotificationVisible = false;
     }
+
+
+  
+
+
 }
