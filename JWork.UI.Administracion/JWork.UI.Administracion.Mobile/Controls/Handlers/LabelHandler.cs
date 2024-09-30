@@ -1,14 +1,14 @@
 /* [grial-metadata] id: Grial#LabelHandler.cs version: 1.0.1 */
 using MauiLabelHandler = Microsoft.Maui.Handlers.LabelHandler;
 
-namespace JWork.UI.Administracion.Mobile
+namespace JWork.UI.Administracion.Mobile.Controls.Handlers
 {
     /// <summary>
     /// This handler fixes: https://github.com/dotnet/maui/issues/14125
     /// </summary>
     public class LabelHandler : MauiLabelHandler
     {
-        [Obsolete]
+       
         public LabelHandler()
             : base(Mapper)
         {

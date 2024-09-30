@@ -26,6 +26,14 @@
             <FontImageSource FontFamily="MaterialIcon" Glyph="business" Color="#FFC107" Size="24"/>
         </ShellContent.Icon>
     </ShellContent>
+    
+    <ShellContent
+            Title="Oficios"
+            ContentTemplate="{DataTemplate views:OficiosPage}">
+        <ShellContent.Icon>
+            <FontImageSource FontFamily="MaterialIcon" Glyph="work"  Color="#FFC107" Size="24"/>
+        </ShellContent.Icon>
+    </ShellContent>
 
 
     <ShellContent
@@ -67,14 +75,7 @@
 
 
 
-    <ShellContent
-                Title="Oficios"
-                ContentTemplate="{DataTemplate views:OficiosPage}">
-        <ShellContent.Icon>
-            <FontImageSource FontFamily="MaterialIcon" Glyph="work"  Color="#FFC107" Size="24"/>
-        </ShellContent.Icon>
-    </ShellContent>
-
+    
 
 
     <ShellContent

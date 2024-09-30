@@ -26,7 +26,7 @@ public class GlobalAlertas
 
         };
 
-        await LocalNotificationCenter.Current.Show(notification);
+        _ = await LocalNotificationCenter.Current.Show(notification);
 
     }
 }

@@ -1,11 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using JWork.UI.Administracion.Business;
+using JWork.UI.Administracion.Common;
 using JWork.UI.Administracion.Models;
 using System.Collections.ObjectModel;
 
 namespace JWork.UI.Administracion.Mobile.ViewModels
 {
-    public partial class OficioViewModel : ViewModelGlobal, IQueryAttributable
+    public partial class OficioViewModel : ViewModelGlobal
     {
         [ObservableProperty]
         public int oficioId;
@@ -37,28 +39,24 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
 
         public async Task InicializarAsync()
         {
-            if (AreaId <= 0)
-            {
-                return;
-            }
 
             try
             {
-                OficioDto response = await _oficioBL.GetPorIdAsync(OficioId);
 
-                // Validar la respuesta
-                if (response != null)
+                List<AreaDto> arealst = await _areaBL.Buscar(new()
                 {
-                    OficioName = response.Nombre;
-                    AreaId = response.AreaId;
-                    AreaSeleccionada = response.Area ?? new AreaDto();
-                    List<AreaDto> arealst = await _areaBL.Buscar(new()
+                    Entidad = new(),
+                    TotalRegistros = 20,
+                    NumeroPagina = 1,
+                });
+                Areas = new ObservableCollection<AreaDto>(arealst ?? []);
+                if (AreaId > 0)
+                {
+                    AreaDto? areaSeleccionada = Areas.FirstOrDefault(a => a.AreaId == AreaId);
+                    if (areaSeleccionada != null)
                     {
-                        Entidad = new(),
-                        TotalRegistros = 20,
-                        NumeroPagina = 1,
-                    });
-                    Areas = new ObservableCollection<AreaDto>(arealst ?? []);
+                        AreaSeleccionada = areaSeleccionada;
+                    }
                 }
 
             }
@@ -70,18 +68,38 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
             }
         }
 
-        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        [RelayCommand]
+        private async Task Guardar()
         {
-            if (query.ContainsKey("id") && int.TryParse(query["id"]?.ToString(), out var id))
+            try
             {
-                OficioId = id;
+                OficioDto oficio = new()
+                {
+                    AreaId = AreaSeleccionada.AreaId,
+                    Nombre = OficioName,
+                    OficioId = OficioId,
+
+                };
+
+                oficio = oficio.OficioId > 0 ? await _oficioBL.Modificar(oficio) : await _oficioBL.Crear(oficio);
+            }
+            catch (JWorkException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
 
+
         private Task MostrarError(string mensaje)
         {
-            Shell.Current.DisplayAlert("Error", mensaje, "Cancelar");
+            _ = Shell.Current.DisplayAlert("Error", mensaje, "Cancelar");
             return Task.CompletedTask;
         }
+
+
     }
 }

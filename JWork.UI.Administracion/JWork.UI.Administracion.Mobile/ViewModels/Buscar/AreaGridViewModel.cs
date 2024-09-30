@@ -34,7 +34,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
         private readonly PopupService _popupService;
         private readonly IServiceProvider _serviceProvider;
 
-        private AreaPopup? _popup; // Mantener la referencia al popup actual
+        private AreaPopup? _popup;
 
         public AreaGridViewModel(AreaBL areaBL, INavigationService navigationService,
             PopupService popupService, IServiceProvider serviceProvider)
@@ -44,7 +44,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
             _popupService = popupService;
             _serviceProvider = serviceProvider;
 
-            areas = new ObservableCollection<AreaDto>();
+            areas = [];
             AreaSeleccionada = new AreaDto();
 
             PropertyChanged += AreaGridViewModel_PropertyChanged;
@@ -112,15 +112,13 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
         {
             try
             {
-                // Verificar si ya hay un popup abierto
                 if (_popup != null)
                 {
-                    return; // Si ya hay un popup abierto, no hacemos nada
+                    return;
                 }
 
                 AreaViewModel viewModel = _serviceProvider.GetRequiredService<AreaViewModel>();
 
-                // Si seleccionamos un área existente, llenamos los campos
                 if (AreaSeleccionada.AreaId > 0)
                 {
                     viewModel.AreaId = AreaSeleccionada.AreaId;
@@ -130,18 +128,16 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
                 }
                 else
                 {
-                    // Si no hay área seleccionada, abrimos un popup para crear una nueva
                     _popup = _serviceProvider.GetRequiredService<AreaPopup>();
                 }
 
-                // Evento para manejar el cierre del popup
                 _popup.Closed += async (s, e) =>
                 {
-                    _popup = null; // Limpiar la referencia al cerrar
+                    _popup = null;
                     await RefreshAreas();
                 };
 
-                Shell.Current.ShowPopup(_popup); // Mostrar el popup
+                Shell.Current.ShowPopup(_popup);
             }
             catch (Exception ex)
             {

@@ -13,7 +13,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
     public partial class ActividadGridViewModel : ViewModelGlobal
     {
         [ObservableProperty]
-        string? textoBusqueda;
+        private string? textoBusqueda;
 
         [ObservableProperty]
         public ObservableCollection<ActividadDto> actividades;

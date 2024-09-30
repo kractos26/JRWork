@@ -18,7 +18,7 @@ public partial class ActividadViewModel(ActividadBL actividadBL, OficioBL oficio
     private int oficioId;
 
     [ObservableProperty]
-    private ObservableCollection<OficioDto>? oficios = new ObservableCollection<OficioDto>();
+    private ObservableCollection<OficioDto>? oficios = [];
 
     [ObservableProperty]
     private OficioDto oficioSeleccionado = new OficioDto();

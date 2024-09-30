@@ -47,7 +47,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
 
         private static Task MostrarError(string mensaje)
         {
-            Shell.Current.DisplayAlert("", mensaje, "ok");
+            _ = Shell.Current.DisplayAlert("", mensaje, "ok");
             return Task.CompletedTask;
         }
     }

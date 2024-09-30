@@ -13,7 +13,7 @@ public partial class AreasPage : ContentPage
         BindingContext = _model;
 
     }
-   
+
 
     protected override async void OnAppearing()
     {
@@ -23,7 +23,7 @@ public partial class AreasPage : ContentPage
 
     private void OnBuscar(object sender, TextChangedEventArgs e)
     {
-        _searchTimer?.Change(Timeout.Infinite, 0); 
+        _ = (_searchTimer?.Change(Timeout.Infinite, 0));
 
         _searchTimer = new Timer(async _ =>
         {

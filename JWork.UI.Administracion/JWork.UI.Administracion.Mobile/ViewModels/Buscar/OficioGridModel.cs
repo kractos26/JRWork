@@ -1,4 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using JWork.UI.Administracion.Business;
 using JWork.UI.Administracion.Mobile.Service;
 using JWork.UI.Administracion.Mobile.Views;
@@ -17,39 +20,42 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
 
         [ObservableProperty]
         public string? mensaje;
-        private readonly OficioBL _habilidadBL;
+        private readonly OficioBL _oficioBL;
 
+        [ObservableProperty]
+        private string textoBusqueda = null!;
 
+        private readonly PopupService _popupService;
         private readonly INavigationService _navigationService;
-        public OficioGridViewModel(OficioBL habilidadBL, INavigationService navigationService)
+        private readonly IServiceProvider _serviceProvider;
+        private OficioPopup? _popup;
+        public OficioGridViewModel(OficioBL oficioBL,
+            INavigationService navigationService, PopupService popupService, IServiceProvider serviceProvider)
         {
-            _habilidadBL = habilidadBL;
+            _oficioBL = oficioBL;
             oficios = [];
             _navigationService = navigationService;
             oficioseleccionado = new();
-            PropertyChanged += AreaGridViewModel_PropertyChanged;
+            _popupService = popupService;
+            _serviceProvider = serviceProvider;
         }
 
-        private async void AreaGridViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(Oficioseleccionado))
-            {
-                string uri = $"{nameof(OficioPage)}?id={Oficioseleccionado.OficioId}";
-                await _navigationService.GotoAsync(uri);
-            }
-        }
+
 
         public async Task ObtenerData()
         {
             try
             {
-                List<OficioDto> resp = await _habilidadBL.Buscar(new()
+                List<OficioDto> resp = await _oficioBL.Buscar(new()
                 {
-                    Entidad = new(),
+                    Entidad = new()
+                    {
+                        Nombre = TextoBusqueda
+                    },
                     TotalRegistros = 20,
                     NumeroPagina = 1,
                 });
-                if (resp.Any())
+                if (resp.Count != 0)
                 {
                     Oficios = new ObservableCollection<OficioDto>(resp);
 
@@ -60,6 +66,76 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
 
                 Mensaje = $"ocurrio un error {ex.Message}";
             }
+        }
+
+        public async Task Buscar()
+        {
+            await ObtenerData();
+        }
+
+        [RelayCommand]
+        private async Task Editar(OficioDto oficio)
+        {
+            try
+            {
+                Oficioseleccionado = oficio;
+                await AbrirModal();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        [RelayCommand]
+        private async Task Crear()
+        {
+            Oficioseleccionado = new OficioDto();
+            await AbrirModal();
+        }
+
+        private async Task AbrirModal()
+        {
+            try
+            {
+                if (_popup != null)
+                {
+                    return;
+                }
+
+                OficioViewModel viewModel = _serviceProvider.GetRequiredService<OficioViewModel>();
+
+                if (Oficioseleccionado.OficioId > 0)
+                {
+                    viewModel.AreaId = Oficioseleccionado.AreaId;
+                    viewModel.OficioName = Oficioseleccionado.Nombre;
+                    viewModel.OficioId = Oficioseleccionado.OficioId;
+                    await viewModel.InicializarAsync();
+                    _popup = new OficioPopup(viewModel);
+                }
+                else
+                {
+                    await viewModel.InicializarAsync();
+                    _popup = new OficioPopup(viewModel);
+                }
+
+                _popup.Closed += async (s, e) =>
+                {
+                    _popup = null;
+                    await RefreshAreas();
+                };
+
+                Shell.Current.ShowPopup(_popup);
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("❌ Error", ex.Message, "Ok");
+            }
+        }
+
+        private async Task RefreshAreas()
+        {
+            await ObtenerData();
         }
     }
 }

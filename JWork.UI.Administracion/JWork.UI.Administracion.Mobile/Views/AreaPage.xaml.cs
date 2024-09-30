@@ -9,16 +9,16 @@ public partial class AreaPopup : Popup
 
     public AreaPopup(AreaViewModel? viewModel)
     {
-		try
-		{
-			InitializeComponent();
+        try
+        {
+            InitializeComponent();
             BindingContext = viewModel ?? throw new ArgumentNullException(nameof(viewModel), "El ViewModel no puede ser null.");
 
         }
         catch (Exception ex)
-		{
+        {
             Console.WriteLine($"Error al inicializar el Popup: {ex.Message}\nStackTrace: {ex.StackTrace}");
-            Shell.Current.DisplayAlert("Error", "No se pudo inicializar el Popup correctamente", "OK");
+            _ = Shell.Current.DisplayAlert("Error", "No se pudo inicializar el Popup correctamente", "OK");
 
         }
     }

@@ -4,6 +4,7 @@ using JWork.UI.Administracion.Common;
 using JWork.UI.Administracion.DataBase.Models;
 using JWork.UI.Administracion.DataBase.Repositories;
 using JWork.UI.Administracion.DataBase.Repositories.Interfaces;
+using JWork.UI.Administracion.Mobile.Controls.Handlers;
 using JWork.UI.Administracion.Mobile.Platforms.Android;
 using JWork.UI.Administracion.Mobile.Service;
 using JWork.UI.Administracion.Mobile.ViewModels;
@@ -24,23 +25,23 @@ namespace JWork.UI.Administracion.Mobile
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
-            builder
+            _ = builder
                 .UseMauiApp<App>().UseLocalNotification()
                 .ConfigureFonts(fonts =>
                 {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                    fonts.AddFont("MaterialIcons-Regular.ttf", "MaterialIcon");
-                    fonts.AddFont("Poppins-Regular.ttf", "Poppins");
-                    fonts.AddFont("materialdesignicons-webfont.ttf", "Material Design Icons");
-                    fonts.AddFont("Roboto-Regular.ttf", "Sans");
+                    _ = fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                    _ = fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    _ = fonts.AddFont("MaterialIcons-Regular.ttf", "MaterialIcon");
+                    _ = fonts.AddFont("Poppins-Regular.ttf", "Poppins");
+                    _ = fonts.AddFont("materialdesignicons-webfont.ttf", "Material Design Icons");
+                    _ = fonts.AddFont("Roboto-Regular.ttf", "Sans");
                 })
 .UseMauiCommunityToolkit()
                 .UseGrial()
                 .ConfigureMauiHandlers(handlers =>
                 {
-                    handlers.AddHandler<NavigationPage, UXDivers.Grial.GrialNavigationPageHandler>();
-                    handlers.AddHandler<Label, JWork.UI.Administracion.Mobile.LabelHandler>();
+                    _ = handlers.AddHandler<NavigationPage, GrialNavigationPageHandler>();
+                    _ = handlers.AddHandler<Label, LabelHandler>();
                 });
 
 
@@ -48,96 +49,96 @@ namespace JWork.UI.Administracion.Mobile
 
 
             string dbPath = new DatabaseRutaService().GetRuta("jwork.db");
-            builder.Services.AddDbContext<JWorkContext>(options =>
+            _ = builder.Services.AddDbContext<JWorkContext>(options =>
             options.UseSqlite($"Data Source={dbPath}").EnableSensitiveDataLogging()
                    .LogTo(Console.WriteLine, LogLevel.Information)
 
             );
 
 
-            builder.Services.AddAutoMapper(typeof(MappingProfile));
+            _ = builder.Services.AddAutoMapper(typeof(MappingProfile));
 
             // Registro de servicios de navegación y páginas
-            builder.Services.AddSingleton<INavigationService, NavigationService>();
+            _ = builder.Services.AddSingleton<INavigationService, NavigationService>();
 
             // Registro de páginas
-            builder.Services.AddSingleton<PopupService>();
-            builder.Services.AddTransient<ActividadPage>();
-            builder.Services.AddTransient<AreaPopup>();
-            builder.Services.AddTransient<OficioPage>();
-            builder.Services.AddTransient<TipoDocumentoPage>();
-            builder.Services.AddTransient<TipoIdentificacionPage>();
-            builder.Services.AddTransient<HabilidadPage>();
-            builder.Services.AddTransient<UnidadMedidaPage>();
-            builder.Services.AddTransient<DivipolaPage>();
-            builder.Services.AddTransient<ConceptoCalificacionPage>();
+            _ = builder.Services.AddSingleton<PopupService>();
+            _ = builder.Services.AddTransient<ActividadPage>();
+            _ = builder.Services.AddTransient<AreaPopup>();
+            _ = builder.Services.AddTransient<OficioPopup>();
+            _ = builder.Services.AddTransient<TipoDocumentoPage>();
+            _ = builder.Services.AddTransient<TipoIdentificacionPage>();
+            _ = builder.Services.AddTransient<HabilidadPage>();
+            _ = builder.Services.AddTransient<UnidadMedidaPage>();
+            _ = builder.Services.AddTransient<DivipolaPage>();
+            _ = builder.Services.AddTransient<ConceptoCalificacionPage>();
 
             // Registro de páginas adicionales con plural (listas)
-            builder.Services.AddTransient<ActividadesPage>();
-            builder.Services.AddTransient<AreasPage>();
-            builder.Services.AddTransient<OficiosPage>();
-            builder.Services.AddTransient<TiposDocumentosPage>();
-            builder.Services.AddTransient<TiposIdentificacionesPage>();
-            builder.Services.AddTransient<HabilidadesPage>();
-            builder.Services.AddTransient<UnidadesMedidasPage>();
-            builder.Services.AddTransient<DivipolasPage>();
-            builder.Services.AddTransient<ConceptoCalificacionesPage>();
+            _ = builder.Services.AddTransient<ActividadesPage>();
+            _ = builder.Services.AddTransient<AreasPage>();
+            _ = builder.Services.AddTransient<OficiosPage>();
+            _ = builder.Services.AddTransient<TiposDocumentosPage>();
+            _ = builder.Services.AddTransient<TiposIdentificacionesPage>();
+            _ = builder.Services.AddTransient<HabilidadesPage>();
+            _ = builder.Services.AddTransient<UnidadesMedidasPage>();
+            _ = builder.Services.AddTransient<DivipolasPage>();
+            _ = builder.Services.AddTransient<ConceptoCalificacionesPage>();
 
             // Registro de ViewModels
-            builder.Services.AddTransient<ActividadViewModel>();
-            builder.Services.AddTransient<AreaViewModel>();
-            builder.Services.AddTransient<OficioViewModel>();
-            builder.Services.AddTransient<TipoDocumentoViewModel>();
-            builder.Services.AddTransient<TipoIdentificacionViewModel>();
-            builder.Services.AddTransient<HabilidadViewModel>();
-            builder.Services.AddTransient<UnidadMedidaViewModel>();
-            builder.Services.AddTransient<DivipolaViewModel>();
-            builder.Services.AddTransient<ConceptoCalificacionViewModel>();
+            _ = builder.Services.AddTransient<ActividadViewModel>();
+            _ = builder.Services.AddTransient<AreaViewModel>();
+            _ = builder.Services.AddTransient<OficioViewModel>();
+            _ = builder.Services.AddTransient<TipoDocumentoViewModel>();
+            _ = builder.Services.AddTransient<TipoIdentificacionViewModel>();
+            _ = builder.Services.AddTransient<HabilidadViewModel>();
+            _ = builder.Services.AddTransient<UnidadMedidaViewModel>();
+            _ = builder.Services.AddTransient<DivipolaViewModel>();
+            _ = builder.Services.AddTransient<ConceptoCalificacionViewModel>();
 
             // Registro de GridViewModels (para listas y grids)
-            builder.Services.AddTransient<ActividadGridViewModel>();
-            builder.Services.AddTransient<AreaGridViewModel>();
-            builder.Services.AddTransient<OficioGridViewModel>();
-            builder.Services.AddTransient<TipoDocumentoGridViewModel>();
-            builder.Services.AddTransient<TipoIdentificacionGridViewModel>();
-            builder.Services.AddTransient<HabilidadGridViewModel>();
-            builder.Services.AddTransient<UnidadMedidaGridViewModel>();
-            builder.Services.AddTransient<DivipolaGridViewModel>();
-            builder.Services.AddTransient<ConceptoCalificacionGridViewModel>();
+            _ = builder.Services.AddTransient<ActividadGridViewModel>();
+            _ = builder.Services.AddTransient<AreaGridViewModel>();
+            _ = builder.Services.AddTransient<OficioGridViewModel>();
+            _ = builder.Services.AddTransient<TipoDocumentoGridViewModel>();
+            _ = builder.Services.AddTransient<TipoIdentificacionGridViewModel>();
+            _ = builder.Services.AddTransient<HabilidadGridViewModel>();
+            _ = builder.Services.AddTransient<UnidadMedidaGridViewModel>();
+            _ = builder.Services.AddTransient<DivipolaGridViewModel>();
+            _ = builder.Services.AddTransient<ConceptoCalificacionGridViewModel>();
 
             // Registro de servicios
-            builder.Services.AddSingleton<ActividadService>();
-            builder.Services.AddSingleton<AreaService>();
-            builder.Services.AddSingleton<ConceptoCalificacionService>();
-            builder.Services.AddSingleton<HabilidadService>();
-            builder.Services.AddSingleton<OficioService>();
-            builder.Services.AddSingleton<DivipolaService>();
-            builder.Services.AddSingleton<TipoDocumentoService>();
-            builder.Services.AddSingleton<TipoIdentificacionService>();
-            builder.Services.AddSingleton<UnidadMedidaService>();
-            builder.Services.AddSingleton<TipoPersonaService>();
+            _ = builder.Services.AddSingleton<ActividadService>();
+            _ = builder.Services.AddSingleton<AreaService>();
+            _ = builder.Services.AddSingleton<ConceptoCalificacionService>();
+            _ = builder.Services.AddSingleton<HabilidadService>();
+            _ = builder.Services.AddSingleton<OficioService>();
+            _ = builder.Services.AddSingleton<DivipolaService>();
+            _ = builder.Services.AddSingleton<TipoDocumentoService>();
+            _ = builder.Services.AddSingleton<TipoIdentificacionService>();
+            _ = builder.Services.AddSingleton<UnidadMedidaService>();
+            _ = builder.Services.AddSingleton<TipoPersonaService>();
 
             // Registro de capas de lógica de negocio (Business Layer)
-            builder.Services.AddSingleton<ActividadBL>();
-            builder.Services.AddSingleton<AreaBL>();
-            builder.Services.AddSingleton<ConceptoCalificacionBL>();
-            builder.Services.AddSingleton<HabilidadBL>();
-            builder.Services.AddSingleton<OficioBL>();
-            builder.Services.AddSingleton<DivipolaBL>();
-            builder.Services.AddSingleton<TipoDocumentoBL>();
-            builder.Services.AddSingleton<TipoIdentificacionBL>();
-            builder.Services.AddSingleton<UnidadMedidaBL>();
+            _ = builder.Services.AddSingleton<ActividadBL>();
+            _ = builder.Services.AddSingleton<AreaBL>();
+            _ = builder.Services.AddSingleton<ConceptoCalificacionBL>();
+            _ = builder.Services.AddSingleton<HabilidadBL>();
+            _ = builder.Services.AddSingleton<OficioBL>();
+            _ = builder.Services.AddSingleton<DivipolaBL>();
+            _ = builder.Services.AddSingleton<TipoDocumentoBL>();
+            _ = builder.Services.AddSingleton<TipoIdentificacionBL>();
+            _ = builder.Services.AddSingleton<UnidadMedidaBL>();
 
-            builder.Services.AddTransient(typeof(IRepositorio<>), typeof(Repositorio<>));
-            builder.Services.AddTransient<IRepositoryActividad, RepositoryActividad>();
-            builder.Services.AddTransient<IRepositoryArea, RepositoryArea>();
-            builder.Services.AddTransient<IRepositoryConceptoCalificacion, RepositoryConceptoCalificacion>();
-            builder.Services.AddTransient<IRepositoryDivipola, RepositoryDivipola>();
-            builder.Services.AddTransient<IRepositoryHabilidad, RepositoryHabilidad>();
-            builder.Services.AddTransient<IRepositoryOficio, RepositoryOficio>();
-            builder.Services.AddTransient<IRepositoryUnidadMedida, RepositoryUnidadMedida>();
-            builder.Services.AddTransient<IRepositoryTipoPersona, RepositoryTipoPersona>();
-            builder.Services.AddSingleton<IDatabaseRutaService, DatabaseRutaService>();
+            _ = builder.Services.AddTransient(typeof(IRepositorio<>), typeof(Repositorio<>));
+            _ = builder.Services.AddTransient<IRepositoryActividad, RepositoryActividad>();
+            _ = builder.Services.AddTransient<IRepositoryArea, RepositoryArea>();
+            _ = builder.Services.AddTransient<IRepositoryConceptoCalificacion, RepositoryConceptoCalificacion>();
+            _ = builder.Services.AddTransient<IRepositoryDivipola, RepositoryDivipola>();
+            _ = builder.Services.AddTransient<IRepositoryHabilidad, RepositoryHabilidad>();
+            _ = builder.Services.AddTransient<IRepositoryOficio, RepositoryOficio>();
+            _ = builder.Services.AddTransient<IRepositoryUnidadMedida, RepositoryUnidadMedida>();
+            _ = builder.Services.AddTransient<IRepositoryTipoPersona, RepositoryTipoPersona>();
+            _ = builder.Services.AddSingleton<IDatabaseRutaService, DatabaseRutaService>();
 
             return builder.Build();
         }

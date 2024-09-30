@@ -1,5 +1,5 @@
 /* [grial-metadata] id: Grial#NewsData.cs version: 1.0.1 */
-namespace JWork.UI.Administracion.Mobile
+namespace JWork.UI.Administracion.Mobile.ViewModels.Data
 {
 
     public class NewsTopicData

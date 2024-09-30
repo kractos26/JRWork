@@ -1,19 +1,18 @@
+using CommunityToolkit.Maui.Views;
 using JWork.UI.Administracion.Mobile.ViewModels;
 
 namespace JWork.UI.Administracion.Mobile.Views;
 
-public partial class OficioPage : ContentPage
+public partial class OficioPopup : Popup
 {
     private readonly OficioViewModel _model;
-    public OficioPage(OficioViewModel model)
+    public OficioPopup(OficioViewModel model)
     {
         _model = model;
         InitializeComponent();
+
         BindingContext = model;
     }
 
-    protected override async void OnAppearing()
-    {
-        await _model.InicializarAsync();
-    }
+
 }

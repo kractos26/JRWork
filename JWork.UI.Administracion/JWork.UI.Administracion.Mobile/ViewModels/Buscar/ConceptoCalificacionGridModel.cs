@@ -19,7 +19,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels.Buscar
         private readonly INavigationService _navigationService;
 
         [ObservableProperty]
-        string? mensaje;
+        private string? mensaje;
         public ConceptoCalificacionGridViewModel(ConceptoCalificacionBL conceptoCalificacionBL,
             INavigationService navigationService)
         {

@@ -62,7 +62,7 @@ namespace JWork.UI.Administracion.Mobile.ViewModels
 
         private Task MostrarError(string mensaje)
         {
-            Shell.Current.DisplayAlert("Error", mensaje, "Cancelar");
+            _ = Shell.Current.DisplayAlert("Error", mensaje, "Cancelar");
             return Task.CompletedTask;
         }
 
