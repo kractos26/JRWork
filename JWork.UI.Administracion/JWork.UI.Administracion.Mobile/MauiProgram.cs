@@ -29,12 +29,12 @@ namespace JWork.UI.Administracion.Mobile
                 .UseMauiApp<App>().UseLocalNotification()
                 .ConfigureFonts(fonts =>
                 {
-                    _ = fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    _ = fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                    _ = fonts.AddFont("MaterialIcons-Regular.ttf", "MaterialIcon");
-                    _ = fonts.AddFont("Poppins-Regular.ttf", "Poppins");
-                    _ = fonts.AddFont("materialdesignicons-webfont.ttf", "Material Design Icons");
-                    _ = fonts.AddFont("Roboto-Regular.ttf", "Sans");
+                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("MaterialIcons-Regular.ttf", "MaterialIcon");
+                    fonts.AddFont("Poppins-Regular.ttf", "Poppins");
+                    fonts.AddFont("materialdesignicons-webfont.ttf", "Material Design Icons");
+                    fonts.AddFont("Roboto-Regular.ttf", "Sans");
                 })
 .UseMauiCommunityToolkit()
                 .UseGrial()
