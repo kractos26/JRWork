@@ -5,7 +5,7 @@ namespace JWork.UI.Administracion.Mobile.Views.Buscar;
 public partial class OficiosPage : ContentPage
 {
     private readonly OficioGridViewModel _modelo;
-    private Timer _searchTimer;
+    private Timer? _searchTimer;
 
     public OficiosPage(OficioGridViewModel model)
     {

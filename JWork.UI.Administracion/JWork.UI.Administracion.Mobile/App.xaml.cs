@@ -1,8 +1,11 @@
+using JWork.UI.Administracion.DataBase.Models;
+using JWork.UI.Administracion.Mobile.ViewModels;
+
 namespace JWork.UI.Administracion.Mobile
 {
     public partial class App : Application
     {
-        public App()
+        public App(DatabaseInicializar dbInicializar)
         {
             InitializeComponent();
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
@@ -12,11 +15,13 @@ namespace JWork.UI.Administracion.Mobile
                 TaskScheduler.UnobservedTaskException += OnUnobservedTaskException;
             }
 
+
             // Configurar el tema de la app
             UserAppTheme = AppTheme.Light;
 
             // Establecer la MainPage
             MainPage = new AppShell();
+            Task.Run(dbInicializar.InitializarAsync);
         }
 
 

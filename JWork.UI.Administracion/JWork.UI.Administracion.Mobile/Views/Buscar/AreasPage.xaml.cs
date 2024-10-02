@@ -5,7 +5,7 @@ namespace JWork.UI.Administracion.Mobile.Views.Buscar;
 public partial class AreasPage : ContentPage
 {
     private readonly AreaGridViewModel _model;
-    private Timer _searchTimer;
+    private Timer? _searchTimer;
     public AreasPage(AreaGridViewModel model)
     {
         InitializeComponent();
@@ -13,6 +13,7 @@ public partial class AreasPage : ContentPage
         BindingContext = _model;
 
     }
+
 
 
     protected override async void OnAppearing()

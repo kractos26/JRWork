@@ -11,7 +11,9 @@ namespace JWork.UI.Administracion.Mobile.Platforms.Android
             base.OnCreate(savedInstanceState);
 
 
-
+            DatabaseRutaService databaseRutaService = new();
+            // Solicitar permisos al iniciar la aplicación
+            databaseRutaService.SolicitarPermisos(this);
 
 
         }
@@ -36,5 +38,7 @@ namespace JWork.UI.Administracion.Mobile.Platforms.Android
                 }
             }
         }
+
+
     }
 }

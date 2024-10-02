@@ -4,7 +4,6 @@ using JWork.UI.Administracion.Common;
 using JWork.UI.Administracion.DataBase.Models;
 using JWork.UI.Administracion.DataBase.Repositories;
 using JWork.UI.Administracion.DataBase.Repositories.Interfaces;
-using JWork.UI.Administracion.Mobile.Controls.Handlers;
 using JWork.UI.Administracion.Mobile.Platforms.Android;
 using JWork.UI.Administracion.Mobile.Service;
 using JWork.UI.Administracion.Mobile.ViewModels;
@@ -41,7 +40,7 @@ namespace JWork.UI.Administracion.Mobile
                 .ConfigureMauiHandlers(handlers =>
                 {
                     _ = handlers.AddHandler<NavigationPage, GrialNavigationPageHandler>();
-                    _ = handlers.AddHandler<Label, LabelHandler>();
+                 
                 });
 
 
@@ -139,7 +138,7 @@ namespace JWork.UI.Administracion.Mobile
             _ = builder.Services.AddTransient<IRepositoryUnidadMedida, RepositoryUnidadMedida>();
             _ = builder.Services.AddTransient<IRepositoryTipoPersona, RepositoryTipoPersona>();
             _ = builder.Services.AddSingleton<IDatabaseRutaService, DatabaseRutaService>();
-
+            builder.Services.AddTransient<DatabaseInicializar>();
             return builder.Build();
         }
     }
